@@ -52,14 +52,28 @@ body {
   width: 100px;
   text-align: center;
   margin-left: 5px;
+  transition: transform 0.3s ease;
+}
+
+.nav-item:hover{
+  transform: translateY(-10px);
 }
 
 .navbar .nav-link {
   color: #fff; /* Cor branca para os links */
+  transition: transform 0.3s ease;
 }
 
 .navbar .nav-link:hover {
   color: #f0e68c; /* Cor ao passar o mouse nos links */
+  transform: translateY(-10px);
+  
+}
+
+.dropdown-item:hover {
+  cursor: pointer;
+  color: #f0e68c;
+  background-color:#8d573a;
 }
 
 /* Rodapé */

@@ -29,8 +29,8 @@
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" routerLink="/perfil" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">PERFIL</a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" routerLink="/perfil/servico1">LOGIN</a>
-            <a class="dropdown-item" routerLink="/perfil/servico2">CRIAR CONTA</a>
+            <a class="dropdown-item" (click)="loginComponent.openPopup()">LOGIN</a>
+            <a class="dropdown-item" routerLink="#">CRIAR CONTA</a>
           </div>
         </li>
       </ul>
@@ -38,7 +38,7 @@
       <!-- Barra de Pesquisa -->
       <form class="d-flex ms-3"> <!-- ms-3 para margem à esquerda -->
         <input class="form-control me-2" type="search" placeholder="Busque seu livro aqui!" aria-label="Search">
-        <button class="btn btn-outline-dark" type="submit"><img src="/assets/lupa.png"></button>
+        <button class="btn btn-outline-dark" style="background-color: #8d573a;" type="submit"><img src="/assets/lupa.png"></button>
       </form>
     </div>
   </div>

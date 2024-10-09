@@ -8,7 +8,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
-  showPopup: boolean = false; // Inicialmente, o popup não está visível
+  showPopup: boolean = false; // Inicialmente, o popup não será exibido
   showError: boolean = false; // Controla a exibição da mensagem de erro
   errorMessage: string = '';  // Armazena a mensagem de erro
 
@@ -21,10 +21,15 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    // Exibe o popup após 2 segundos
-    setTimeout(() => {
-      this.showPopup = true;
-    }, 2000); // 2000 milissegundos = 2 segundos
+    // Verifica se o popup já foi mostrado anteriormente
+    const popupShown = sessionStorage.getItem('popupShown');
+    
+    if (!popupShown) {
+      // Exibe o popup após 2 segundos na primeira vez que a página é carregada
+      setTimeout(() => {
+        this.showPopup = true;
+      }, 2000);
+    }
   }
 
   login() {
@@ -49,6 +54,11 @@ export class LoginComponent implements OnInit {
 
   closePopup() {
     this.showPopup = false;
-    sessionStorage.setItem('popupShown', 'true');
+    sessionStorage.setItem('popupShown', 'true'); // Salva o estado no navegador
+  }
+
+  // Método para abrir o popup ao clicar no submenu "Login"
+  openPopup() {
+    this.showPopup = true;
   }
 }
