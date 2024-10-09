@@ -1,0 +1,105 @@
+body {
+  background-color: #ded8c3;
+  display: flex;
+  flex-direction: column; /* Para que o rodapé fique na parte inferior */
+  min-height: 100vh; /* Para ocupar toda a altura da tela */
+  margin: 0; /* Remove margem padrão do body */
+  font-family: 'Times New Roman', Times, serif;
+}
+
+/* Imagem no topo */
+.top-image {
+  display: block;
+  margin: 0 auto;
+  max-width: 100%; 
+  height: auto; 
+}
+
+.etec {
+  display: block;
+  margin: 20px auto; /* Espaço em cima e embaixo */
+  max-width: 100%; 
+}
+
+.fred{
+  display: block;
+  margin: 20px auto; /* Espaço em cima e embaixo */
+  max-width: 100%;
+}
+
+@media (max-width: 768px) {
+  .top-image {
+    width: 100%; /* imagem tamanho máximo celulares */
+  }
+  .fred{
+    width: 80px;
+  }
+}
+
+@media (min-width: 992px) {
+  .top-image {
+    width: 500px; /* Largura fixa para telas grandes */
+  }
+  .fred{
+    width: 120px;
+  }
+}
+
+.nav-item {
+  position: relative;
+  border: 3px solid black;
+  border-radius: 10px;
+  width: 100px;
+  text-align: center;
+  margin-left: 5px;
+}
+
+.navbar .nav-link {
+  color: #fff; /* Cor branca para os links */
+}
+
+.navbar .nav-link:hover {
+  color: #f0e68c; /* Cor ao passar o mouse nos links */
+}
+
+/* Rodapé */
+.rodape {
+  background-color: #000;
+  color: #fff;
+  text-align: center;
+  padding: 10px;
+  margin-top: 200px;
+  width: 100%;
+  height: 50px;
+}
+
+/* LOGIN */
+
+.login{
+  margin: auto;
+  border-radius: 10px;
+  font-weight: bold;
+}
+
+.login1{
+  margin: auto;
+  border-radius: 10px;
+  font-weight: bold;
+}
+
+.lstyle{
+  margin-bottom: 10px;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+.error{
+  font-weight: bold;
+  color: red;
+  text-align: center;
+}
+
+.form-control{
+  font-weight: bold;
+}
+

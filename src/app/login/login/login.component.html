@@ -1,0 +1,43 @@
+<div class="modal fade show" tabindex="-1" style="display: block;" *ngIf="showPopup">
+  <div class="modal-dialog">
+    <div class="modal-content custom-modal">
+      <div class="modal-header d-flex justify-content-between align-items-center">
+        <button type="button" class="btn-close" aria-label="Close" (click)="closePopup()"></button>
+      </div>
+      <div class="modal-body">
+        <div class="text-center">
+          <img src="/assets/fred.jpeg" class="fred" alt="Login Image" />
+          <h1 class="text-center">LOGIN</h1>
+        </div>
+
+        <form [formGroup]="loginForm" (ngSubmit)="login()">
+          <div class="form-group">
+            <label for="email" class="lstyle">Email:</label>
+            <input id="email" class="form-control" type="email" formControlName="email" placeholder="Digite seu email" />
+          </div>
+
+          <div class="form-group">
+            <label for="password" class="lstyle">Senha:</label>
+            <input id="password" class="form-control" type="password" formControlName="password" placeholder="Digite sua senha" />
+          </div>
+
+          <!-- Exibe a mensagem de erro se houver -->
+          <div *ngIf="showError" class="error">
+          {{ errorMessage }}
+          </div>
+
+          <div class="d-flex justify-content-center mt-3">
+            <button type="submit" class="login">Login</button>
+            <button type="button" class="login1">Esqueci a senha</button>
+          </div>
+        </form>
+
+        <p class="text-center mt-3">
+          <a href="#" class="text-decoration-none">Novo por aqui? Crie sua conta!</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+

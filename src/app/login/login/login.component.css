@@ -1,0 +1,11 @@
+.custom-modal {
+    background-color: rgba(255, 255, 255, 0.7); /* Fundo branco com 70% de opacidade */
+    border-radius: 10px;
+    backdrop-filter: blur(5px); /* Efeito de desfoque */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3); /* Sombra ao redor */
+  }
+  
+  .modal-backdrop {
+    background-color: rgba(0, 0, 0, 0.5); /* Fundo escuro por trás do modal com 50% de opacidade */
+  }
+  
