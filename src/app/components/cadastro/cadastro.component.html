@@ -1,0 +1,48 @@
+<div class="container">
+
+    <div class="form-container">
+    <h2>CRIE SUA CONTA</h2>
+    <p>Os campos com "*" são obrigatórios</p>
+        <form (ngSubmit)="onSubmit()" #userForm="ngForm">
+            <div class="form-group">
+                <label for="name">* Nome:</label>
+                <input type="text" id="name" class="form-control" 
+                       [(ngModel)]="user.name" name="name" required placeholder="Seu nome" aria-required="true">
+            </div>
+            <div class="form-group">
+                <label for="email">* Email:</label>
+                <input type="email" id="email" class="form-control" 
+                       [(ngModel)]="user.email" name="email" required placeholder="Seu endereço de email" aria-required="true">
+            </div>
+            <div class="form-group">
+                <label for="password">* Senha:</label>
+                <input type="password" id="password" class="form-control" 
+                       [(ngModel)]="user.password" name="password" required placeholder="Sua senha" aria-required="true">
+            </div>
+            <div class="form-group">
+                <label for="dateOfBirth">* Data de Nascimento:</label>
+                <input type="date" id="dateOfBirth" class="form-control" 
+                       [(ngModel)]="user.dateOfBirth" name="dateOfBirth" required aria-required="true">
+            </div>
+            <div class="form-group">
+                <label for="sex">* Gênero:</label>
+                <select id="sex" class="form-control" 
+                        [(ngModel)]="user.sex" name="sex" required aria-required="true">
+                    <option value="">Selecione...</option>
+                    <option value="Masculino">Masculino</option>
+                    <option value="Feminino">Feminino</option>
+                    <option value="Outro">Outro</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="profilePicture">Foto de Perfil:</label>
+                <input type="text" id="profilePicture" class="form-control" 
+                       [(ngModel)]="user.profilePicture" name="profilePicture" placeholder="URL da foto de perfil">
+                <div *ngIf="errorMessage" class="alert alert-danger">
+                    {{ errorMessage }}
+                </div>
+            </div>
+            <button type="submit" class="button">Cadastrar</button>
+        </form>
+    </div>
+</div>

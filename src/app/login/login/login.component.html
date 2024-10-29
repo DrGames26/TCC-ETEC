@@ -12,12 +12,12 @@
 
         <form [formGroup]="loginForm" (ngSubmit)="login()">
           <div class="form-group">
-            <label for="email" class="lstyle">Email:</label>
+            <label for="email" class="lstyle" style="margin-bottom: 7px;">Email:</label>
             <input id="email" class="form-control" type="email" formControlName="email" placeholder="Digite seu email" />
           </div>
 
           <div class="form-group">
-            <label for="password" class="lstyle">Senha:</label>
+            <label for="password" class="lstyle" style="margin-bottom: 7px; margin-top: 7px;">Senha:</label>
             <input id="password" class="form-control" type="password" formControlName="password" placeholder="Digite sua senha" />
           </div>
 
@@ -27,14 +27,15 @@
           </div>
 
           <div class="d-flex justify-content-center mt-3">
-            <button type="submit" class="login">Login</button>
+            <button type="submit" class="login" style="margin-right: 20px;">Login</button>
             <button type="button" class="login">Esqueci a senha</button>
           </div>
         </form>
 
         <p class="text-center mt-3">
-          <a href="#" class="text-decoration-none">Novo por aqui? Crie sua conta!</a>
+          <a href="#" class="text-decoration-none" routerLink="/cadastro" (click)="closePopup()">Novo por aqui? Crie sua conta!</a>
         </p>
+        
       </div>
     </div>
   </div>

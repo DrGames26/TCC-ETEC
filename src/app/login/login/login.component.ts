@@ -1,64 +1,54 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';  // Import Router
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
   loginForm: FormGroup;
-  showPopup: boolean = false; // Inicialmente, o popup não será exibido
-  showError: boolean = false; // Controla a exibição da mensagem de erro
-  errorMessage: string = '';  // Armazena a mensagem de erro
+  showPopup: boolean = false;
+  showError: boolean = false;
+  errorMessage: string = '';
 
-  constructor(private fb: FormBuilder) {
-    // Define o formulário de login com validação de campos obrigatórios
+  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required]
+      password: ['', Validators.required],
     });
   }
 
-  ngOnInit() {
-    // Verifica se o popup já foi mostrado anteriormente
-    const popupShown = sessionStorage.getItem('popupShown');
-    
-    if (!popupShown) {
-      // Exibe o popup após 2 segundos na primeira vez que a página é carregada
-      setTimeout(() => {
-        this.showPopup = true;
-      }, 2000);
-    }
+  openPopup() {
+    this.showPopup = true;
+  }
+
+  closePopup() {
+    this.showPopup = false;
+    this.showError = false;
   }
 
   login() {
-    // Verifica se o formulário está preenchido corretamente
     if (this.loginForm.invalid) {
-      this.errorMessage = 'Por favor, preencha todos os campos corretamente.';
       this.showError = true;
+      this.errorMessage = 'Preencha todos os campos corretamente!';
       return;
     }
 
     const { email, password } = this.loginForm.value;
 
-    // Simulação de verificação de e-mail e senha
-    if (email !== 'usuario@exemplo.com' || password !== 'senha123') {
-      this.errorMessage = 'Login ou senha incorretos. Verifique novamente.';
-      this.showError = true;
-    } else {
-      this.closePopup();  
-      console.log('Login bem-sucedido!');
-    }
-  }
-
-  closePopup() {
-    this.showPopup = false;
-    sessionStorage.setItem('popupShown', 'true'); // Salva o estado no navegador
-  }
-
-  // Método para abrir o popup ao clicar no submenu "Login"
-  openPopup() {
-    this.showPopup = true;
+    this.authService.login({ email, password }).subscribe(
+      (response: any) => {
+        console.log('User logged in', response);
+        // Redirecionar para a página de perfil com os dados do usuário
+        this.router.navigate(['/perfil'], { state: { user: response } });
+        this.closePopup();
+      },
+      (error: any) => {
+        this.showError = true;
+        this.errorMessage = 'Erro ao fazer login. Tente novamente.';
+      }
+    );
   }
 }

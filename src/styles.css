@@ -1,10 +1,14 @@
 body {
-  background-color: #ded8c3;
+  background: #ded8c3;
   display: flex;
   flex-direction: column; /* Para que o rodapé fique na parte inferior */
   min-height: 100vh; /* Para ocupar toda a altura da tela */
   margin: 0; /* Remove margem padrão do body */
   font-family: 'Times New Roman', Times, serif;
+}
+
+.content {
+  flex: 1; /* Isso garante que o conteúdo ocupe o espaço disponível */
 }
 
 /* Imagem no topo */
@@ -13,101 +17,81 @@ body {
   margin: 0 auto;
   max-width: 100%; 
   height: auto; 
+  border: none;
+  border-radius: 15px;
+  transition: box-shadow 0.3s, transform 0.3s; /* Transição adicional */
 }
 
-.etec {
+.top-image:hover {
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5); /* Sombra ao passar o mouse */
+  transform: scale(1.05); /* Aumenta ligeiramente a imagem ao passar o mouse */
+}
+
+.etec, .fred {
   display: block;
   margin: 20px auto; /* Espaço em cima e embaixo */
   max-width: 100%; 
-}
-
-.fred{
-  display: block;
-  margin: 20px auto; /* Espaço em cima e embaixo */
-  max-width: 100%;
+  border-radius: 15px;
 }
 
 @media (max-width: 768px) {
   .top-image {
-    width: 100%; /* imagem tamanho máximo celulares */
+    width: 100%; /* Imagem tamanho máximo em celulares */
   }
-  .fred{
+
+  .fred {
     width: 80px;
   }
 }
 
 @media (min-width: 992px) {
   .top-image {
-    width: 500px; /* Largura fixa para telas grandes */
+    width: 40%; 
   }
-  .fred{
+
+  .fred {
     width: 120px;
   }
 }
 
 .nav-item {
+  font-weight: bold;
   position: relative;
-  border: 3px solid black;
   border-radius: 10px;
   width: 100px;
   text-align: center;
   margin-left: 5px;
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, background-color 0.3s ease; /* Adicionando transição de cor */
+  background-color: #b48f6b;
 }
 
-.nav-item:hover{
+.nav-item:hover {
   transform: translateY(-10px);
 }
 
 .navbar .nav-link {
-  color: #fff; /* Cor branca para os links */
-  transition: transform 0.3s ease;
+  color: #000; /* Cor preta para os links */
+  transition: color 0.3s ease; /* Transição suave na cor */
 }
 
 .navbar .nav-link:hover {
-  color: #f0e68c; /* Cor ao passar o mouse nos links */
-  transform: translateY(-10px);
-  
+  color: #D4AF37;  
 }
 
 .dropdown-item:hover {
   cursor: pointer;
-  color: #f0e68c;
-  background-color:#8d573a;
+  color: #D4AF37;
+  background-color: #8d573a;
 }
 
 /* Rodapé */
 .rodape {
-  background-color: #000;
+  background-color: #8d573a;
   color: #fff;
   text-align: center;
   padding: 10px;
-  margin-top: 200px;
   width: 100%;
   height: 50px;
+  border: 2px solid #000;
+  margin-top: auto; /* Isso garante que o rodapé fique no final da página */
 }
-
-/* LOGIN */
-
-.login{
-  margin: auto;
-  border-radius: 10px;
-  font-weight: bold;
-}
-
-.lstyle{
-  margin-bottom: 10px;
-  margin-top: 10px;
-  font-weight: bold;
-}
-
-.error{
-  font-weight: bold;
-  color: red;
-  text-align: center;
-}
-
-.form-control{
-  font-weight: bold;
-}
-

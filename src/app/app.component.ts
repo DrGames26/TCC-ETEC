@@ -10,10 +10,10 @@ import { LoginComponent } from './login/login/login.component';
 export class AppComponent {
   title = 'Sorobooks';
 
-  // Acessa o componente de login para abrir o popup a partir do menu
+
   @ViewChild(LoginComponent) loginComponent!: LoginComponent;
 
-  dropdownOpen = false; // Controla a exibição do submenu
+  dropdownOpen = false; 
 
   toggleDropdown() {
     this.dropdownOpen = !this.dropdownOpen;

@@ -8,4 +8,29 @@
   .modal-backdrop {
     background-color: rgba(0, 0, 0, 0.5); /* Fundo escuro por trás do modal com 50% de opacidade */
   }
+
+  /* LOGIN */
+
+.login{
+  margin: auto;
+  border-radius: 10px;
+  font-weight: bold;
+}
+
+.lstyle{
+  margin-bottom: 10px;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+.error{
+  font-weight: bold;
+  color: red;
+  text-align: center;
+}
+
+.form-control{
+  font-weight: bold;
+}
+
   

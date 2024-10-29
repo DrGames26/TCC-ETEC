@@ -10,6 +10,10 @@ import { EquipeComponent } from './components/equipe/equipe.component';
 import { AppRoutingModule } from './app-routing.module';
 import { LivroService } from './services/livro.service';
 import { LoginComponent } from './login/login/login.component';
+import { CadastroComponent } from './components/cadastro/cadastro.component';
+import { CadastroUsuarioService } from './services/cadastro-usuario.service';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -19,14 +23,17 @@ import { LoginComponent } from './login/login/login.component';
     LivrosComponent,
     SuporteComponent,
     EquipeComponent,
-    LoginComponent
+    LoginComponent,
+    CadastroComponent
   ],
   imports: [
     BrowserModule,
-    ReactiveFormsModule, 
+    ReactiveFormsModule,
+    HttpClientModule,
+    FormsModule,
     AppRoutingModule  
   ],
-  providers: [LivroService],
+  providers: [LivroService, CadastroUsuarioService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
