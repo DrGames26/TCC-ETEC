@@ -1,0 +1,9 @@
+version: 1
+services:
+  - type: static
+    name: sorobooks
+    env: static
+    url: https://sorobooks.onrender.com
+    routes:
+      - src: /(.*)
+        dest: /index.html
