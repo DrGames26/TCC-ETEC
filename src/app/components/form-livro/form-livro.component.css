@@ -1,0 +1,46 @@
+.container {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+  
+.form-livro {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    background-color: #8d573a;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+  
+.form-livro:hover {
+    transform: scale(1.02);
+}
+
+.titulo-livro {
+    color: #000; 
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+}
+  
+.pagina {
+    background-color: #fdfdfd;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 15px;
+}
+  
+input,
+textarea {
+    border: 1px solid #7a5a4d;
+    border-radius: 5px;
+}
+  
+.alert-danger {
+    margin-top: 1px;
+}

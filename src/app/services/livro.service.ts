@@ -1,20 +1,30 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
+export interface Livro {
+  id?: number;
+  name: string;
+  author: string;
+  description?: string;
+  genre: string;
+  picture?: string;
+  usuarioPublicador?: string;
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class LivroService {
+  private apiUrl = 'http://localhost:8080/api/books';
 
-  constructor() {}
+  constructor(private http: HttpClient) {}
 
-  getLivros(): Observable<any[]> {
-    // Dados fictícios para teste
-    const livros = [
-      { nome: 'Livro Exemplo 1'},
-      { nome: 'Livro Exemplo 2'},
-      { nome: 'Livro Exemplo 3'}
-    ];
-    return of(livros);
+  getLivros(): Observable<Livro[]> {
+    return this.http.get<Livro[]>(`${this.apiUrl}/list`);
+  }
+
+  addLivro(livro: Livro): Observable<Livro> {
+    return this.http.post<Livro>(`${this.apiUrl}/add`, livro);
   }
 }

@@ -7,52 +7,66 @@ import { map, catchError } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:8080/api';
-  private userSubject = new BehaviorSubject<any>(null);
-  public user$ = this.userSubject.asObservable();
+  private apiUrl = 'http://localhost:8080/api'; // URL base da API
+  private userSubject = new BehaviorSubject<any>(null); // Armazena o usuário autenticado
+  public user$ = this.userSubject.asObservable(); // Observable para acessar o usuário
 
   constructor(private http: HttpClient) {
+    // Carrega o usuário armazenado localmente (se houver) ao inicializar
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
       this.userSubject.next(JSON.parse(storedUser));
     }
   }
 
+  // Função de registro de novo usuário
   register(user: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/register`, user).pipe(
       catchError((error) => {
-        // Captura o erro e exibe uma mensagem adequada
         if (error.status === 409) {
-          alert(error.error); // Exibe a mensagem de conflito
+          alert('Usuário já existe.'); // Alerta de conflito
+        } else {
+          alert('Erro ao registrar. Tente novamente.');
         }
-        return throwError(error); // Repropaga o erro
+        return throwError(error);
       })
     );
   }
 
+  // Função de login do usuário
   login(credentials: { email: string; password: string }): Observable<any> {
     return this.http.post(`${this.apiUrl}/login`, credentials).pipe(
       map((response: any) => {
-        if (response.name && response.email && response.sex) {
-          const user = {
-            name: response.name,
-            email: response.email,
-            sex: response.sex,
-          };
-          this.userSubject.next(user);
-          localStorage.setItem('user', JSON.stringify(user));
-        }
-        return this.userSubject.value;
+        // Armazena apenas as informações do usuário necessárias
+        const user = {
+          name: response.name,
+          email: response.email,
+          sex: response.sex,
+        };
+        this.userSubject.next(user); // Atualiza o BehaviorSubject
+        localStorage.setItem('user', JSON.stringify(user)); // Salva no localStorage
+        return user;
+      }),
+      catchError((error) => {
+        alert('Erro ao fazer login. Verifique suas credenciais.');
+        return throwError(error);
       })
     );
   }
 
+  // Obtém o usuário autenticado atual
   getUser() {
     return this.userSubject.value;
   }
 
+  // Função de logout para remover dados de autenticação
   logout() {
-    this.userSubject.next(null);
-    localStorage.removeItem('user');
+    this.userSubject.next(null); // Limpa o BehaviorSubject
+    localStorage.removeItem('user'); // Remove o usuário do localStorage
+  }
+
+  // Verifica se o usuário está autenticado
+  isLoggedIn(): boolean {
+    return !!this.userSubject.value;
   }
 }

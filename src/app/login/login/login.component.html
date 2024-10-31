@@ -1,44 +1,34 @@
-<div class="modal fade show" tabindex="-1" style="display: block;" *ngIf="showPopup">
-  <div class="modal-dialog">
-    <div class="modal-content custom-modal">
-      <div class="modal-header d-flex justify-content-between align-items-center">
-        <button type="button" class="btn-close" aria-label="Close" (click)="closePopup()"></button>
-      </div>
-      <div class="modal-body">
-        <div class="text-center">
-          <img src="/assets/fred.jpeg" class="fred" alt="Login Image" />
-          <h1 class="text-center">LOGIN</h1>
-        </div>
-
-        <form [formGroup]="loginForm" (ngSubmit)="login()">
-          <div class="form-group">
-            <label for="email" class="lstyle" style="margin-bottom: 7px;">Email:</label>
-            <input id="email" class="form-control" type="email" formControlName="email" placeholder="Digite seu email" />
-          </div>
-
-          <div class="form-group">
-            <label for="password" class="lstyle" style="margin-bottom: 7px; margin-top: 7px;">Senha:</label>
-            <input id="password" class="form-control" type="password" formControlName="password" placeholder="Digite sua senha" />
-          </div>
-
-          <!-- Exibe a mensagem de erro se houver -->
-          <div *ngIf="showError" class="error">
-          {{ errorMessage }}
-          </div>
-
-          <div class="d-flex justify-content-center mt-3">
-            <button type="submit" class="login" style="margin-right: 20px;">Login</button>
-            <button type="button" class="login">Esqueci a senha</button>
-          </div>
-        </form>
-
-        <p class="text-center mt-3">
-          <a href="#" class="text-decoration-none" routerLink="/cadastro" (click)="closePopup()">Novo por aqui? Crie sua conta!</a>
-        </p>
-        
-      </div>
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+  <div class="card p-4 shadow-lg" style="max-width: 400px; width: 100%; border-radius: 20px;"> <!-- Cantos externos mais arredondados -->
+    <div class="text-center mb-4">
+      <img src="/assets/fred.jpeg" class="img-fluid rounded-circle mb-3" alt="Login Image" style="width: 100px; height: 100px;">
+      <h2 class="h4 font-weight-bold">LOGIN</h2>
     </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="login()">
+      <div class="form-group mb-3">
+        <label for="email" class="form-label fw-bold">Email:</label> <!-- Texto em negrito -->
+        <input id="email" class="form-control" type="email" formControlName="email" placeholder="Digite seu email" />
+      </div>
+
+      <div class="form-group mb-3">
+        <label for="password" class="form-label fw-bold">Senha:</label> <!-- Texto em negrito -->
+        <input id="password" class="form-control" type="password" formControlName="password" placeholder="Digite sua senha" />
+      </div>
+
+      <!-- Mensagem de erro -->
+      <div *ngIf="showError" class="alert alert-danger text-center">
+        {{ errorMessage }}
+      </div>
+
+      <div class="d-grid gap-2 mt-3">
+        <button type="submit" class="btn btn-primary btn-block">Login</button>
+        <button type="button" class="btn btn-link">Esqueci a senha</button>
+      </div>
+    </form>
+
+    <p class="text-center mt-4 mb-0">
+      <a href="#" class="text-decoration-none" routerLink="/cadastro">Novo por aqui? Crie sua conta!</a>
+    </p>
   </div>
 </div>
-
-

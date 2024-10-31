@@ -14,6 +14,8 @@ import { CadastroComponent } from './components/cadastro/cadastro.component';
 import { CadastroUsuarioService } from './services/cadastro-usuario.service';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { ListaLivrosComponent } from './components/lista-livros/lista-livros.component';
+import { FormLivroComponent } from './components/form-livro/form-livro.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,9 @@ import { FormsModule } from '@angular/forms';
     SuporteComponent,
     EquipeComponent,
     LoginComponent,
-    CadastroComponent
+    CadastroComponent,
+    ListaLivrosComponent,
+    FormLivroComponent
   ],
   imports: [
     BrowserModule,

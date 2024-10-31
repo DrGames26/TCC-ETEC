@@ -1,0 +1,28 @@
+<div class="container" style="margin-top: -150px;">
+  <form (ngSubmit)="adicionarLivro()" class="form-livro">
+    <h2 class="fw-bold titulo-livro">ADICIONE SEU LIVRO!</h2>
+    
+    <div class="pagina">
+      <div class="mb-3">
+        <input [(ngModel)]="novoLivro.name" name="name" placeholder="Nome" required class="form-control">
+      </div>
+      <div class="mb-3">
+        <input [(ngModel)]="novoLivro.author" name="author" placeholder="Autor" required class="form-control">
+      </div>
+      <div class="mb-3">
+        <input [(ngModel)]="novoLivro.genre" name="genre" placeholder="Gênero" required class="form-control">
+      </div>
+      <div class="mb-3">
+        <input [(ngModel)]="novoLivro.picture" name="picture" placeholder="URL da Imagem" required class="form-control">
+      </div>
+      <div class="mb-3">
+        <textarea [(ngModel)]="novoLivro.description" name="description" placeholder="Descrição" required class="form-control"></textarea>
+      </div>
+    </div>
+
+    <!-- Mensagem de erro -->
+    <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+
+    <button type="submit" class="btn btn-primary w-100">Adicionar Livro</button>
+  </form>
+</div>
