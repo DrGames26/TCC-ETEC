@@ -71,7 +71,7 @@ body {
 }
 
 .navbar .nav-link {
-  color: #000; /* Cor preta para os links */
+  color: #fff; /* Cor branca para os links */
   transition: color 0.3s ease; /* Transição suave na cor */
 }
 

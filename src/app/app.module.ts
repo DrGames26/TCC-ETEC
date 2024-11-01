@@ -16,6 +16,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { ListaLivrosComponent } from './components/lista-livros/lista-livros.component';
 import { FormLivroComponent } from './components/form-livro/form-livro.component';
+import { LivroDetalhesComponent } from './components/livro-detalhes/livro-detalhes.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { FormLivroComponent } from './components/form-livro/form-livro.component
     LoginComponent,
     CadastroComponent,
     ListaLivrosComponent,
-    FormLivroComponent
+    FormLivroComponent,
+    LivroDetalhesComponent
   ],
   imports: [
     BrowserModule,

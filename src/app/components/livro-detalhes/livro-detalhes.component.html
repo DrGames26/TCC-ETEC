@@ -1,0 +1,27 @@
+<div class="container mt-5">
+    <div *ngIf="livro; else loading" class="card">
+      <div class="row g-0">
+        <div class="col-md-4">
+          <img *ngIf="livro.picture" [src]="livro.picture" class="img-fluid rounded-start" alt="Imagem do Livro">
+        </div>
+        <div class="col-md-8">
+          <div class="card-body">
+            <h2 class="card-title">{{ livro.name }}</h2>
+            <p class="card-text"><strong>Autor:</strong> {{ livro.author }}</p>
+            <p class="card-text"><strong>Gênero:</strong> {{ livro.genre }}</p>
+            <p class="card-text"><strong>Descrição:</strong> {{ livro.description }}</p>
+            <p class="card-text"><strong>Publicado por:</strong> {{ livro.usuarioPublicador }}</p>
+            <!-- Botão para troca -->
+            <button class="btn btn-primary mt-3">Trocar Livro</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <ng-template #loading>
+      <div class="alert alert-info" role="alert">
+        Carregando detalhes do livro...
+      </div>
+    </ng-template>
+  </div>
+  

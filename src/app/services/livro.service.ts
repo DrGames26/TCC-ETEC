@@ -8,7 +8,7 @@ export interface Livro {
   author: string;
   description?: string;
   genre: string;
-  picture?: string;
+  picture?: string; 
   usuarioPublicador?: string;
 }
 
@@ -20,11 +20,18 @@ export class LivroService {
 
   constructor(private http: HttpClient) {}
 
+  // Obtém a lista de livros
   getLivros(): Observable<Livro[]> {
     return this.http.get<Livro[]>(`${this.apiUrl}/list`);
   }
 
+  // Adiciona um novo livro
   addLivro(livro: Livro): Observable<Livro> {
     return this.http.post<Livro>(`${this.apiUrl}/add`, livro);
+  }
+
+  // Obtém um livro específico pelo ID
+  getLivroPorId(id: number): Observable<Livro> {
+    return this.http.get<Livro>(`${this.apiUrl}/${id}`);
   }
 }

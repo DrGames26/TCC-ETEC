@@ -1,1 +1,65 @@
-<p>AJUDA AE</p>
+<div class="container mt-5">
+    <!-- Título da Página -->
+    <div class="text-center mb-4">
+      <h2>Suporte</h2>
+      <p>Estamos aqui para ajudar! Entre em contato conosco abaixo.</p>
+    </div>
+  
+    <!-- Formulário de Suporte -->
+    <div class="row justify-content-center">
+      <div class="col-md-8 col-lg-6">
+        <form>
+          <div class="mb-3">
+            <label for="name" class="form-label">Nome</label>
+            <input type="text" class="form-control" id="name" placeholder="Seu nome">
+          </div>
+          <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email" placeholder="seuemail@exemplo.com">
+          </div>
+          <div class="mb-3">
+            <label for="subject" class="form-label">Assunto</label>
+            <input type="text" class="form-control" id="subject" placeholder="Assunto da mensagem">
+          </div>
+          <div class="mb-3">
+            <label for="message" class="form-label">Mensagem</label>
+            <textarea class="form-control" id="message" rows="5" placeholder="Descreva seu problema ou pergunta"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary w-100">Enviar</button>
+        </form>
+      </div>
+    </div>
+  
+    <!-- Seção de Perguntas Frequentes (FAQ) -->
+    <div class="mt-5">
+      <h3>Perguntas Frequentes</h3>
+      <div class="accordion" id="faqAccordion">
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingOne">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+              Como posso resetar minha senha?
+            </button>
+          </h2>
+          <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#faqAccordion">
+            <div class="accordion-body">
+              Para resetar sua senha, vá para a página de login e clique em "Esqueceu a senha?". Siga as instruções para redefinir sua senha.
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingTwo">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+              Como posso postar um livro?
+            </button>
+          </h2>
+          <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#faqAccordion">
+            <div class="accordion-body">
+              Para postar um livro, acesse sua conta e vá para a seção "Adicionar Livro". Preencha os detalhes e clique em "Postar".
+            </div>
+          </div>
+        </div>
+        <!-- Adicione mais perguntas conforme necessário -->
+      </div>
+    </div>
+  </div>
+  

@@ -1,29 +1,33 @@
 <body>
   <!-- Banner -->
-  <img src="/assets/fred_banner1.png" alt="banner" class="top-image">
+  <img src="/assets/fred_banner1.png" alt="Banner do site Sorobooks" class="top-image">
 
   <!-- Menu de navegação -->
-  <nav class="navbar navbar-expand-lg" style="background-color: #8d573a; border: 2px solid #000;">
+  <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #8d573a; border: 2px solid #000;">
     <div class="container">
+      <!-- Botão do menu hamburguer -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
       <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
-        <button style="background-color: #8d573a; color: white;" class="btn" routerLink="/form-livro">ADICIONE SEU LIVRO AQUI</button>
+        <button class="btn" style="background-color: #8d573a; color: white;" routerLink="/form-livro">ADICIONE SEU LIVRO AQUI</button>
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link text-light" routerLink="/home">INÍCIO</a>
+            <a class="nav-link" routerLink="/home">INÍCIO</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link text-light" routerLink="/livros">LIVROS</a>
+            <a class="nav-link" routerLink="/livros">LIVROS</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link text-light" routerLink="/suporte">SUPORTE</a>
+            <a class="nav-link" routerLink="/suporte">SUPORTE</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link text-light" routerLink="/equipe">EQUIPE</a>
+            <a class="nav-link" routerLink="/equipe">EQUIPE</a>
           </li>
 
           <!-- Aba Perfil -->
           <li class="nav-item dropdown" *ngIf="!isAuthenticated">
-            <a class="nav-link dropdown-toggle text-light" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">PERFIL</a>
+            <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">PERFIL</a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" routerLink="/login">LOGIN</a>
               <a class="dropdown-item" routerLink="/cadastro">CRIAR CONTA</a>
@@ -31,9 +35,10 @@
           </li>
 
           <li class="nav-item dropdown" *ngIf="isAuthenticated">
-            <a class="nav-link dropdown-toggle text-light" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">PERFIL</a>
+            <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">PERFIL</a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" routerLink="/perfil">PERFIL</a>
+              <a class="dropdown-item" routerLink="/estante">MINHA ESTANTE</a>
               <a class="dropdown-item" (click)="logout()">SAIR</a>
             </div>
           </li>
@@ -42,8 +47,8 @@
         <!-- Barra de pesquisa -->
         <form class="d-flex ms-3">
           <input class="form-control me-2" type="search" placeholder="Busque seu livro aqui!" aria-label="Search">
-          <button class="btn btn" style="background-color: #8d573a" type="submit">
-            <img src="/assets/lupa.png" alt="Search Icon">
+          <button class="btn btn-outline-light" type="submit">
+            <img src="/assets/lupa.png" alt="Ícone de pesquisa">
           </button>
         </form>
       </div>
@@ -56,7 +61,7 @@
   </div>
 
   <!-- Rodapé -->
-  <footer class="rodape text-center py-3" style="background-color: #8d573a; color: #fff;">
+  <footer class="rodape">
     <p>&copy; 2024 Sorobooks - Todos os direitos reservados.</p>
   </footer>
 </body>

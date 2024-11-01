@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './components/config/home.component';
 import { LivrosComponent } from './components/livros/livros.component';
 import { FormLivroComponent } from './components/form-livro/form-livro.component';
+import { LivroDetalhesComponent } from './components/livro-detalhes/livro-detalhes.component';
 import { SuporteComponent } from './components/suporte/suporte.component';
 import { EquipeComponent } from './components/equipe/equipe.component';
 import { LoginComponent } from './login/login/login.component';
@@ -15,6 +16,7 @@ const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   { path: 'livros', component: LivrosComponent },
+  { path: 'livro/:id', component: LivroDetalhesComponent },
   { path: 'form-livro', component: FormLivroComponent },
   { path: 'suporte', component: SuporteComponent},
   { path: 'equipe', component: EquipeComponent},

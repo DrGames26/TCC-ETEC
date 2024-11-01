@@ -1,5 +1,5 @@
 <div class="livros-container position-relative">
-  <div *ngFor="let livro of livros" class="livro">
+  <div *ngFor="let livro of livros" class="livro" (click)="navegarParaDetalhes(livro.id!)">
     <img *ngIf="livro.picture" [src]="livro.picture" alt="Imagem do Livro">
     <h3>{{ livro.name }}</h3>
     <p>Autor: {{ livro.author }}</p>
