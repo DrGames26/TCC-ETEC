@@ -37,12 +37,13 @@ export class AuthService {
   login(credentials: { email: string; password: string }): Observable<any> {
     return this.http.post(`${this.apiUrl}/login`, credentials).pipe(
       map((response: any) => {
-        // Inclui profilePicture e outras informações do usuário
+        
         const user = {
           name: response.name,
           email: response.email,
           sex: response.sex,
-          profilePicture: response.profilePicture // Adiciona profilePicture
+          profilePicture: response.profilePicture,
+          phoneNumber: response.phoneNumber
         };
         this.userSubject.next(user); // Atualiza o BehaviorSubject com o usuário completo
         localStorage.setItem('user', JSON.stringify(user)); // Salva no localStorage

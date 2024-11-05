@@ -5,4 +5,5 @@ export interface User {
   dateOfBirth: string;
   sex: string;
   profilePicture?: string;
+  phoneNumber: string;
 }
