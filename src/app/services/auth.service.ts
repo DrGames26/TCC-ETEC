@@ -7,7 +7,7 @@ import { map, catchError } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'https://sorobooks.onrender.com/api'; // URL base da API
+  private apiUrl = 'https://sorobooks-backend.onrender.com/api'; // URL base da API
   private userSubject = new BehaviorSubject<any>(null); // Armazena o usuário autenticado
   public user$ = this.userSubject.asObservable(); // Observable para acessar o usuário
 
