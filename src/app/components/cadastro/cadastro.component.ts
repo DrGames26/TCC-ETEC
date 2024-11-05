@@ -16,7 +16,8 @@ export class CadastroComponent {
     password: '',
     dateOfBirth: '',
     sex: '',
-    profilePicture: ''
+    profilePicture: '',
+    phoneNumber: ''
   };
 
   errorMessage: string = '';
