@@ -16,7 +16,7 @@ export interface Livro {
   providedIn: 'root'
 })
 export class LivroService {
-  private apiUrl = 'http://localhost:8080/api/books';
+  private apiUrl = 'https://sorobooks.onrender.com/api/books'; // URL do backend hospedado
 
   constructor(private http: HttpClient) {}
 
