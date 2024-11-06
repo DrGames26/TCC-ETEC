@@ -16,10 +16,9 @@ export class ExchangeService {
   // Criar solicitação de troca
   requestExchange(requestData: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/request`, requestData).pipe(
-      tap(() => {
-        this.toastr.success('Solicitação de troca enviada!', 'Sucesso');
-      }, () => {
-        this.toastr.error('Erro ao enviar solicitação de troca.', 'Erro');
+      tap({
+        next: () => this.toastr.success('Solicitação de troca enviada!', 'Sucesso'),
+        error: () => this.toastr.error('Erro ao enviar solicitação de troca.', 'Erro')
       })
     );
   }
@@ -31,22 +30,20 @@ export class ExchangeService {
 
   // Aceitar solicitação de troca
   acceptExchange(id: number): Observable<any> {
-    return this.http.put(`${this.apiUrl}/${id}/status`, { status: 'ACEITAR' }).pipe(
-      tap(() => {
-        this.toastr.success('Solicitação de troca aceita!', 'Sucesso');
-      }, () => {
-        this.toastr.error('Erro ao aceitar solicitação.', 'Erro');
+    return this.http.put(`${this.apiUrl}/${id}/status`, { status: 'ACCEPTED' }).pipe(
+      tap({
+        next: () => this.toastr.success('Solicitação de troca aceita!', 'Sucesso'),
+        error: () => this.toastr.error('Erro ao aceitar solicitação.', 'Erro')
       })
     );
   }
 
   // Recusar solicitação de troca
   rejectExchange(id: number): Observable<any> {
-    return this.http.put(`${this.apiUrl}/${id}/status`, { status: 'RECUSAR' }).pipe(
-      tap(() => {
-        this.toastr.success('Solicitação de troca recusada!', 'Sucesso');
-      }, () => {
-        this.toastr.error('Erro ao recusar solicitação.', 'Erro');
+    return this.http.put(`${this.apiUrl}/${id}/status`, { status: 'REJECTED' }).pipe(
+      tap({
+        next: () => this.toastr.success('Solicitação de troca recusada!', 'Sucesso'),
+        error: () => this.toastr.error('Erro ao recusar solicitação.', 'Erro')
       })
     );
   }
