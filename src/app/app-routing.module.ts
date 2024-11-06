@@ -8,6 +8,7 @@ import { SuporteComponent } from './components/suporte/suporte.component';
 import { EquipeComponent } from './components/equipe/equipe.component';
 import { LoginComponent } from './login/login/login.component';
 import { PerfilComponent } from './components/perfil/perfil.component';
+import { EstanteComponent } from './components/estante/estante.component';
 import { CadastroComponent } from './components/cadastro/cadastro.component';
 
 
@@ -21,6 +22,7 @@ const routes: Routes = [
   { path: 'suporte', component: SuporteComponent},
   { path: 'equipe', component: EquipeComponent},
   { path: 'cadastro', component: CadastroComponent},
+  { path: 'estante', component: EstanteComponent},
   { path: 'login', component: LoginComponent},
   { path: 'perfil', component: PerfilComponent }
   

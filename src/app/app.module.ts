@@ -17,6 +17,7 @@ import { FormsModule } from '@angular/forms';
 import { ListaLivrosComponent } from './components/lista-livros/lista-livros.component';
 import { FormLivroComponent } from './components/form-livro/form-livro.component';
 import { LivroDetalhesComponent } from './components/livro-detalhes/livro-detalhes.component';
+import { EstanteComponent } from './components/estante/estante.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { LivroDetalhesComponent } from './components/livro-detalhes/livro-detalh
     CadastroComponent,
     ListaLivrosComponent,
     FormLivroComponent,
-    LivroDetalhesComponent
+    LivroDetalhesComponent,
+    EstanteComponent
   ],
   imports: [
     BrowserModule,
