@@ -15,7 +15,6 @@
           <!-- Detalhes da troca -->
           <div class="col-md-9">
             <p class="card-text">
-              <img *ngIf="livro.picture" [src]="livro.picture" alt="Imagem do Livro">
               Troca de <strong>{{ exchange.requestedBookId }}</strong> por <strong>{{ exchange.offeredBookId }}</strong>.
             </p>
             <button class="btn btn-success" (click)="acceptExchange(exchange.id)">Aceitar</button>
