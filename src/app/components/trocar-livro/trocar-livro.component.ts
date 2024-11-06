@@ -55,18 +55,26 @@ export class TrocarLivroComponent implements OnInit {
 
   // Função para solicitar troca
   offerExchange(livroId: number): void {
+    if (!this.livroDesejado) {
+      this.toastr.error('Por favor, selecione um livro desejado para troca.', 'Erro');
+      return;
+    }
+
     const troca = {
-      bookOfferedId: livroId,
-      bookRequestedId: this.livroDesejado?.id,  // Utilizando o livro desejado
+      offeredBookId: livroId,  // Livro oferecido
+      requestedBookId: this.livroDesejado.id,  // Livro desejado
+      requester: this.authService.getUser()?.name || ''  // Nome do solicitante
     };
 
     this.exchangeService.requestExchange(troca).subscribe(
       () => {
         this.toastr.success('Troca solicitada com sucesso!', 'Sucesso');
-        this.router.navigate(['/trocas']);  
+        this.router.navigate(['/trocas']);  // Redireciona para a página de trocas
       },
-      () => {
-        this.toastr.error('Erro ao solicitar troca.', 'Erro');
+      (error) => {
+        console.error('Erro ao solicitar troca:', error);
+        const errorMessage = error?.error?.message || 'Erro desconhecido';
+        this.toastr.error(errorMessage, 'Erro');
       }
     );
   }
