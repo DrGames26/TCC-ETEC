@@ -1,0 +1,17 @@
+<div class="container mt-5">
+    <h2>Escolha um livro para oferecer a troca</h2>
+  
+    <div class="row">
+      <div class="col-md-4" *ngFor="let livro of meusLivros">
+        <div class="card">
+          <img *ngIf="livro.picture" [src]="livro.picture" class="card-img-top" alt="Imagem do Livro">
+          <div class="card-body">
+            <h5 class="card-title">{{ livro.name }}</h5>
+            <p class="card-text"><strong>Autor:</strong> {{ livro.author }}</p>
+            <button class="btn btn-primary mt-3" [routerLink]="['/trocar-livro', livro.id]">Trocar Livro</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

@@ -1,0 +1,19 @@
+<h3>Trocas Pendentes</h3>
+<div *ngFor="let exchange of pendentes">
+  <!-- Exibir informações sobre trocas pendentes -->
+  <p>{{ exchange.requester }} solicitou a troca de {{ exchange.requestedBookId }} por {{ exchange.offeredBookId }}</p>
+  <button (click)="acceptExchange(exchange.id)">Aceitar</button>
+  <button (click)="rejectExchange(exchange.id)">Recusar</button>
+</div>
+
+<h3>Trocas Aceitas</h3>
+<div *ngFor="let exchange of aceitas">
+  <!-- Exibir informações sobre trocas aceitas -->
+  <p>{{ exchange.requester }} aceitou a troca de {{ exchange.requestedBookId }} por {{ exchange.offeredBookId }}</p>
+</div>
+
+<h3>Trocas Recusadas</h3>
+<div *ngFor="let exchange of recusadas">
+  <!-- Exibir informações sobre trocas recusadas -->
+  <p>{{ exchange.requester }} recusou a troca de {{ exchange.requestedBookId }} por {{ exchange.offeredBookId }}</p>
+</div>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';  // Importando o Router
 import { LivroService, Livro } from 'src/app/services/livro.service';
 
 @Component({
@@ -10,7 +10,11 @@ import { LivroService, Livro } from 'src/app/services/livro.service';
 export class LivroDetalhesComponent implements OnInit {
   livro: Livro | undefined;
 
-  constructor(private route: ActivatedRoute, private livroService: LivroService) {}
+  constructor(
+    private route: ActivatedRoute,
+    private livroService: LivroService,
+    private router: Router  // Injetando o Router
+  ) {}
 
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
@@ -22,5 +26,12 @@ export class LivroDetalhesComponent implements OnInit {
       (livro) => this.livro = livro,
       (error) => console.error('Erro ao carregar o livro:', error)
     );
+  }
+
+  // Navega para a página de troca de livro
+  trocarLivro(): void {
+    if (this.livro) {
+      this.router.navigate(['/trocar-livro', this.livro.id]);  // Passando o ID do livro para a página de troca
+    }
   }
 }

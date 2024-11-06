@@ -10,6 +10,8 @@ import { LoginComponent } from './login/login/login.component';
 import { PerfilComponent } from './components/perfil/perfil.component';
 import { EstanteComponent } from './components/estante/estante.component';
 import { CadastroComponent } from './components/cadastro/cadastro.component';
+import { TrocasPendentesComponent } from './components/trocas-pendentes/trocas-pendentes.component';
+import { TrocarLivroComponent } from './components/trocar-livro/trocar-livro.component';
 
 
 
@@ -23,6 +25,8 @@ const routes: Routes = [
   { path: 'equipe', component: EquipeComponent},
   { path: 'cadastro', component: CadastroComponent},
   { path: 'estante', component: EstanteComponent},
+  { path: 'trocas', component: TrocasPendentesComponent},
+  { path: 'trocar-livro/:livroId', component: TrocarLivroComponent },
   { path: 'login', component: LoginComponent},
   { path: 'perfil', component: PerfilComponent }
   

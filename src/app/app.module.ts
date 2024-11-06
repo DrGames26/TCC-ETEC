@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { ReactiveFormsModule } from '@angular/forms'; 
+import { ReactiveFormsModule } from '@angular/forms';
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/config/home.component';
 import { PerfilComponent } from './components/perfil/perfil.component';
@@ -18,6 +20,8 @@ import { ListaLivrosComponent } from './components/lista-livros/lista-livros.com
 import { FormLivroComponent } from './components/form-livro/form-livro.component';
 import { LivroDetalhesComponent } from './components/livro-detalhes/livro-detalhes.component';
 import { EstanteComponent } from './components/estante/estante.component';
+import { TrocasPendentesComponent } from './components/trocas-pendentes/trocas-pendentes.component';
+import { TrocarLivroComponent } from './components/trocar-livro/trocar-livro.component';
 
 @NgModule({
   declarations: [
@@ -32,13 +36,17 @@ import { EstanteComponent } from './components/estante/estante.component';
     ListaLivrosComponent,
     FormLivroComponent,
     LivroDetalhesComponent,
-    EstanteComponent
+    EstanteComponent,
+    TrocasPendentesComponent,
+    TrocarLivroComponent
   ],
   imports: [
     BrowserModule,
     ReactiveFormsModule,
     HttpClientModule,
     FormsModule,
+    ToastrModule.forRoot(),
+    BrowserAnimationsModule,
     AppRoutingModule  
   ],
   providers: [LivroService, CadastroUsuarioService],
