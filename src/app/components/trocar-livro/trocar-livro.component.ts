@@ -4,6 +4,7 @@ import { ExchangeService } from '../../services/exchange.service';  // Serviço 
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Livro } from '../../services/livro.service';  // Importando a interface Livro
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-trocar-livro',
@@ -18,13 +19,16 @@ export class TrocarLivroComponent implements OnInit {
     private livroService: LivroService,  
     private exchangeService: ExchangeService,  
     private toastr: ToastrService,  
-    private router: Router,  
+    private router: Router,
+    private authService: AuthService,  
     private route: ActivatedRoute  
   ) {}
 
   ngOnInit(): void {
-    // Obter os livros do usuário
-    this.livroService.getMyBooks().subscribe(
+
+   const usuarioPublicador = this.authService.getUser()?.email || '';
+
+    this.livroService.getBooksByUsuarioPublicador(usuarioPublicador).subscribe(
       (data: Livro[]) => { // Especificando o tipo de 'data' como Livro[]
         this.meusLivros = data;
       },
