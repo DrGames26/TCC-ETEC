@@ -14,9 +14,7 @@
           </div>
           <!-- Detalhes da troca -->
           <div class="col-md-9">
-            <p class="card-text">
-              Troca de <strong>{{ exchange.requestedBookId }}</strong> por <strong>{{ exchange.offeredBookId }}</strong>.
-            </p>
+            
             <button class="btn btn-success" (click)="acceptExchange(exchange.id)">Aceitar</button>
             <button class="btn btn-danger" (click)="rejectExchange(exchange.id)">Recusar</button>
           </div>
