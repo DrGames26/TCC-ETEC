@@ -63,7 +63,7 @@ export class TrocarLivroComponent implements OnInit {
     this.exchangeService.requestExchange(troca).subscribe(
       () => {
         this.toastr.success('Troca solicitada com sucesso!', 'Sucesso');
-        this.router.navigate(['/minha-conta']);  // Redireciona para a página da conta do usuário
+        this.router.navigate(['/trocas']);  // Redireciona para a página da conta do usuário
       },
       () => {
         this.toastr.error('Erro ao solicitar troca.', 'Erro');
