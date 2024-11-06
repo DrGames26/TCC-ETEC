@@ -9,7 +9,7 @@ import { tap } from 'rxjs/operators';
 })
 export class ExchangeService {
 
-  private apiUrl = 'https://sorobooks-backend.onrender.com/api/exchange';
+  private apiUrl = 'https://sorobooks-backend.onrender.com/api/exchange'; // URL base para a API
 
   constructor(private http: HttpClient, private toastr: ToastrService) {}
 
@@ -17,7 +17,9 @@ export class ExchangeService {
   requestExchange(requestData: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/request`, requestData).pipe(
       tap({
-        next: () => this.toastr.success('Solicitação de troca enviada!', 'Sucesso'),
+        next: () => {
+          this.toastr.success('Solicitação de troca enviada!', 'Sucesso');
+        },
         error: (error) => {
           console.error('Erro ao enviar solicitação de troca:', error);
           this.toastr.error('Erro ao enviar solicitação de troca.', 'Erro');
@@ -40,9 +42,11 @@ export class ExchangeService {
 
   // Aceitar solicitação de troca
   acceptExchange(id: number): Observable<any> {
-    return this.http.put(`${this.apiUrl}/${id}/status`, { status: 'ACCEPTED' }).pipe(
+    return this.http.put(`${this.apiUrl}/${id}/status`, { status: 'ACCEPTED' }).pipe(  // Enviando status como string
       tap({
-        next: () => this.toastr.success('Solicitação de troca aceita!', 'Sucesso'),
+        next: () => {
+          this.toastr.success('Solicitação de troca aceita!', 'Sucesso');
+        },
         error: (error) => {
           console.error('Erro ao aceitar solicitação de troca:', error);
           this.toastr.error('Erro ao aceitar solicitação.', 'Erro');
@@ -53,9 +57,11 @@ export class ExchangeService {
 
   // Recusar solicitação de troca
   rejectExchange(id: number): Observable<any> {
-    return this.http.put(`${this.apiUrl}/${id}/status`, { status: 'REJECTED' }).pipe(
+    return this.http.put(`${this.apiUrl}/${id}/status`, { status: 'REJECTED' }).pipe(  // Enviando status como string
       tap({
-        next: () => this.toastr.success('Solicitação de troca recusada!', 'Sucesso'),
+        next: () => {
+          this.toastr.success('Solicitação de troca recusada!', 'Sucesso');
+        },
         error: (error) => {
           console.error('Erro ao recusar solicitação de troca:', error);
           this.toastr.error('Erro ao recusar solicitação.', 'Erro');
