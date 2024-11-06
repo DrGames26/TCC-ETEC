@@ -22,9 +22,10 @@ export class TrocasPendentesComponent implements OnInit {
   }
 
   loadExchanges(): void {
+    // Carregar as trocas pendentes
     this.exchangeService.getPendingExchanges().subscribe(
       (data) => {
-        // Separar trocas por status
+        // Filtrando trocas conforme o status
         this.pendentes = data.filter(exchange => exchange.status === 'PENDING');
         this.aceitas = data.filter(exchange => exchange.status === 'ACCEPTED');
         this.recusadas = data.filter(exchange => exchange.status === 'REJECTED');
@@ -39,7 +40,7 @@ export class TrocasPendentesComponent implements OnInit {
     this.exchangeService.acceptExchange(id).subscribe(
       () => {
         this.toastr.success('Solicitação de troca aceita!', 'Sucesso');
-        this.loadExchanges(); // Recarregar a lista
+        this.loadExchanges(); // Recarregar as trocas após aceitação
       },
       () => {
         this.toastr.error('Erro ao aceitar solicitação.', 'Erro');
@@ -51,7 +52,7 @@ export class TrocasPendentesComponent implements OnInit {
     this.exchangeService.rejectExchange(id).subscribe(
       () => {
         this.toastr.success('Solicitação de troca recusada!', 'Sucesso');
-        this.loadExchanges(); // Recarregar a lista
+        this.loadExchanges(); // Recarregar as trocas após recusa
       },
       () => {
         this.toastr.error('Erro ao recusar solicitação.', 'Erro');
