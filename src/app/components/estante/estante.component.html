@@ -1,6 +1,6 @@
 <div class="livros-container position-relative">
     <div class="text-center bg-light p-4 rounded shadow-sm">
-        <h1>Meus livros</h1>
+      <h2 class="text-center mb-4" style="font-size: 2rem; color: #8d573a;">Meus Livros</h2>
       </div>
     <div *ngFor="let livro of livros" class="livro" (click)="navegarParaDetalhes(livro.id!)">
       <img *ngIf="livro.picture" [src]="livro.picture" alt="Imagem do Livro">
