@@ -41,19 +41,20 @@ export class ExchangeService {
   }
 
   // Aceitar solicitação de troca
-  acceptExchange(id: number): Observable<any> {
-    return this.http.put(`${this.apiUrl}/${id}/status`, { status: 'ACCEPTED' }).pipe(  // Enviando status como string
-      tap({
-        next: () => {
-          this.toastr.success('Solicitação de troca aceita!', 'Sucesso');
-        },
-        error: (error) => {
-          console.error('Erro ao aceitar solicitação de troca:', error);
-          this.toastr.error('Erro ao aceitar solicitação.', 'Erro');
-        }
-      })
-    );
-  }
+acceptExchange(id: number): Observable<any> {
+  return this.http.put(`${this.apiUrl}/${id}/status`, { status: 'ACCEPTED' }).pipe(
+    tap({
+      next: (response) => {
+        console.log('Resposta do servidor:', response); // Verifique a resposta
+        this.toastr.success('Solicitação de troca aceita!', 'Sucesso');
+      },
+      error: (error) => {
+        console.error('Erro ao aceitar solicitação de troca:', error);
+        this.toastr.error('Erro ao aceitar solicitação.', 'Erro');
+      }
+    })
+  );
+}
 
   // Recusar solicitação de troca
   rejectExchange(id: number): Observable<any> {
