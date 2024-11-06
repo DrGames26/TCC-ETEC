@@ -26,8 +26,7 @@ export class ExchangeService {
 
   // Aceitar solicitação de troca
   acceptExchange(id: number): Observable<any> {
-    return this.http.put(`${this.apiUrl}/accept/${id}`, {}).pipe(
-      // Usando RxJS para lidar com a resposta e exibir a notificação
+    return this.http.put(`${this.apiUrl}/${id}/status`, "ACEITAR").pipe(
       tap(() => {
         this.toastr.success('Solicitação de troca aceita!', 'Sucesso');
       }, () => {
