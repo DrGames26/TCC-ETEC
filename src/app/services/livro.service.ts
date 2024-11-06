@@ -37,6 +37,6 @@ export class LivroService {
 
   // Obtém os livros do usuário (Método que você precisa para a troca)
   getMyBooks(): Observable<Livro[]> {
-    return this.http.get<Livro[]>(`${this.apiUrl}/my-books`); // Altere essa URL conforme necessário
+    return this.http.get<Livro[]>(`${this.apiUrl}/books`); 
   }
 }
