@@ -36,7 +36,7 @@ export class LivroService {
   }
 
   // Obtém os livros do usuário (Método que você precisa para a troca)
-  getMyBooks(): Observable<Livro[]> {
-    return this.http.get<Livro[]>(`${this.apiUrl}/books`); 
+  getBooksByUsuarioPublicador(usuarioPublicador: string): Observable<Livro[]> {
+    return this.http.get<Livro[]>(`${this.apiUrl}/my-books?usuarioPublicador=${usuarioPublicador}`);
   }
 }
