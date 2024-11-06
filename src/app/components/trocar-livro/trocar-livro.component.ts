@@ -12,8 +12,8 @@ import { AuthService } from '../../services/auth.service';
   styleUrls: ['./trocar-livro.component.css']
 })
 export class TrocarLivroComponent implements OnInit {
-  livroDesejado: Livro | null = null;  // Inicializando com null
-  meusLivros: Livro[] = [];  // Lista de livros do usuário
+  livroDesejado: Livro | null = null;  // Livro desejado por outro usuário
+  meusLivros: Livro[] = [];  // Lista de livros do usuário logado
 
   constructor(
     private livroService: LivroService,  
@@ -25,25 +25,25 @@ export class TrocarLivroComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    const usuarioPublicador = this.authService.getUser()?.name || '';  // Usando o nome do usuário para buscar seus livros
 
-   const usuarioPublicador = this.authService.getUser()?.email || '';
-
+    // Obtendo os livros do usuário logado para trocar
     this.livroService.getBooksByUsuarioPublicador(usuarioPublicador).subscribe(
-      (data: Livro[]) => { // Especificando o tipo de 'data' como Livro[]
-        this.meusLivros = data;
+      (data: Livro[]) => {
+        this.meusLivros = data;  // Atribuindo a lista de livros do usuário
       },
-      (error: any) => { // Especificando o tipo de 'error' como 'any'
+      (error: any) => {
         this.toastr.error('Erro ao carregar seus livros.', 'Erro');
       }
     );
     
-    // Obter o livro selecionado a partir da URL
+    // Obter o livro desejado a partir da URL
     this.route.paramMap.subscribe(params => {
       const livroId = params.get('livroId');
       if (livroId) {
         this.livroService.getLivroPorId(Number(livroId)).subscribe(
-          (livro: Livro) => { // Obtendo os detalhes completos do livro
-            this.livroDesejado = livro;
+          (livro: Livro) => {
+            this.livroDesejado = livro;  // Atribuindo o livro desejado para troca
           },
           () => {
             this.toastr.error('Erro ao carregar os detalhes do livro.', 'Erro');
@@ -53,16 +53,17 @@ export class TrocarLivroComponent implements OnInit {
     });
   }
 
-  offerExchange(livroId: string): void {
+  // Função para solicitar troca
+  offerExchange(livroId: number): void {
     const troca = {
       bookOfferedId: livroId,
-      bookRequestedId: this.livroDesejado?.id,  // Utilizando a verificação de null
+      bookRequestedId: this.livroDesejado?.id,  // Utilizando o livro desejado
     };
 
     this.exchangeService.requestExchange(troca).subscribe(
       () => {
         this.toastr.success('Troca solicitada com sucesso!', 'Sucesso');
-        this.router.navigate(['/minha-conta']); // Redirecionar para a página da conta do usuário
+        this.router.navigate(['/minha-conta']);  // Redireciona para a página da conta do usuário
       },
       () => {
         this.toastr.error('Erro ao solicitar troca.', 'Erro');
