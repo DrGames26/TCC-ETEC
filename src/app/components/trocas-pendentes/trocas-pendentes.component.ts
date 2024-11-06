@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ExchangeService } from '../../services/exchange.service';
-import { ToastrService } from 'ngx-toastr'; 
+import { ExchangeService } from '../../services/exchange.service'; // Importe o serviço que irá buscar os dados
+import { ToastrService } from 'ngx-toastr'; // Importe o Toastr para exibir mensagens
 
 @Component({
-  selector: 'app-trocas-pendentes',  
+  selector: 'app-trocas-pendentes',
   templateUrl: './trocas-pendentes.component.html',  
-  styleUrls: ['./trocas-pendentes.component.css']  
+  styleUrls: ['./trocas-pendentes.component.css']
 })
 export class TrocasPendentesComponent implements OnInit {
   pendentes: any[] = [];
@@ -13,19 +13,19 @@ export class TrocasPendentesComponent implements OnInit {
   recusadas: any[] = [];
 
   constructor(
-    private exchangeService: ExchangeService,
-    private toastr: ToastrService  
+    private exchangeService: ExchangeService, // Serviço que interage com o backend
+    private toastr: ToastrService  // Para exibir notificações
   ) {}
 
   ngOnInit(): void {
-    this.loadExchanges();
+    this.loadExchanges(); // Chama o método que carrega as trocas
   }
 
   loadExchanges(): void {
-    // Carregar as trocas pendentes
+    // Chama o serviço para buscar as trocas pendentes do backend
     this.exchangeService.getPendingExchanges().subscribe(
       (data) => {
-        // Filtrando trocas conforme o status
+        // Filtra as trocas de acordo com o status (PENDING, ACCEPTED, REJECTED)
         this.pendentes = data.filter(exchange => exchange.status === 'PENDING');
         this.aceitas = data.filter(exchange => exchange.status === 'ACCEPTED');
         this.recusadas = data.filter(exchange => exchange.status === 'REJECTED');
@@ -40,7 +40,7 @@ export class TrocasPendentesComponent implements OnInit {
     this.exchangeService.acceptExchange(id).subscribe(
       () => {
         this.toastr.success('Solicitação de troca aceita!', 'Sucesso');
-        this.loadExchanges(); // Recarregar as trocas após aceitação
+        this.loadExchanges(); // Recarrega as trocas após aceitar
       },
       () => {
         this.toastr.error('Erro ao aceitar solicitação.', 'Erro');
@@ -52,7 +52,7 @@ export class TrocasPendentesComponent implements OnInit {
     this.exchangeService.rejectExchange(id).subscribe(
       () => {
         this.toastr.success('Solicitação de troca recusada!', 'Sucesso');
-        this.loadExchanges(); // Recarregar as trocas após recusa
+        this.loadExchanges(); // Recarrega as trocas após recusar
       },
       () => {
         this.toastr.error('Erro ao recusar solicitação.', 'Erro');
