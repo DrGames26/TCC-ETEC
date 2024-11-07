@@ -67,6 +67,14 @@ export class TrocarLivroComponent implements OnInit {
     };
 
     this.exchangeService.requestExchange(troca).subscribe(
+      (response) => {
+        // Se a resposta indicar sucesso, não exiba erro
+        if (response && response.success) {
+          this.toastr.success('Troca solicitada com sucesso!', 'Sucesso');
+        } else {
+          this.toastr.error('Erro desconhecido', 'Erro');
+        }
+      },
       (error) => {
         console.error('Erro ao solicitar troca:', error);
         const errorMessage = error?.error?.message || 'Erro desconhecido';
