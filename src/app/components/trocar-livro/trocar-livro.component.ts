@@ -32,7 +32,7 @@ export class TrocarLivroComponent implements OnInit {
         this.meusLivros = data;
       },
       () => {
-        this.toastr.error('Erro ao carregar seus livros.', 'Erro');
+        // Não exibir erro aqui
       }
     );
       
@@ -44,7 +44,7 @@ export class TrocarLivroComponent implements OnInit {
             this.livroDesejado = livro;
           },
           () => {
-            this.toastr.error('Erro ao carregar os detalhes do livro.', 'Erro');
+            // Não exibir erro aqui
           }
         );
       }
@@ -53,7 +53,6 @@ export class TrocarLivroComponent implements OnInit {
 
   offerExchange(livroId: number): void {
     if (!this.livroDesejado) {
-      this.toastr.error('Por favor, selecione um livro desejado para troca.', 'Erro');
       return;
     }
 
@@ -75,14 +74,10 @@ export class TrocarLivroComponent implements OnInit {
       (response) => {
         if (response && response.success) {
           this.toastr.success('Troca solicitada com sucesso!', 'Sucesso');
-        } else {
-          this.toastr.error('Erro desconhecido', 'Erro');
         }
       },
-      (error) => {
-        console.error('Erro ao solicitar troca:', error);
-        const errorMessage = error?.error?.message || 'Erro desconhecido';
-        this.toastr.error(errorMessage, 'Erro');
+      () => {
+        // Não exibir erro aqui
       }
     );
   }
