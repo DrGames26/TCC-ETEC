@@ -35,4 +35,28 @@ export class TrocasPendentesComponent implements OnInit {
       }
     );
   }
+
+  acceptExchange(id: number): void {
+    this.exchangeService.acceptExchange(id).subscribe(
+      () => {
+        this.toastr.success('Solicitação de troca aceita!', 'Sucesso');
+        this.loadExchanges(); // Recarrega as trocas após aceitar
+      },
+      () => {
+        this.toastr.error('Erro ao aceitar solicitação.', 'Erro');
+      }
+    );
+  }
+
+  rejectExchange(id: number): void {
+    this.exchangeService.rejectExchange(id).subscribe(
+      () => {
+        this.toastr.success('Solicitação de troca recusada!', 'Sucesso');
+        this.loadExchanges(); // Recarrega as trocas após recusar
+      },
+      () => {
+        this.toastr.error('Erro ao recusar solicitação.', 'Erro');
+      }
+    );
+  }
 }
