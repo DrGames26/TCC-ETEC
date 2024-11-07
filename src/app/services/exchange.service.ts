@@ -15,12 +15,11 @@ export class ExchangeService {
 
   requestExchange(requestData: any): Observable<any> {
     const formattedRequestData = {
-      requestedBookId: requestData.requestedBookId,
-      offeredBookId: requestData.offeredBookId,
-      requester: requestData.requester,
+      requestedBook: requestData.requestedBook,
+      offeredBook: requestData.offeredBook,
+      requester: requestData.requester
     };
     
-    console.log('Dados formatados para troca:', formattedRequestData);
 
     return this.http.post(`${this.apiUrl}/request`, formattedRequestData).pipe(
       tap({
