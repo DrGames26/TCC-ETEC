@@ -15,9 +15,9 @@ export class ExchangeService {
 
   requestExchange(requestData: any): Observable<any> {
     const formattedRequestData = {
-      requestedBook: requestData.requestedBook,
-      offeredBook: requestData.offeredBook,
-      requester: requestData.requester
+      requestedBookId: requestData.requestedBookId,
+      offeredBookId: requestData.offeredBookId,
+      requester: requestData.requester,
     };
     
     console.log('Dados formatados para troca:', formattedRequestData);
