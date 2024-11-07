@@ -8,7 +8,12 @@
         <div class="card-body">
           <h5 class="card-title">{{ livro.name }}</h5>
           <p class="card-text">{{ livro.author }}</p>
-          <button class="btn btn-primary" (click)="offerExchange(livro.id)">Oferecer para Troca</button>
+          <button 
+          *ngIf="livroDesejado" 
+          class="btn btn-primary" 
+          (click)="offerExchange(livroDesejado.id)">
+          Oferecer para Troca
+        </button>
         </div>
       </div>
     </div>
