@@ -17,6 +17,7 @@ export class ExchangeService {
   requestExchange(requestData: any): Observable<any> {
     const formattedRequestData = {
       requestedBook: requestData.requestedBook ? {
+        id: requestData.requestedBook.id,
         name: requestData.requestedBook.name || 'Título não disponível',
         author: requestData.requestedBook.author || 'Autor não disponível',
         description: requestData.requestedBook.description || 'Descrição não disponível',
@@ -26,6 +27,7 @@ export class ExchangeService {
       } : {},
       
       offeredBook: requestData.offeredBook ? {
+        id: requestData.offeredBook.id,
         name: requestData.offeredBook.name || 'Título não disponível',
         author: requestData.offeredBook.author || 'Autor não disponível',
         description: requestData.offeredBook.description || 'Descrição não disponível',
@@ -65,20 +67,20 @@ export class ExchangeService {
   }
 
   // Aceitar solicitação de troca
-acceptExchange(id: number): Observable<any> {
-  return this.http.put(`${this.apiUrl}/${id}/status`, { status: 'ACCEPTED' }).pipe(
-    tap({
-      next: (response) => {
-        console.log('Resposta do servidor:', response); // Verifique a resposta
-        this.toastr.success('Solicitação de troca aceita!', 'Sucesso');
-      },
-      error: (error) => {
-        console.error('Erro ao aceitar solicitação de troca:', error);
-        this.toastr.error('Erro ao aceitar solicitação.', 'Erro');
-      }
-    })
-  );
-}
+  acceptExchange(id: number): Observable<any> {
+    return this.http.put(`${this.apiUrl}/${id}/status`, { status: 'ACCEPTED' }).pipe(
+      tap({
+        next: (response) => {
+          this.toastr.success('Solicitação de troca aceita!', 'Sucesso');
+        },
+        error: (error) => {
+          console.error('Erro ao aceitar solicitação de troca:', error);
+          this.toastr.error('Erro ao aceitar solicitação.', 'Erro');
+        }
+      })
+    );
+  }
+  
 
   // Recusar solicitação de troca
   rejectExchange(id: number): Observable<any> {
