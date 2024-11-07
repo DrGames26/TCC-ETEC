@@ -16,7 +16,7 @@ export class ExchangeService {
   // Criar solicitação de troca
   requestExchange(requestData: any): Observable<any> {
     const formattedRequestData = {
-      requestedBook: {
+      requestedBook: requestData.requestedBook ? {
         id: requestData.requestedBook.id,
         name: requestData.requestedBook.name || 'Título não disponível',
         author: requestData.requestedBook.author || 'Autor não disponível',
@@ -24,8 +24,9 @@ export class ExchangeService {
         genre: requestData.requestedBook.genre || 'Gênero não disponível',
         picture: requestData.requestedBook.picture || 'Imagem não disponível',
         usuarioPublicador: requestData.requestedBook.usuarioPublicador || 'Usuário não disponível'
-      },
-      offeredBook: {
+      } : {},
+      
+      offeredBook: requestData.offeredBook ? {
         id: requestData.offeredBook.id,
         name: requestData.offeredBook.name || 'Título não disponível',
         author: requestData.offeredBook.author || 'Autor não disponível',
@@ -33,9 +34,11 @@ export class ExchangeService {
         genre: requestData.offeredBook.genre || 'Gênero não disponível',
         picture: requestData.offeredBook.picture || 'Imagem não disponível',
         usuarioPublicador: requestData.offeredBook.usuarioPublicador || 'Usuário não disponível'
-      },
+      } : {},
+      
       requester: requestData.requester
     };
+    
     
   
     return this.http.post(`${this.apiUrl}/request`, formattedRequestData).pipe(

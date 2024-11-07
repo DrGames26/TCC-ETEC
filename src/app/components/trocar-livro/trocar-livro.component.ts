@@ -37,7 +37,7 @@ export class TrocarLivroComponent implements OnInit {
         this.toastr.error('Erro ao carregar seus livros.', 'Erro');
       }
     );
-    
+      
     // Obter o livro desejado a partir da URL
     this.route.paramMap.subscribe(params => {
       const livroId = params.get('livroId');
