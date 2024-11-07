@@ -15,7 +15,13 @@ export class ExchangeService {
 
   // Criar solicitação de troca
   requestExchange(requestData: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/request`, requestData).pipe(
+    const formattedRequestData = {
+      requestedBookId: requestData.requestedBookId, 
+      offeredBookId: requestData.offeredBookId,
+      requester: requestData.requester 
+    };
+  
+    return this.http.post(`${this.apiUrl}/request`, formattedRequestData).pipe(
       tap({
         next: () => {
           this.toastr.success('Solicitação de troca enviada!', 'Sucesso');
