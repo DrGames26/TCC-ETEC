@@ -10,7 +10,8 @@
         <div class="row">
           <!-- Imagem do livro solicitado -->
           <div class="col-md-3">
-            <img *ngIf="exchange.requestedBook.picture" [src]="exchange.requestedBook.picture" class="img-fluid" alt="Imagem do Livro Solicitado">
+            <img *ngIf="exchange.requestedBook?.picture" [src]="exchange.requestedBook?.picture" class="img-fluid" alt="Imagem do Livro Solicitado">
+
           </div>
           <!-- Detalhes da troca -->
           <div class="col-md-9">
