@@ -9,38 +9,17 @@ import { tap } from 'rxjs/operators';
 })
 export class ExchangeService {
 
-  private apiUrl = 'https://sorobooks-backend.onrender.com/api/exchange'; // URL base para a API
+  private apiUrl = 'https://sorobooks-backend.onrender.com/api/exchange'; 
 
   constructor(private http: HttpClient, private toastr: ToastrService) {}
 
-  // Criar solicitação de troca
   requestExchange(requestData: any): Observable<any> {
     const formattedRequestData = {
-      requestedBook: requestData.requestedBook ? {
-        id: requestData.requestedBook.id,
-        name: requestData.requestedBook.name || 'Título não disponível',
-        author: requestData.requestedBook.author || 'Autor não disponível',
-        description: requestData.requestedBook.description || 'Descrição não disponível',
-        genre: requestData.requestedBook.genre || 'Gênero não disponível',
-        picture: requestData.requestedBook.picture || 'Imagem não disponível',
-        usuarioPublicador: requestData.requestedBook.usuarioPublicador || 'Usuário não disponível'
-      } : {},
-      
-      offeredBook: requestData.offeredBook ? {
-        id: requestData.offeredBook.id,
-        name: requestData.offeredBook.name || 'Título não disponível',
-        author: requestData.offeredBook.author || 'Autor não disponível',
-        description: requestData.offeredBook.description || 'Descrição não disponível',
-        genre: requestData.offeredBook.genre || 'Gênero não disponível',
-        picture: requestData.offeredBook.picture || 'Imagem não disponível',
-        usuarioPublicador: requestData.offeredBook.usuarioPublicador || 'Usuário não disponível'
-      } : {},
-      
+      requestedBook: requestData.requestedBook,
+      offeredBook: requestData.offeredBook,
       requester: requestData.requester
     };
     
-    
-  
     return this.http.post(`${this.apiUrl}/request`, formattedRequestData).pipe(
       tap({
         next: () => {
