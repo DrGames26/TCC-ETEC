@@ -23,7 +23,7 @@ export class ExchangeService {
     return this.http.post(`${this.apiUrl}/request`, formattedRequestData).pipe(
       tap({
         next: () => {
-          this.toastr.success('Solicitação de troca enviada!', 'Sucesso');
+         
         },
         error: (error) => {
           console.error('Erro ao enviar solicitação de troca:', error);
