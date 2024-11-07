@@ -66,6 +66,9 @@ export class TrocarLivroComponent implements OnInit {
       requester: this.authService.getUser()?.email || ''  // Alterando para pegar o e-mail do solicitante
     };
 
+    // Verificando o valor de requester
+    console.log('Requester:', troca.requester);  // Verifique o e-mail do solicitante
+
     this.exchangeService.requestExchange(troca).subscribe(
       (response) => {
         // Se a resposta indicar sucesso, não exiba erro
