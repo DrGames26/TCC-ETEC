@@ -20,6 +20,8 @@ export class ExchangeService {
       requester: requestData.requester
     };
     
+    console.log('Dados formatados para troca:', formattedRequestData);
+
     return this.http.post(`${this.apiUrl}/request`, formattedRequestData).pipe(
       tap({
         next: () => {
