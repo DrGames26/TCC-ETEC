@@ -63,7 +63,7 @@ export class TrocarLivroComponent implements OnInit {
     const troca = {
       offeredBookId: livroId,  // Livro oferecido
       requestedBookId: this.livroDesejado.id,  // Livro desejado
-      requester: this.authService.getUser()?.name || ''  // Nome do solicitante
+      requester: this.authService.getUser()?.email || ''  // Alterando para pegar o e-mail do solicitante
     };
 
     this.exchangeService.requestExchange(troca).subscribe(
