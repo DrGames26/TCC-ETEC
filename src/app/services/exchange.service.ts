@@ -17,7 +17,6 @@ export class ExchangeService {
   requestExchange(requestData: any): Observable<any> {
     const formattedRequestData = {
       requestedBook: requestData.requestedBook ? {
-        id: requestData.requestedBook.id,
         name: requestData.requestedBook.name || 'Título não disponível',
         author: requestData.requestedBook.author || 'Autor não disponível',
         description: requestData.requestedBook.description || 'Descrição não disponível',
@@ -27,7 +26,6 @@ export class ExchangeService {
       } : {},
       
       offeredBook: requestData.offeredBook ? {
-        id: requestData.offeredBook.id,
         name: requestData.offeredBook.name || 'Título não disponível',
         author: requestData.offeredBook.author || 'Autor não disponível',
         description: requestData.offeredBook.description || 'Descrição não disponível',
