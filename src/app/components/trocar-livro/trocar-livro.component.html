@@ -7,26 +7,9 @@
         <img *ngIf="livro.picture" [src]="livro.picture" class="card-img-top" alt="Imagem do Livro">
         <div class="card-body">
           <h5 class="card-title">{{ livro.name }}</h5>
-          <p class="card-text">{{ livro.author }}</p>
-          <button 
-          *ngIf="livroDesejado" 
-          class="btn btn-primary" 
-          (click)="offerExchange(livroDesejado.id)">
-          Oferecer para Troca
-        </button>
+          <p class="card-text"><strong>Autor:</strong> {{ livro.author }}</p>
+          <button *ngIf="livro.id" class="btn btn-primary" (click)="offerExchange(livro.id)">Oferecer para Troca</button>
         </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Se um livro desejado foi selecionado -->
-  <div *ngIf="livroDesejado" class="mt-5">
-    <h3>Você está oferecendo para trocar o livro:</h3>
-    <div class="card">
-      <img *ngIf="livroDesejado.picture" [src]="livroDesejado.picture" class="card-img-top" alt="Imagem do Livro Desejado">
-      <div class="card-body">
-        <h5 class="card-title">{{ livroDesejado.name }}</h5>
-        <p class="card-text">{{ livroDesejado.author }}</p>
       </div>
     </div>
   </div>
