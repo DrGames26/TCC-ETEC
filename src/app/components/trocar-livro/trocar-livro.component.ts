@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { LivroService } from '../../services/livro.service';  // Serviço para listar os livros do usuário
-import { ExchangeService } from '../../services/exchange.service';  // Serviço de trocas
+import { LivroService } from '../../services/livro.service';  
+import { ExchangeService } from '../../services/exchange.service';
+import { AuthService } from '../../services/auth.service';  
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { Livro } from '../../services/livro.service';  // Importando a interface Livro
-import { AuthService } from '../../services/auth.service';
+import { Livro } from '../../services/livro.service';  
+
 
 @Component({
   selector: 'app-trocar-livro',
