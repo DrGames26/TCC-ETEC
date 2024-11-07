@@ -27,30 +27,27 @@ export class TrocarLivroComponent implements OnInit {
   ngOnInit(): void {
     const usuarioPublicador = this.authService.getUser()?.name || '';  
 
+    // Carregar os livros do usuário autenticado
     this.livroService.getBooksByUsuarioPublicador(usuarioPublicador).subscribe(
       (data: Livro[]) => {
         this.meusLivros = data;
-      },
-      () => {
-        // Não exibir erro aqui
       }
     );
       
+    // Carregar detalhes do livro desejado
     this.route.paramMap.subscribe(params => {
       const livroId = params.get('livroId');
       if (livroId) {
         this.livroService.getLivroPorId(Number(livroId)).subscribe(
           (livro: Livro) => {
             this.livroDesejado = livro;
-          },
-          () => {
-            // Não exibir erro aqui
           }
         );
       }
     });
   }
 
+  // Função para oferecer a troca
   offerExchange(livroId: number): void {
     if (!this.livroDesejado) {
       return;
@@ -59,25 +56,23 @@ export class TrocarLivroComponent implements OnInit {
     const troca = {
       offeredBook: {
         id: livroId,
-        // Adicione aqui outros detalhes do livro oferecido, se necessário
       },
       requestedBook: {
         id: this.livroDesejado.id,
-        // Adicione aqui outros detalhes do livro desejado, se necessário
       },
       requester: this.authService.getUser()?.email || ''
     };
 
     console.log('Requester:', troca.requester);
 
+    // Solicitar a troca
     this.exchangeService.requestExchange(troca).subscribe(
       (response) => {
         if (response && response.success) {
           this.toastr.success('Troca solicitada com sucesso!', 'Sucesso');
+          // Redirecionar para a página de trocas
+          this.router.navigate(['/trocas']);
         }
-      },
-      () => {
-        // Não exibir erro aqui
       }
     );
   }
