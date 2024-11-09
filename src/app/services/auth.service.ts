@@ -13,7 +13,7 @@ export class AuthService {
     'gabrielacciari7@gmail.com',
     'gacarneirk@gmail.com',
     'hellenmascarettidasilva11@gmail.com',
-    'isabella.prado1610@gmail.com'
+    'isabella.esteves1610@gmail.com'
   ];
   
   private apiUrl = 'https://sorobooks-backend.onrender.com/api'; // URL base da API
