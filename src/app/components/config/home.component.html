@@ -8,15 +8,13 @@
   <!-- Livros adicionados recentemente -->
   <section class="mt-5">
     <h2 class="text-center mb-4" style="font-size: 2rem; color: #8d573a;">Livros adicionados recentemente</h2>
-    <ul class="list-group">
-      <div class="livros-container position-relative">
-        <div *ngFor="let livro of livros | slice:0:5" class="livro" (click)="navegarParaDetalhes(livro.id!)">
-          <img *ngIf="livro.picture" [src]="livro.picture" alt="Imagem do Livro">
-          <h3>{{ livro.name }}</h3>
-          <p>Autor: {{ livro.author }}</p>
-          <p>Publicado por: {{ livro.usuarioPublicador }}</p>
-        </div>
+    <div class="livros-container">
+      <div *ngFor="let livro of livros | slice:0:5" class="livro" (click)="navegarParaDetalhes(livro.id)">
+        <img *ngIf="livro.picture" [src]="livro.picture" alt="Imagem do Livro">
+        <h3>{{ livro.name }}</h3>
+        <p>Autor: {{ livro.author }}</p>
+        <p>Publicado por: {{ livro.usuarioPublicador }}</p>
       </div>
-    </ul>
+    </div>
   </section>
 </div>

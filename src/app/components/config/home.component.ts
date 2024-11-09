@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { LivroService } from '../../services/livro.service'; 
+import { LivroService } from '../../services/livro.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -15,8 +15,9 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.livroService.getLivros().subscribe((data: any) => {
-      this.livros = data;
-      console.log(this.livros);
+      // Ordena os livros por ID do maior para o menor (mais recentes aparecem primeiro)
+      this.livros = data.sort((a: any, b: any) => (b.id || 0) - (a.id || 0));
+      console.log(this.livros);  // Para verificar os livros carregados
     });
   }
 
