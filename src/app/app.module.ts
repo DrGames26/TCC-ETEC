@@ -22,6 +22,7 @@ import { LivroDetalhesComponent } from './components/livro-detalhes/livro-detalh
 import { EstanteComponent } from './components/estante/estante.component';
 import { TrocasPendentesComponent } from './components/trocas-pendentes/trocas-pendentes.component';
 import { TrocarLivroComponent } from './components/trocar-livro/trocar-livro.component';
+import { AdmComponent } from './components/adm/adm.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { TrocarLivroComponent } from './components/trocar-livro/trocar-livro.com
     LivroDetalhesComponent,
     EstanteComponent,
     TrocasPendentesComponent,
-    TrocarLivroComponent
+    TrocarLivroComponent,
+    AdmComponent
   ],
   imports: [
     BrowserModule,

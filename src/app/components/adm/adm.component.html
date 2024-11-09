@@ -1,0 +1,62 @@
+<div class="container mt-4">
+    <h2>Painel de Administração</h2>
+  
+    <!-- Gerenciamento de Contas -->
+    <section class="admin-section">
+      <h3>Gerenciar Contas</h3>
+      <div *ngIf="users.length > 0; else noUsers">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>Email</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of users">
+              <td>{{ user.name }}</td>
+              <td>{{ user.email }}</td>
+              <td>
+                <button class="btn btn-warning btn-sm" (click)="editUser(user)">Editar</button>
+                <button class="btn btn-danger btn-sm" (click)="deleteUser(user.id)">Excluir</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <ng-template #noUsers>
+        <p>Nenhuma conta encontrada.</p>
+      </ng-template>
+    </section>
+  
+    <!-- Gerenciamento de Livros -->
+    <section class="admin-section mt-5">
+      <h3>Gerenciar Livros</h3>
+      <div *ngIf="books.length > 0; else noBooks">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Título</th>
+              <th>Descrição</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let book of books">
+              <td>{{ book.title }}</td>
+              <td>{{ book.description }}</td>
+              <td>
+                <button class="btn btn-warning btn-sm" (click)="editBook(book)">Editar</button>
+                <button class="btn btn-danger btn-sm" (click)="deleteBook(book.id)">Excluir</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <ng-template #noBooks>
+        <p>Nenhum livro encontrado.</p>
+      </ng-template>
+    </section>
+  </div>
+  
