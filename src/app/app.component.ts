@@ -35,4 +35,9 @@ export class AppComponent {
   get isAuthenticated() {
     return this.authService.isLoggedIn();
   }
+
+  // Verifica se o usuário autenticado possui um e-mail autorizado
+  get isAuthorizedUser() {
+    return this.authService.isAuthorized();
+  }
 }

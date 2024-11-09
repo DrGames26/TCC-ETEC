@@ -7,6 +7,15 @@ import { map, catchError } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class AuthService {
+  // Lista de e-mails autorizados para acessar abas restritas
+  authorizedEmails: string[] = [
+    'felipechiav@gmail.com',
+    'gabrielacciari7@gmail.com',
+    'gacarneirk@gmail.com',
+    'hellenmascarettidasilva11@gmail.com',
+    'isabella.prado1610@gmail.com'
+  ];
+  
   private apiUrl = 'https://sorobooks-backend.onrender.com/api'; // URL base da API
   private userSubject = new BehaviorSubject<any>(null); // Armazena o usuário autenticado
   public user$ = this.userSubject.asObservable(); // Observable para acessar o usuário
@@ -37,7 +46,6 @@ export class AuthService {
   login(credentials: { email: string; password: string }): Observable<any> {
     return this.http.post(`${this.apiUrl}/login`, credentials).pipe(
       map((response: any) => {
-        
         const user = {
           name: response.name,
           email: response.email,
@@ -61,14 +69,20 @@ export class AuthService {
     return this.userSubject.value;
   }
 
+  // Verifica se o usuário está autenticado
+  isLoggedIn(): boolean {
+    return !!this.userSubject.value;
+  }
+
   // Função de logout para remover dados de autenticação
   logout() {
     this.userSubject.next(null); // Limpa o BehaviorSubject
     localStorage.removeItem('user'); // Remove o usuário do localStorage
   }
 
-  // Verifica se o usuário está autenticado
-  isLoggedIn(): boolean {
-    return !!this.userSubject.value;
+  // Verifica se o usuário autenticado está na lista de e-mails autorizados
+  isAuthorized(): boolean {
+    const user = this.getUser();
+    return user ? this.authorizedEmails.includes(user.email) : false;
   }
 }

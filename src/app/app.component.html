@@ -37,6 +37,7 @@
           <li class="nav-item dropdown" *ngIf="isAuthenticated">
             <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">PERFIL</a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" *ngIf="authService.isAuthorized()" routerLink="/adm">CONFIGURAÇÕES</a>
               <a class="dropdown-item" routerLink="/perfil">PERFIL</a>
               <a class="dropdown-item" routerLink="/estante">MINHA ESTANTE</a>
               <a class="dropdown-item" routerLink="/trocas">NOTIFICAÇÕES DE TROCA</a>
