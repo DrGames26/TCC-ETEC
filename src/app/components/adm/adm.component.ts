@@ -43,8 +43,11 @@ export class AdmComponent implements OnInit {
     console.log('Editar usuário', user);
   }
 
-  deleteUser(userId: number) {
-    console.log('Excluir usuário', userId);
+  deleteUser(userEmail: string): void {
+    // Chame o serviço de exclusão de usuários e passe o email ou outro identificador
+    this.cadastroUsuarioService.deleteUserByEmail(userEmail).subscribe(response => {
+      // Lógica após a exclusão
+    });
   }
 
   // Editar e excluir livro

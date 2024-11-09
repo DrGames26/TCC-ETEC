@@ -21,4 +21,7 @@ export class CadastroUsuarioService {
   listarUsuarios(): Observable<User[]> {
     return this.http.get<User[]>(`${this.apiUrl}/users`);
   }
+  deleteUserByEmail(email: string): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/users/${email}`);
+  }
 }
