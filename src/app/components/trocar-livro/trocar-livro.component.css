@@ -10,16 +10,11 @@
   border-color: #a06a4e;
 }
 
-.card {
-  width: 100%; /* Ajusta para ocupar 100% da coluna */
-  max-width: 400px; /* Limite máximo de largura */
-  height: auto; /* Deixa a altura flexível */
-  overflow: hidden;
+.card-body img {
+  width: 100%;          /* Ocupa toda a largura do card */
+  height: auto;         /* Mantém a proporção da imagem */
+  max-height: 200px;    /* Define uma altura máxima para limitar o tamanho */
+  object-fit: cover;    /* Garante que a imagem se ajuste ao espaço sem distorção */
+  border-radius: 8px;   /* Bordas arredondadas para um estilo mais suave */
 }
 
-.card-img-top {
-  width: 100%; /* A largura da imagem ocupa 100% da largura do card */
-  height: 300px; /* Altura fixa para todas as imagens */
-  object-fit: contain; /* A imagem será ajustada para caber no espaço definido, sem cortes */
-  background-color: #f8f9fa; 
-}

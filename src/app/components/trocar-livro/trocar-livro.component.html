@@ -5,7 +5,7 @@
     <div class="col mb-4" *ngFor="let livro of meusLivros">   
         
         <div class="card-body">
-          <img *ngIf="livro.picture" [src]="livro.picture" class="card-img-top" alt="Imagem do Livro">
+          <img *ngIf="livro.picture" [src]="livro.picture" alt="Imagem do Livro">
           <h5 class="card-title">{{ livro.name }}</h5>
           <p class="card-text"><strong>Autor:</strong> {{ livro.author }}</p>
           <button *ngIf="livro.id" class="btn btn-custom" (click)="offerExchange(livro.id)">Oferecer para Troca</button>
