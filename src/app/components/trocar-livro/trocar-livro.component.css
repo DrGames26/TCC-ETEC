@@ -9,3 +9,9 @@
     background-color: #a06a4e;
     border-color: #a06a4e;
   }
+
+  .card-img-top {
+    width: 100%;
+    height: 680px; /* Definindo a altura fixa */
+    object-fit: contain; /* Mantem Proporção */
+  }
