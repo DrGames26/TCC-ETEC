@@ -10,6 +10,12 @@
   border-color: #a06a4e;
 }
 
+.card-body {
+  max-width: 400px; /* Limite máximo de largura */
+  height: auto; /* Deixa a altura flexível */
+  overflow: hidden;
+}
+
 .card-body img {
   width: 100%;         
   height: auto;        
@@ -26,4 +32,7 @@
   background-color: #ffffff; 
   padding: 5px 0;             
 }
+
+
+
 
