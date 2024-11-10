@@ -1,36 +1,26 @@
-.btn-custom {
-    background-color: #8d573a;
-    border-color: #8d573a;
-    color: #ffffff;
-    font-weight: 600;
-  }
-  
-  .btn-custom:hover {
-    background-color: #a06a4e;
-    border-color: #a06a4e;
-  }
+.card {
+  width: 100%;
+  max-width: 18rem; /* Ajuste o tamanho máximo para os cards */
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
 
-  .card {
-    width: 100%; /* Define uma largura total dentro da coluna */
-    max-width: 18rem; /* Ajuste para o tamanho máximo desejado */
-    height: 100%; /* Faz o card ocupar toda a altura */
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .card-img-top {
-    height: 200px; /* Altura fixa para a imagem */
-    object-fit: cover; /* Ajuste para manter a proporção da imagem */
-  }
-  
-  .card-body {
-    flex-grow: 1; /* Expande o corpo para ocupar o espaço */
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between; /* Distribui o conteúdo */
-  }
+.card-img-top {
+  width: 100%;
+  height: 200px; /* Altura fixa para manter a proporção */
+  object-fit: contain; /* Exibe a imagem inteira sem cortar */
+  padding: 10px; /* Adiciona um pequeno espaçamento interno */
+  background-color: #f8f9fa; /* Cor de fundo para caso a imagem não preencha totalmente */
+}
 
-  .row {
-    align-items: stretch; /* Faz os cards ocuparem a mesma altura */
-  }
-  
+.card-body {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.row {
+  align-items: stretch; /* Garante que todos os cards fiquem com a mesma altura */
+}
