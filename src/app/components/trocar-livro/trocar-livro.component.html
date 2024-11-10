@@ -4,7 +4,7 @@
     <div class="col-12 text-center">
       <h2>Escolha um livro para trocar</h2>
       <div class="card">
-        <img *ngIf="livroDesejado.picture" [src]="livroDesejado.picture" class="card-img-top" alt="Imagem do livro">
+        <img *ngIf="livroDesejado" [src]="livroDesejado.picture" class="card-img-top" alt="Imagem do livro">
         <div class="card-body">
           <h5 class="card-title">{{ livroDesejado.name }}</h5>
           <p class="card-text"><strong>Autor:</strong> {{ livroDesejado.author }}</p>
@@ -12,6 +12,7 @@
       </div>
     </div>
   </div>
+
 
   <!-- Meus Livros -->
   <div class="row mt-4">
