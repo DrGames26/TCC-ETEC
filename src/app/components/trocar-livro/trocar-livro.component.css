@@ -1,27 +1,29 @@
-.btn-custom {
-    background-color: #8d573a;
-    border-color: #8d573a;
-    color: #ffffff;
-    font-weight: 600;
-  }
-  
-  .btn-custom:hover {
-    background-color: #a06a4e;
-    border-color: #a06a4e;
-  }
-
 .card {
-  width: 100%; /* Garantir que o card ocupe 100% da largura da coluna */
-  height: 680px; /* Definir uma altura fixa para o card */
-  overflow: hidden; /* Evitar que o conteúdo ultrapasse os limites do card */
+  width: 100%; /* Faz com que o card ocupe 100% da largura da coluna */
+  height: 100%; /* Ajusta a altura para que o card ocupe toda a altura da célula */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .card-img-top {
-  width: 100%; /* A largura da imagem ocupa 100% da largura do card */
-  height: 250px; /* A altura da imagem será fixada, você pode ajustar conforme necessário */
-  object-fit: contain; /* A imagem será ajustada mantendo a proporção, sem cortar ou distorcer */
+  width: 100%;
+  height: 250px; /* Altura da imagem */
+  object-fit: contain;
 }
 
 .row {
-  gap: 20px; /* Define o espaçamento entre os cards */
+  gap: 20px;
+}
+
+.btn-custom {
+  background-color: #8d573a;
+  border-color: #8d573a;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.btn-custom:hover {
+  background-color: #a06a4e;
+  border-color: #a06a4e;
 }
