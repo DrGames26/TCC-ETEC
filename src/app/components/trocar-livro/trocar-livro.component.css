@@ -9,30 +9,3 @@
     background-color: #a06a4e;
     border-color: #a06a4e;
   }
-
-  .card {
-    width: 100%;
-    max-width: 20rem; /* Aumenta a largura máxima dos cards */
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .card-img-top {
-    width: 100%;
-    height: 250px; /* Aumenta a altura da imagem */
-    object-fit: cover; /* Preenche totalmente o container do card */
-  }
-  
-  .card-body {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-  
-  .row {
-    align-items: stretch; /* Garante que todos os cards fiquem com a mesma altura */
-  }
-  
-  
