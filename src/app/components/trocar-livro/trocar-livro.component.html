@@ -1,17 +1,32 @@
-<div class="container mt-5">
-  <h2>Escolha um livro para oferecer na troca!</h2>
-
-  <div class="row row-cols-1 row-cols-md-3 g-3">
-    <div class="col mb-4" *ngFor="let livro of meusLivros">   
-        
+<div class="container my-4">
+  <h2 class="text-center mb-4">Trocar Livro</h2>
+  
+  <div *ngIf="livroDesejado" class="row">
+    <!-- Exibição do livro desejado -->
+    <div class="col-12 col-md-4">
+      <div class="card">
+        <img [src]="livroDesejado.picture" class="card-img-top" alt="{{ livroDesejado.title }}" />
         <div class="card-body">
-          <img *ngIf="livro.picture" [src]="livro.picture" alt="Imagem do Livro">
-          <h5 class="card-title">{{ livro.name }}</h5>
-          <p class="card-text"><strong>Autor:</strong> {{ livro.author }}</p>
-          <button *ngIf="livro.id" class="btn btn-custom" (click)="offerExchange(livro.id)">Oferecer para Troca</button>
-
+          <h5 class="card-title">{{ livroDesejado.title }}</h5>
+          <p class="card-text">Autor: {{ livroDesejado.author }}</p>
+          <p class="card-text">{{ livroDesejado.description }}</p>
         </div>
+      </div>
+    </div>
+  </div>
 
+  <h4 class="text-center mb-4">Seus Livros</h4>
+
+  <div class="row">
+    <div class="col-12 col-md-4" *ngFor="let livro of meusLivros">
+      <div class="card mb-4">
+        <img [src]="livro.picture" class="card-img-top" alt="{{ livro.title }}" />
+        <div class="card-body">
+          <h5 class="card-title">{{ livro.title }}</h5>
+          <p class="card-text">Autor: {{ livro.author }}</p>
+          <button class="btn btn-custom" (click)="offerExchange(livro.id)">Oferecer Troca</button>
+        </div>
+      </div>
     </div>
   </div>
 </div>

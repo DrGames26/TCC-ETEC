@@ -10,32 +10,28 @@
   border-color: #a06a4e;
 }
 
-.card {
-  display: flex;
-  flex-direction: column;
-  height: 100%;  /* Faz todos os cards terem a mesma altura */
+/* Ajustar o tamanho das imagens e cards */
+.card-img-top {
+  height: 300px;
+  object-fit: cover;
+}
+
+/* Ajustar margens e espaçamentos */
+.my-4 {
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .card-body {
-  background-color: #ffffff; 
-  padding: 15px;
-  flex-grow: 1; /* Faz o corpo do card crescer para ocupar o espaço restante */
-}
-
-.card-body img {
-  width: 100%;         
-  height: auto;        
-  object-fit: cover;    
-  border-radius: 8px;  
+  text-align: center;
 }
 
 .card-title {
-  background-color: #ffffff; 
-  padding: 5px 0;             
+  font-weight: bold;
 }
 
 .card-text {
-  margin-bottom: 15px;  /* Adiciona espaçamento entre o autor e o botão */
+  font-size: 0.9em;
 }
 
 
