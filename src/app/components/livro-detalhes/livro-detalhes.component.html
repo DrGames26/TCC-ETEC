@@ -1,27 +1,27 @@
 <div class="container mt-5">
-  <div *ngIf="livro; else loading" class="card livro-detalhes">
-    <div class="row g-0">
-      <div class="col-md-4">
-        <img *ngIf="livro.picture" [src]="livro.picture" class="img-fluid livro-imagem" alt="Imagem do Livro">
-      </div>
-      <div class="col-md-8">
-        <div class="card-body">
-          <h2 class="card-title">{{ livro.name }}</h2>
-          <p class="card-text"><strong>Autor:</strong> {{ livro.author }}</p>
-          <p class="card-text"><strong>Gênero:</strong> {{ livro.genre }}</p>
-          <p class="card-text"><strong>Descrição:</strong> {{ livro.description }}</p>
-          <p class="card-text"><strong>Publicado por:</strong> {{ livro.usuarioPublicador }}</p>
-          <button class="btn btn-custom mt-3" (click)="trocarLivro()">
-            <i class="bi bi-arrow-left-right"></i> Trocar Livro
-          </button>
+    <div *ngIf="livro; else loading" class="card">
+      <div class="row g-0">
+        <div class="col-md-4">
+          <img *ngIf="livro.picture" [src]="livro.picture" class="img-fluid rounded-start" alt="Imagem do Livro">
+        </div>
+        <div class="col-md-8">
+          <div class="card-body">
+            <h2 class="card-title">{{ livro.name }}</h2>
+            <p class="card-text"><strong>Autor:</strong> {{ livro.author }}</p>
+            <p class="card-text"><strong>Gênero:</strong> {{ livro.genre }}</p>
+            <p class="card-text"><strong>Descrição:</strong> {{ livro.description }}</p>
+            <p class="card-text"><strong>Publicado por:</strong> {{ livro.usuarioPublicador }}</p>
+            <!-- Botão para troca -->
+            <button class="btn btn-primary mt-3" (click)="trocarLivro()">Trocar Livro</button>
+          </div>
         </div>
       </div>
     </div>
+  
+    <ng-template #loading>
+      <div class="alert alert-info" role="alert">
+        Carregando detalhes do livro...
+      </div>
+    </ng-template>
   </div>
-
-  <ng-template #loading>
-    <div class="alert alert-info text-center mt-4" role="alert">
-      Carregando detalhes do livro...
-    </div>
-  </ng-template>
-</div>
+  
