@@ -11,8 +11,8 @@
   }
 
 .card {
-  width: 250px; /* Definindo a largura fixa para o card */
-  height: 380px; /* Definindo a altura fixa para o card */
+  width: 400px; /* Definindo a largura fixa para o card */
+  height: 680px; /* Definindo a altura fixa para o card */
   overflow: hidden; /* Evita que qualquer conteúdo extra ultrapasse os limites do card */
 }
 
