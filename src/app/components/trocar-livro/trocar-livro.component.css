@@ -21,5 +21,5 @@
   width: 100%; /* A largura da imagem ocupa 100% da largura do card */
   height: 300px; /* Altura fixa para todas as imagens */
   object-fit: contain; /* A imagem será ajustada para caber no espaço definido, sem cortes */
-  background-color: #f8f9fa; /* Cor de fundo para áreas vazias ao redor da imagem */
+  background-color: #f8f9fa; 
 }
