@@ -22,6 +22,3 @@
   object-fit: contain; /* A imagem será ajustada mantendo a proporção, sem cortar ou distorcer */
 }
 
-.row {
-  gap: 15px; 
-}
