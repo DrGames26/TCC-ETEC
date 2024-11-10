@@ -13,8 +13,12 @@
 .card-body img {
   width: 100%;          /* Ocupa toda a largura do card */
   height: auto;         /* Mantém a proporção da imagem */
-  max-height: 200px;    /* Define uma altura máxima para limitar o tamanho */
+  max-height: 400px;    /* Define uma altura máxima para limitar o tamanho */
   object-fit: cover;    /* Garante que a imagem se ajuste ao espaço sem distorção */
   border-radius: 8px;   /* Bordas arredondadas para um estilo mais suave */
+}
+
+.card-title{
+  background-color: #ffffff;
 }
 
