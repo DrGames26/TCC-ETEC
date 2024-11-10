@@ -14,8 +14,6 @@ import { Livro } from '../../services/livro.service';
 export class TrocarLivroComponent implements OnInit {
   livroDesejado: Livro | null = null;  
   meusLivros: Livro[] = [];  
-  loadingLivros: boolean = true; // Para indicar o carregamento dos livros
-  loadingLivroDesejado: boolean = true; // Para indicar o carregamento do livro desejado
 
   constructor(
     private livroService: LivroService,  
@@ -33,11 +31,6 @@ export class TrocarLivroComponent implements OnInit {
     this.livroService.getBooksByUsuarioPublicador(usuarioPublicador).subscribe(
       (data: Livro[]) => {
         this.meusLivros = data;
-        this.loadingLivros = false;
-      },
-      (error) => {
-        this.toastr.error('Erro ao carregar os livros.', 'Erro');
-        this.loadingLivros = false;
       }
     );
       
@@ -48,11 +41,6 @@ export class TrocarLivroComponent implements OnInit {
         this.livroService.getLivroPorId(Number(livroId)).subscribe(
           (livro: Livro) => {
             this.livroDesejado = livro;
-            this.loadingLivroDesejado = false;
-          },
-          (error) => {
-            this.toastr.error('Erro ao carregar o livro desejado.', 'Erro');
-            this.loadingLivroDesejado = false;
           }
         );
       }
@@ -84,12 +72,7 @@ export class TrocarLivroComponent implements OnInit {
           this.toastr.success('Troca solicitada com sucesso!', 'Sucesso');
           // Redirecionar para a página de trocas
           this.router.navigate(['/trocas']);
-        } else {
-          this.toastr.error('Não foi possível solicitar a troca. Tente novamente.', 'Erro');
         }
-      },
-      (error) => {
-        this.toastr.error('Erro ao solicitar a troca.', 'Erro');
       }
     );
   }

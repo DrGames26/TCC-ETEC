@@ -1,39 +1,33 @@
-.btn-custom {
-  background-color: #8d573a;
-  border-color: #8d573a;
-  color: #ffffff;
-  font-weight: 600;
-}
-
-.btn-custom:hover {
-  background-color: #a06a4e;
-  border-color: #a06a4e;
-}
-
-/* Ajustar o tamanho das imagens e cards */
+/* Ajustes para garantir que as imagens de livros se ajustem bem */
 .card-img-top {
-  height: 300px;
-  object-fit: cover;
+  height: 200px; /* Definindo altura fixa para as imagens */
+  object-fit: cover; /* Fazendo com que a imagem cubra o espaço sem distorcer */
 }
 
-/* Ajustar margens e espaçamentos */
-.my-4 {
-  margin-top: 20px;
-  margin-bottom: 20px;
-}
-
+/* Estilos adicionais */
 .card-body {
   text-align: center;
 }
 
-.card-title {
+h3 {
+  text-align: center;
+}
+
+h5.card-title {
+  font-size: 1.1rem;
   font-weight: bold;
 }
 
-.card-text {
-  font-size: 0.9em;
+.card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+.card-body {
+  padding: 1rem;
+}
 
-
-
+button {
+  width: 100%;
+}

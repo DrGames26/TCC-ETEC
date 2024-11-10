@@ -1,30 +1,30 @@
-<div class="container my-4">
-  <h2 class="text-center mb-4">Trocar Livro</h2>
-  
-  <div *ngIf="livroDesejado" class="row">
-    <!-- Exibição do livro desejado -->
-    <div class="col-12 col-md-4">
-      <div class="card">
-        <img [src]="livroDesejado.picture" class="card-img-top" alt="{{ livroDesejado.name }}" />
-        <div class="card-body">
-          <h5 class="card-title">{{ livroDesejado.name }}</h5>
-          <p class="card-text">Autor: {{ livroDesejado.author }}</p>
-          <p class="card-text">{{ livroDesejado.description }}</p>
-        </div>
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-12">
+      <h2>Escolha um livro para trocar</h2>
+      <div *ngIf="livroDesejado">
+        <h3>Você escolheu: {{ livroDesejado.name }}</h3>
+        <p><strong>Autor:</strong> {{ livroDesejado.author }}</p>
+        <img *ngIf="livroDesejado.picture" [src]="livroDesejado.picture" class="img-fluid" alt="Imagem do livro">
       </div>
     </div>
   </div>
 
-  <h4 class="text-center mb-4">Seus Livros</h4>
-
-  <div class="row">
-    <div class="col-12 col-md-4" *ngFor="let livro of meusLivros">
-      <div class="card mb-4">
-        <img [src]="livro.picture" class="card-img-top" alt="{{ livro.name }}" />
-        <div class="card-body">
-          <h5 class="card-title">{{ livro.name }}</h5>
-          <p class="card-text">Autor: {{ livro.author }}</p>
-          <button class="btn btn-primary" (click)="offerExchange(livro.id)">Oferecer Troca</button>
+  <div class="row mt-4">
+    <div class="col-12">
+      <h3>Meus Livros</h3>
+      <div class="row">
+        <div *ngFor="let livro of meusLivros" class="col-md-4 col-sm-6 mb-4">
+          <div class="card">
+            <img *ngIf="livro.picture" [src]="livro.picture" class="card-img-top" alt="Imagem do livro">
+            <div class="card-body">
+              <h5 class="card-title">{{ livro.name }}</h5>
+              <p class="card-text"><strong>Autor:</strong> {{ livro.author }}</p>
+              <button class="btn btn-primary" (click)="offerExchange(livro.id)">
+                Oferecer para troca
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
