@@ -10,15 +10,18 @@
     border-color: #a06a4e;
   }
 
-  .card {
-    width: 450px; /* Definindo a largura fixa para o card */
-    height: 680px; /* Definindo a altura fixa para o card */
-    overflow: hidden; /* Evita que qualquer conteúdo extra ultrapasse os limites do card */
-  }
-  
-  .card-img-top {
-    width: 100%; /* A largura da imagem ocupa 100% da largura do card */
-    height: 100%; /* A altura da imagem ocupa 100% da altura do card */
-    object-fit: contain; /* A imagem será ajustada mantendo a proporção, sem cortar ou distorcer */
-  }
-  
+.card {
+  width: 450px; /* Definindo a largura fixa para o card */
+  height: 680px; /* Definindo a altura fixa para o card */
+  overflow: hidden; /* Evita que qualquer conteúdo extra ultrapasse os limites do card */
+}
+
+.card-img-top {
+  width: 100%; /* A largura da imagem ocupa 100% da largura do card */
+  height: 100%; /* A altura da imagem ocupa 100% da altura do card */
+  object-fit: contain; /* A imagem será ajustada mantendo a proporção, sem cortar ou distorcer */
+}
+
+.row {
+  gap: 20px; 
+}
