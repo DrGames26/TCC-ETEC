@@ -20,9 +20,7 @@
             <div class="card-body">
               <h5 class="card-title">{{ livro.name }}</h5>
               <p class="card-text"><strong>Autor:</strong> {{ livro.author }}</p>
-              <button class="btn btn-primary" (click)="offerExchange(livro.id)">
-                Oferecer para troca
-              </button>
+              <button *ngIf="livro.id" class="btn btn-primary" (click)="offerExchange(livro.id)">Oferecer para troca</button>
             </div>
           </div>
         </div>
