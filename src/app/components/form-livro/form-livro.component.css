@@ -71,9 +71,9 @@
   .btn-enviar {
     width: 100%;
     padding: 10px;
-    background-color: #D4AF37;
-    color: #8d573a;
+    background-color: #8d573a;
     font-weight: bold;
+    color: #ffffff;
     font-size: 1.1rem;
     border: none;
     border-radius: 5px;
@@ -82,7 +82,7 @@
   }
   
   .btn-enviar:hover {
-    background-color: #e0b85b;
-    color: #fff;
+    background-color: #a06a4e;
+    color: #ffffff;
   }
   
