@@ -5,9 +5,9 @@
     <!-- Exibição do livro desejado -->
     <div class="col-12 col-md-4">
       <div class="card">
-        <img [src]="livroDesejado.picture" class="card-img-top" alt="{{ livroDesejado.title }}" />
+        <img [src]="livroDesejado.picture" class="card-img-top" alt="{{ livroDesejado.name }}" />
         <div class="card-body">
-          <h5 class="card-title">{{ livroDesejado.title }}</h5>
+          <h5 class="card-title">{{ livroDesejado.name }}</h5>
           <p class="card-text">Autor: {{ livroDesejado.author }}</p>
           <p class="card-text">{{ livroDesejado.description }}</p>
         </div>
@@ -20,11 +20,11 @@
   <div class="row">
     <div class="col-12 col-md-4" *ngFor="let livro of meusLivros">
       <div class="card mb-4">
-        <img [src]="livro.picture" class="card-img-top" alt="{{ livro.title }}" />
+        <img [src]="livro.picture" class="card-img-top" alt="{{ livro.name }}" />
         <div class="card-body">
-          <h5 class="card-title">{{ livro.title }}</h5>
+          <h5 class="card-title">{{ livro.name }}</h5>
           <p class="card-text">Autor: {{ livro.author }}</p>
-          <button class="btn btn-custom" (click)="offerExchange(livro.id)">Oferecer Troca</button>
+          <button class="btn btn-primary" (click)="offerExchange(livro.id)">Oferecer Troca</button>
         </div>
       </div>
     </div>
