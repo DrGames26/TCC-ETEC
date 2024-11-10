@@ -1,26 +1,38 @@
-.card {
-  width: 100%;
-  max-width: 18rem; /* Ajuste o tamanho máximo para os cards */
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-}
+.btn-custom {
+    background-color: #8d573a;
+    border-color: #8d573a;
+    color: #ffffff;
+    font-weight: 600;
+  }
+  
+  .btn-custom:hover {
+    background-color: #a06a4e;
+    border-color: #a06a4e;
+  }
 
-.card-img-top {
-  width: 100%;
-  height: 200px; /* Altura fixa para manter a proporção */
-  object-fit: contain; /* Exibe a imagem inteira sem cortar */
-  padding: 10px; /* Adiciona um pequeno espaçamento interno */
-  background-color: #f8f9fa; /* Cor de fundo para caso a imagem não preencha totalmente */
-}
-
-.card-body {
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.row {
-  align-items: stretch; /* Garante que todos os cards fiquem com a mesma altura */
-}
+  .card {
+    width: 100%;
+    max-width: 20rem; /* Aumenta a largura máxima dos cards */
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .card-img-top {
+    width: 100%;
+    height: 250px; /* Aumenta a altura da imagem */
+    object-fit: cover; /* Preenche totalmente o container do card */
+  }
+  
+  .card-body {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .row {
+    align-items: stretch; /* Garante que todos os cards fiquem com a mesma altura */
+  }
+  
+  
