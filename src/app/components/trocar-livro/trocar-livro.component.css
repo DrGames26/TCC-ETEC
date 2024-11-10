@@ -1,3 +1,15 @@
+.btn-custom {
+  background-color: #8d573a;
+  border-color: #8d573a;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.btn-custom:hover {
+  background-color: #a06a4e;
+  border-color: #a06a4e;
+}
+
 .card-img-top {
   width: 100%;  /* Garante que a imagem ocupe toda a largura do card */
   height: 400px;  /* Ajusta a altura da imagem */
