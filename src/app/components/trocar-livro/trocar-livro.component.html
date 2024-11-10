@@ -1,9 +1,9 @@
 <!-- Livro Escolhido -->
 <div class="container mt-5">
   <div class="row">
-    <div class="col-12">
-      <h3 class="text-center">Escolha um livro para trocar</h3>
-      <div *ngIf="livroDesejado" class="row">
+    <div class="col-12 text-center"> <!-- Alinha o título -->
+      <h3>Livro escolhido</h3>
+      <div *ngIf="livroDesejado" class="row justify-content-center"> <!-- Centraliza o card -->
         <div class="col-md-4 col-sm-6">
           <div class="card">
             <img *ngIf="livroDesejado.picture" [src]="livroDesejado.picture" class="card-img-top" alt="Imagem do livro">
@@ -21,7 +21,7 @@
   <!-- Meus Livros -->
   <div class="row mt-4">
     <div class="col-12">
-      <h3 class="text-center">Meus Livros</h3>
+      <h3 class="text-center">Trocar por</h3>
       <div class="row">
         <div *ngFor="let livro of meusLivros" class="col-md-4 col-sm-6 mb-4">
           <div class="card">
