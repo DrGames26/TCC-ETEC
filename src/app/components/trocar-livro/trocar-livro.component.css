@@ -1,24 +1,29 @@
 .card-img-top {
-  height: 200px;  /* Limita a altura da imagem */
-  object-fit: cover;  /* A imagem vai cobrir o espaço sem distorcer, cortando o excesso se necessário */
+  width: 100%;  /* Garante que a imagem ocupe toda a largura do card */
+  height: 200px;  /* Ajusta a altura da imagem */
+  object-fit: contain;  /* Faz a imagem se ajustar completamente ao espaço do card sem distorção */
 }
 
 .card-body {
   padding: 1rem;
   text-align: center;
   display: flex;
-  flex-direction: column;  /* Garante que o conteúdo seja alinhado em coluna */
-  justify-content: space-between;  /* Dá espaçamento entre os elementos dentro do card */
+  flex-direction: column;
+  justify-content: space-between;  /* Dá espaço entre os elementos dentro do card */
+  height: 100%;  /* Garante que o corpo do card ocupe o espaço restante */
 }
 
 .card {
-  height: 350px;  /* Altura fixa para garantir uniformidade entre os cards */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 400px;  /* Altura fixa para garantir uniformidade entre os cards */
 }
 
 .card-body img {
-  width: 100%;  /* Garante que a imagem ocupe toda a largura do card */
-  height: 200px;  /* Ajusta a altura da imagem dentro do card */
-  object-fit: contain;  /* Ajusta a imagem para que caiba totalmente sem cortar ou distorcer */
+  max-width: 100%;  /* Garante que a imagem não ultrapasse a largura do card */
+  max-height: 200px;  /* Limita a altura máxima da imagem */
+  object-fit: contain;  /* Ajusta a imagem para caber completamente sem distorcer */
 }
 
 button {
