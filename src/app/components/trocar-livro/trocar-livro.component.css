@@ -1,16 +1,25 @@
-/* Ajustes para garantir que as imagens de livros se ajustem bem */
 .card-img-top {
-  height: 200px; /* Definindo altura fixa para as imagens */
-  object-fit: cover; /* Fazendo com que a imagem cubra o espaço sem distorcer */
+  height: 200px; 
+  object-fit: cover; 
 }
 
-/* Estilos adicionais */
+/* Centralizando o conteúdo do livro escolhido */
+.card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+/* Estilos para o corpo do card */
 .card-body {
+  padding: 1rem;
   text-align: center;
 }
 
 h3 {
-  text-align: center;
+  font-size: 1.5rem;
+  font-weight: bold;
 }
 
 h5.card-title {
@@ -18,16 +27,20 @@ h5.card-title {
   font-weight: bold;
 }
 
-.card {
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.card-body {
-  padding: 1rem;
+.card-body img {
+  width: 100%;
+  max-height: 300px; /* Ajuste de altura máxima para a imagem */
+  object-fit: contain; /* Imagem com ajuste para não cortar */
 }
 
 button {
   width: 100%;
+  margin-top: 10px;
+}
+
+/* Responsividade para centralizar o conteúdo */
+@media (max-width: 767px) {
+  .card {
+    max-width: 100%;
+  }
 }
