@@ -11,24 +11,15 @@
 }
 
 .card {
-  width: 100%;
-  max-width: 400px;
-  height: 400px;
+  width: 100%; /* Ajusta para ocupar 100% da coluna */
+  max-width: 400px; /* Limite máximo de largura */
+  height: auto; /* Deixa a altura flexível */
   overflow: hidden;
-  border: none; /* Remove bordas extras */
 }
 
 .card-img-top {
-  width: 100%;
-  height: 400px;
-  object-fit: cover; /* Ajusta a imagem para cobrir a área sem deixar espaços */
-  border-top-left-radius: 8px; /* Arredonda os cantos superiores */
-  border-top-right-radius: 8px;
-}
-
-.card-body {
-  padding: 15px;
-  background-color: #ffffff; /* Fundo para o texto e botão */
-  border-bottom-left-radius: 8px; /* Arredonda os cantos inferiores */
-  border-bottom-right-radius: 8px;
+  width: 100%; /* A largura da imagem ocupa 100% da largura do card */
+  height: 400px; /* Altura fixa para todas as imagens */
+  object-fit: contain; /* A imagem será ajustada para caber no espaço definido, sem cortes */
+  background-color: #f8f9fa; /* Cor de fundo para áreas vazias ao redor da imagem */
 }
