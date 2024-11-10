@@ -1,12 +1,36 @@
-.card {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .card-title {
-    color: #333;
-  }
-  
-  .card-text {
-    color: #555;
-  }
-  
+.livro-detalhes {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  border: none;
+  border-radius: 12px;
+  overflow: hidden;
+  background: linear-gradient(135deg, #f5f5f5, #e0e0e0);
+}
+
+.livro-imagem {
+  max-height: 300px;
+  object-fit: cover;
+  border-top-left-radius: 12px;
+  border-bottom-left-radius: 12px;
+}
+
+.card-title {
+  color: #4b3e29;
+  font-weight: 700;
+  font-size: 1.8rem;
+}
+
+.card-text {
+  color: #6c757d;
+}
+
+.btn-custom {
+  background-color: #8d573a;
+  border-color: #8d573a;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.btn-custom:hover {
+  background-color: #a06a4e;
+  border-color: #a06a4e;
+}
