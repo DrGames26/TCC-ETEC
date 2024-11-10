@@ -100,3 +100,22 @@ body {
   border: 2px solid #000;
   margin-top: auto; /* Isso garante que o rodapé fique no final da página */
 }
+
+.destaque-btn {
+  background-color: #D4AF37; /* Cor de destaque dourada */
+  color: #8d573a; /* Cor do texto para combinar */
+  font-weight: bold;
+  padding: 10px 20px;
+  font-size: 1.1rem; /* Tamanho de fonte maior */
+  border: 2px solid #fff; /* Borda branca para contraste */
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Sombra para dar profundidade */
+  transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s; /* Transições suaves */
+}
+
+.destaque-btn:hover {
+  background-color: #e0b85b; /* Cor mais clara ao passar o mouse */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4); /* Sombra maior ao passar o mouse */
+  transform: translateY(-5px); /* Elevação suave */
+  color: #fff; /* Cor do texto branca ao passar o mouse */
+}
