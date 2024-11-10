@@ -18,7 +18,8 @@
 }
 
 .card-img-top {
-  width: 100%;
-  height: auto; /* Define altura automática */
-  object-fit: contain;
+  width: 100%; /* A largura da imagem ocupa 100% da largura do card */
+  height: 400px; /* Altura fixa para todas as imagens */
+  object-fit: contain; /* A imagem será ajustada para caber no espaço definido, sem cortes */
+  background-color: #f8f9fa; /* Cor de fundo para áreas vazias ao redor da imagem */
 }
