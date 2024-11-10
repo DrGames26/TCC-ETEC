@@ -21,7 +21,3 @@
   height: 100%; /* A altura da imagem ocupa 100% da altura do card */
   object-fit: contain; /* A imagem será ajustada mantendo a proporção, sem cortar ou distorcer */
 }
-
-.row {
-  gap: 5px; 
-}
