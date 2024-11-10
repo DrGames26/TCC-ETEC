@@ -1,44 +1,24 @@
-.livro-imagem {
-  width: 100%;  /* A imagem irá se ajustar ao tamanho do seu contêiner */
-  height: auto; /* Mantém a proporção da imagem */
-  max-width: 450px; /* Tamanho máximo para telas grandes */
-  max-height: 680px; /* Tamanho máximo para telas grandes */
-  object-fit: cover; /* Fazendo com que a imagem cubra o espaço sem distorcer */
-}
-
-/* Responsividade para telas pequenas (como celulares) */
-@media (max-width: 767px) {
-  .livro-imagem {
-    max-width: 100%; /* A imagem irá ocupar toda a largura disponível */
-    max-height: 400px; /* Ajuste para uma altura mais compacta em celulares */
-    object-fit: contain; /* Ajusta a imagem sem cortar */
-  }
-}
-
 .card-img-top {
-  height: 200px;
-  object-fit: cover;
+  height: 200px;  /* Limita a altura da imagem */
+  object-fit: cover;  /* A imagem vai cobrir o espaço sem distorcer, cortando o excesso se necessário */
 }
 
 .card-body {
   padding: 1rem;
   text-align: center;
+  display: flex;
+  flex-direction: column;  /* Garante que o conteúdo seja alinhado em coluna */
+  justify-content: space-between;  /* Dá espaçamento entre os elementos dentro do card */
 }
 
-h3 {
-  font-size: 1.5rem;
-  font-weight: bold;
-}
-
-h5.card-title {
-  font-size: 1.1rem;
-  font-weight: bold;
+.card {
+  height: 350px;  /* Altura fixa para garantir uniformidade entre os cards */
 }
 
 .card-body img {
-  width: 100%;
-  max-height: 300px;
-  object-fit: contain;
+  width: 100%;  /* Garante que a imagem ocupe toda a largura do card */
+  height: 200px;  /* Ajusta a altura da imagem dentro do card */
+  object-fit: contain;  /* Ajusta a imagem para que caiba totalmente sem cortar ou distorcer */
 }
 
 button {
