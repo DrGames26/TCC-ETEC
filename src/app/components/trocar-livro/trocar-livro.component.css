@@ -1,17 +1,25 @@
+.livro-imagem {
+  width: 100%;  /* A imagem irá se ajustar ao tamanho do seu contêiner */
+  height: auto; /* Mantém a proporção da imagem */
+  max-width: 450px; /* Tamanho máximo para telas grandes */
+  max-height: 680px; /* Tamanho máximo para telas grandes */
+  object-fit: cover; /* Fazendo com que a imagem cubra o espaço sem distorcer */
+}
+
+/* Responsividade para telas pequenas (como celulares) */
+@media (max-width: 767px) {
+  .livro-imagem {
+    max-width: 100%; /* A imagem irá ocupar toda a largura disponível */
+    max-height: 400px; /* Ajuste para uma altura mais compacta em celulares */
+    object-fit: contain; /* Ajusta a imagem sem cortar */
+  }
+}
+
 .card-img-top {
-  height: 100%; 
-  object-fit: cover; 
+  height: 200px;
+  object-fit: cover;
 }
 
-/* Centralizando o conteúdo do livro escolhido */
-.card {
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  margin-bottom: 20px;
-}
-
-/* Estilos para o corpo do card */
 .card-body {
   padding: 1rem;
   text-align: center;
@@ -29,8 +37,8 @@ h5.card-title {
 
 .card-body img {
   width: 100%;
-  max-height: 300px; /* Ajuste de altura máxima para a imagem */
-  object-fit: contain; /* Imagem com ajuste para não cortar */
+  max-height: 300px;
+  object-fit: contain;
 }
 
 button {
@@ -38,7 +46,6 @@ button {
   margin-top: 10px;
 }
 
-/* Responsividade para centralizar o conteúdo */
 @media (max-width: 767px) {
   .card {
     max-width: 100%;
