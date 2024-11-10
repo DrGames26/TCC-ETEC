@@ -1,6 +1,6 @@
 .card-img-top {
   width: 100%;  /* Garante que a imagem ocupe toda a largura do card */
-  height: 200px;  /* Ajusta a altura da imagem */
+  height: 400px;  /* Ajusta a altura da imagem */
   object-fit: contain;  /* Faz a imagem se ajustar completamente ao espaço do card sem distorção */
 }
 
@@ -22,7 +22,7 @@
 
 .card-body img {
   max-width: 100%;  /* Garante que a imagem não ultrapasse a largura do card */
-  max-height: 200px;  /* Limita a altura máxima da imagem */
+  max-height:400px;  /* Limita a altura máxima da imagem */
   object-fit: contain;  /* Ajusta a imagem para caber completamente sem distorcer */
 }
 
