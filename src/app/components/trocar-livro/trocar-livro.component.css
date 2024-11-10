@@ -10,10 +10,16 @@
   border-color: #a06a4e;
 }
 
+.card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;  /* Faz todos os cards terem a mesma altura */
+}
+
 .card-body {
-  max-width: 400px; /* Limite máximo de largura */
-  height: auto; /* Deixa a altura flexível */
-  overflow: hidden;
+  background-color: #ffffff; 
+  padding: 15px;
+  flex-grow: 1; /* Faz o corpo do card crescer para ocupar o espaço restante */
 }
 
 .card-body img {
@@ -23,14 +29,13 @@
   border-radius: 8px;  
 }
 
-.card-body {
-  background-color: #ffffff; 
-  padding: 15px;              
-}
-
 .card-title {
   background-color: #ffffff; 
   padding: 5px 0;             
+}
+
+.card-text {
+  margin-bottom: 15px;  /* Adiciona espaçamento entre o autor e o botão */
 }
 
 
