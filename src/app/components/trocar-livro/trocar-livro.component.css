@@ -9,3 +9,28 @@
     background-color: #a06a4e;
     border-color: #a06a4e;
   }
+
+  .card {
+    width: 100%; /* Define uma largura total dentro da coluna */
+    max-width: 18rem; /* Ajuste para o tamanho máximo desejado */
+    height: 100%; /* Faz o card ocupar toda a altura */
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .card-img-top {
+    height: 200px; /* Altura fixa para a imagem */
+    object-fit: cover; /* Ajuste para manter a proporção da imagem */
+  }
+  
+  .card-body {
+    flex-grow: 1; /* Expande o corpo para ocupar o espaço */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Distribui o conteúdo */
+  }
+
+  .row {
+    align-items: stretch; /* Faz os cards ocuparem a mesma altura */
+  }
+  
