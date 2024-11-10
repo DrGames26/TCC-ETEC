@@ -3,16 +3,18 @@
   <div class="row">
     <div class="col-12 text-center">
       <h2>Escolha um livro para trocar</h2>
-      <div class="card">
-        <img *ngIf="livroDesejado" [src]="livroDesejado.picture" class="card-img-top" alt="Imagem do livro">
+      <div *ngIf="livroDesejado" class="card mx-auto" style="max-width: 18rem;">
         <div class="card-body">
-          <h5 class="card-title">{{ livroDesejado.name }}</h5>
+          <h3 class="card-title">{{ livroDesejado.name }}</h3>
           <p class="card-text"><strong>Autor:</strong> {{ livroDesejado.author }}</p>
+          <div *ngIf="livroDesejado.picture">
+            <img [src]="livroDesejado.picture" class="livro-imagem" alt="Imagem do livro">
+          </div>
         </div>
       </div>
     </div>
   </div>
-
+  
 
   <!-- Meus Livros -->
   <div class="row mt-4">
