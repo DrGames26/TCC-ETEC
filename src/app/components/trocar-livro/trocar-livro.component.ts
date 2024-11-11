@@ -71,7 +71,7 @@ export class TrocarLivroComponent implements OnInit {
         if (response && response.success) {
           this.toastr.success('Troca solicitada com sucesso!', 'Sucesso');
           // Redirecionar para a página de trocas
-          this.router.navigate(['/trocas']);
+          this.router.navigateByUrl('/trocas');
         }
       }
     );
