@@ -60,7 +60,7 @@ export class TrocarLivroComponent implements OnInit {
       requestedBook: {
         id: this.livroDesejado.id,
       },
-      requester: this.authService.getUser()?.name || ''
+      requester: this.authService.getUser()?.email || ''
     };
 
     console.log('Requester:', troca.requester);

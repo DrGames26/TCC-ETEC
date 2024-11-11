@@ -4,23 +4,26 @@
 
   <!-- Lista de trocas pendentes -->
   <div *ngFor="let exchange of pendentes" class="mb-3">
-    <div class="card">
+    <div class="card p-3">
       <div class="card-body">
-        <h5 class="card-title">{{ exchange.requester }} solicitou uma troca</h5>
-        <div class="row">
-          <!-- Imagem do livro solicitado -->
-          <div class="col-md-3">
-            <img *ngIf="exchange.requestedBook?.picture" [src]="exchange.requestedBook?.picture" class="img-fluid" alt="Imagem do Livro Solicitado">
+        <h5 class="card-title text-center mb-4">{{ exchange.requester }} solicitou uma troca</h5>
+        <div class="d-flex justify-content-between align-items-center">
+          <!-- Imagem do livro solicitado à esquerda -->
+          <div class="col-md-4 text-center">
+            <img *ngIf="exchange.requestedBook?.picture" [src]="exchange.requestedBook?.picture" class="img-fluid rounded shadow-sm" alt="Imagem do Livro Solicitado" style="max-width: 100px;">
+            <p class="mt-2"><strong>Livro Solicitado</strong></p>
+          </div>
 
+          <!-- Botões centralizados -->
+          <div class="col-md-4 text-center">
+            <button class="btn btn-success mx-1 mb-2" (click)="acceptExchange(exchange.id)" style="width: 100px;">Aceitar</button>
+            <button class="btn btn-danger mx-1" (click)="rejectExchange(exchange.id)" style="width: 100px;">Recusar</button>
           </div>
-          <div class="col-md-3">
-            <img *ngIf="exchange.offeredBook?.picture" [src]="exchange.offeredBook?.picture" class="img-fluid" alt="Imagem do Livro Oferecido">
-          </div>
-          <!-- Detalhes da troca -->
-          <div class="col-md-9">
-            
-            <button class="btn btn-success" (click)="acceptExchange(exchange.id)">Aceitar</button>
-            <button class="btn btn-danger" (click)="rejectExchange(exchange.id)">Recusar</button>
+
+          <!-- Imagem do livro oferecido à direita -->
+          <div class="col-md-4 text-center">
+            <img *ngIf="exchange.offeredBook?.picture" [src]="exchange.offeredBook?.picture" class="img-fluid rounded shadow-sm" alt="Imagem do Livro Oferecido" style="max-width: 100px;">
+            <p class="mt-2"><strong>Livro Oferecido</strong></p>
           </div>
         </div>
       </div>
@@ -29,20 +32,18 @@
 
   <!-- Título para trocas aceitas -->
   <h3 class="mb-4 text-center">Trocas Aceitas</h3>
-  
+
   <!-- Lista de trocas aceitas -->
   <div *ngFor="let exchange of aceitas" class="mb-3">
-    <div class="card">
+    <div class="card p-3">
       <div class="card-body">
-        <h5 class="card-title">{{ exchange.requester }} aceitou a troca</h5>
+        <h5 class="card-title text-center mb-4">{{ exchange.requester }} aceitou a troca</h5>
         <div class="row">
-          <!-- Imagem do livro aceito -->
-          <div class="col-md-3">
-            <img *ngIf="exchange.requestedBook.picture" [src]="exchange.requestedBook.picture" class="img-fluid" alt="Imagem do Livro Solicitado">
+          <div class="col-md-6 text-center">
+            <img *ngIf="exchange.requestedBook.picture" [src]="exchange.requestedBook.picture" class="img-fluid rounded shadow-sm" alt="Imagem do Livro Aceito" style="max-width: 100px;">
           </div>
-          <!-- Detalhes da troca -->
-          <div class="col-md-9">
-            <p class="card-text">
+          <div class="col-md-6 text-center">
+            <p class="card-text mt-3">
               Troca de <strong>{{ exchange.requestedBookId }}</strong> por <strong>{{ exchange.offeredBookId }}</strong>.
             </p>
           </div>
@@ -56,17 +57,15 @@
 
   <!-- Lista de trocas recusadas -->
   <div *ngFor="let exchange of recusadas" class="mb-3">
-    <div class="card">
+    <div class="card p-3">
       <div class="card-body">
-        <h5 class="card-title">{{ exchange.requester }} recusou a troca</h5>
+        <h5 class="card-title text-center mb-4">{{ exchange.requester }} recusou a troca</h5>
         <div class="row">
-          <!-- Imagem do livro recusado -->
-          <div class="col-md-3">
-            <img *ngIf="exchange.requestedBook.picture" [src]="exchange.requestedBook.picture" class="img-fluid" alt="Imagem do Livro Solicitado">
+          <div class="col-md-6 text-center">
+            <img *ngIf="exchange.requestedBook.picture" [src]="exchange.requestedBook.picture" class="img-fluid rounded shadow-sm" alt="Imagem do Livro Recusado" style="max-width: 100px;">
           </div>
-          <!-- Detalhes da troca -->
-          <div class="col-md-9">
-            <p class="card-text">
+          <div class="col-md-6 text-center">
+            <p class="card-text mt-3">
               Troca de <strong>{{ exchange.requestedBookId }}</strong> por <strong>{{ exchange.offeredBookId }}</strong>.
             </p>
           </div>
