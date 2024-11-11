@@ -70,9 +70,16 @@ export class TrocarLivroComponent implements OnInit {
       (response) => {
         if (response && response.success) {
           this.toastr.success('Troca solicitada com sucesso!', 'Sucesso');
-          // Redirecionar para a página de trocas
+          // Após a solicitação da troca ser bem-sucedida, redireciona para a página de trocas
           this.router.navigate(['/trocas']);
+        } else {
+          // Caso a solicitação de troca falhe, exibe uma mensagem de erro
+          this.toastr.error('Erro ao solicitar troca, tente novamente.', 'Erro');
         }
+      },
+      (error) => {
+        // Em caso de erro na requisição HTTP
+        this.toastr.error('Erro ao solicitar troca, tente novamente.', 'Erro');
       }
     );
   }
