@@ -19,7 +19,7 @@
             <td>{{ user.email }}</td>
             <td>
               <button class="btn btn-warning btn-sm" (click)="openEditUserModal(user)">Editar</button>
-              <button class="btn btn-danger btn-sm" (click)="openDeleteUserModal(user)">Excluir</button>
+              <button class="btn btn-danger btn-sm" (click)="openDeleteUserModal(user, deleteModal)">Excluir</button>
             </td>
           </tr>
         </tbody>
@@ -47,8 +47,8 @@
             <td>{{ book.title }}</td>
             <td>{{ book.description }}</td>
             <td>
-              <button class="btn btn-warning btn-sm" (click)="openEditBookModal(book)">Editar</button>
-              <button class="btn btn-danger btn-sm" (click)="openDeleteBookModal(book)">Excluir</button>
+              <button class="btn btn-warning btn-sm" (click)="openEditBookModal(book, editModal)">Editar</button>
+              <button class="btn btn-danger btn-sm" (click)="openDeleteBookModal(book, deleteModal)">Excluir</button>
             </td>
           </tr>
         </tbody>
@@ -60,10 +60,31 @@
   </section>
 </div>
 
-<!-- Modal de confirmação de exclusão -->
+<!-- Modal de Edição de Livro -->
+<ng-template #editModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="modal-basic-title">Editar Livro</h5>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('cancel')"></button>
+  </div>
+  <div class="modal-body">
+    <form (ngSubmit)="saveEditedBook()">
+      <div class="mb-3">
+        <label for="bookTitle" class="form-label">Título</label>
+        <input type="text" class="form-control" id="bookTitle" [(ngModel)]="bookToEdit.title" name="title" required />
+      </div>
+      <div class="mb-3">
+        <label for="bookDescription" class="form-label">Descrição</label>
+        <textarea class="form-control" id="bookDescription" [(ngModel)]="bookToEdit.description" name="description" required></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Salvar</button>
+    </form>
+  </div>
+</ng-template>
+
+<!-- Modal de Exclusão de Item (Livro ou Usuário) -->
 <ng-template #deleteModal let-modal>
   <div class="modal-header">
-    <h5 class="modal-title" id="modal-basic-title">Confirmação de Exclusão</h5>
+    <h5 class="modal-title" id="modal-delete-title">Confirmação de Exclusão</h5>
     <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('cancel')"></button>
   </div>
   <div class="modal-body">

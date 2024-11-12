@@ -15,6 +15,8 @@ export class AdmComponent implements OnInit {
   books: any[] = [];
   isAuthorized = false;
   bookToEdit: any | null = null; // Livro selecionado para edição
+  userToDelete: User | null = null; // Usuário a ser excluído
+  bookToDelete: any | null = null; // Livro a ser excluído
 
   constructor(
     private authService: AuthService,
@@ -38,11 +40,13 @@ export class AdmComponent implements OnInit {
     }
   }
 
+  // Método para abrir o modal de edição de livro
   openEditBookModal(book: any, content: any) {
     this.bookToEdit = { ...book }; // Clona os dados do livro para edição
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
   }
 
+  // Método para salvar as edições no livro
   saveEditedBook() {
     if (this.bookToEdit) {
       this.livroService.editLivro(this.bookToEdit).subscribe(() => {
@@ -50,6 +54,40 @@ export class AdmComponent implements OnInit {
         const index = this.books.findIndex((b) => b.id === this.bookToEdit!.id);
         if (index > -1) this.books[index] = { ...this.bookToEdit };
         this.bookToEdit = null;
+        this.modalService.dismissAll();
+      });
+    }
+  }
+
+  // Método para abrir o modal de exclusão de livro
+  openDeleteBookModal(book: any, deleteContent: any) {
+    this.bookToDelete = { ...book }; // Clona os dados do livro para exclusão
+    this.modalService.open(deleteContent, { ariaLabelledBy: 'modal-delete-title' });
+  }
+
+  // Método para excluir o livro
+  deleteBook() {
+    if (this.bookToDelete) {
+      this.livroService.deleteBook(this.bookToDelete.id).subscribe(() => {
+        this.books = this.books.filter((b) => b.id !== this.bookToDelete!.id);
+        this.bookToDelete = null;
+        this.modalService.dismissAll();
+      });
+    }
+  }
+
+  // Método para abrir o modal de exclusão de usuário
+  openDeleteUserModal(user: User, deleteContent: any) {
+    this.userToDelete = { ...user }; // Clona os dados do usuário para exclusão
+    this.modalService.open(deleteContent, { ariaLabelledBy: 'modal-delete-title' });
+  }
+
+  // Método para excluir o usuário
+  deleteUser() {
+    if (this.userToDelete) {
+      this.cadastroUsuarioService.deleteUserByEmail(this.userToDelete.id).subscribe(() => {
+        this.users = this.users.filter((u) => u.id !== this.userToDelete!.id);
+        this.userToDelete = null;
         this.modalService.dismissAll();
       });
     }

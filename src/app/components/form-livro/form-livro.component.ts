@@ -10,6 +10,7 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class FormLivroComponent {
   novoLivro: Livro = {
+    id: 0,
     name: '',
     author: '',
     genre: '',
