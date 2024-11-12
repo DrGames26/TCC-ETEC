@@ -25,7 +25,6 @@
   vertical-align: middle;
   white-space: nowrap;
   padding: 10px 15px;
-  border: 1px solid #dee2e6; /* Borda entre as células */
 }
 
 .table-hover tbody tr:hover {
@@ -41,6 +40,10 @@
 
 .table-bordered {
   border: 1px solid #dee2e6;
+}
+
+.table-bordered tbody tr {
+  border-bottom: 1px solid #dee2e6; /* Linha divisória entre as linhas */
 }
 
 .table-dark th {
