@@ -11,6 +11,12 @@
   border: none;
 }
 
+.table td.descricao-livro {
+  white-space: normal;
+  max-width: 200px; 
+  word-wrap: break-word; 
+}
+
 table {
   width: 100%;
   table-layout: auto;
