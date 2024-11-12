@@ -105,4 +105,5 @@ export class AdmComponent implements OnInit {
       });
     }
   }
+  
 }

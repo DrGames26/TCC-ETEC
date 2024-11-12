@@ -15,7 +15,7 @@ export class AuthService {
     'hellenmascarettidasilva11@gmail.com',
     'isabella.esteves1610@gmail.com'
   ];
-  
+
   private apiUrl = 'https://sorobooks-backend.onrender.com/api'; // URL base da API
   private userSubject = new BehaviorSubject<any>(null); // Armazena o usuário autenticado
   public user$ = this.userSubject.asObservable(); // Observable para acessar o usuário
@@ -64,6 +64,29 @@ export class AuthService {
     );
   }
 
+  // Função para atualizar o usuário
+  updateUser(email: string, updatedUser: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/users/${email}`, updatedUser).pipe(
+      map((response: any) => {
+        // Atualiza o usuário no BehaviorSubject e no localStorage após a atualização
+        const updatedUserData = {
+          name: response.name,
+          email: response.email,
+          sex: response.sex,
+          profilePicture: response.profilePicture,
+          phoneNumber: response.phoneNumber
+        };
+        this.userSubject.next(updatedUserData);
+        localStorage.setItem('user', JSON.stringify(updatedUserData));
+        return updatedUserData;
+      }),
+      catchError((error) => {
+        alert('Erro ao atualizar as informações. Tente novamente.');
+        return throwError(error);
+      })
+    );
+  }
+
   // Obtém o usuário autenticado atual
   getUser() {
     return this.userSubject.value;
@@ -86,3 +109,4 @@ export class AuthService {
     return user ? this.authorizedEmails.includes(user.email) : false;
   }
 }
+
