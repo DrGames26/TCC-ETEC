@@ -10,13 +10,15 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class FormLivroComponent {
   novoLivro: Livro = {
+    id: 0, // Inicializa o id com 0, que é esperado pelo tipo Livro
     name: '',
-    author: '', 
+    author: '',
     genre: '',
     description: '',
     picture: '',
     usuarioPublicador: '' 
   };
+  
 
   errorMessage: string = '';
 
@@ -57,7 +59,16 @@ export class FormLivroComponent {
     this.livroService.addLivro(livroComPostagem).subscribe(
       (livro) => {
         console.log('Livro adicionado com sucesso:', livro);
-        this.novoLivro = { name: '', author: '', genre: '', description: '', picture: '', usuarioPublicador: '' }; // Reinicia todos os campos
+        // Reinicia os campos após adicionar o livro, mantendo o id
+        this.novoLivro = { 
+          id: 0, // mantém o id
+          name: '', 
+          author: '', 
+          genre: '', 
+          description: '', 
+          picture: '', 
+          usuarioPublicador: '' 
+        };
         this.errorMessage = ''; // Limpa a mensagem de erro
         this.router.navigate(['/livros']); // Redireciona para a página de livros
       },
