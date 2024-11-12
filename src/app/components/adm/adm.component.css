@@ -39,11 +39,11 @@
 }
 
 .table-bordered {
-  border: 1px solid #dee2e6;
+  border: 1px solid #000;
 }
 
 .table-bordered tbody tr {
-  border-bottom: 1px solid #dee2e6; /* Linha divisória entre as linhas */
+  border-bottom: 1px solid #000; /* Linha divisória entre as linhas */
 }
 
 .table-dark th {
