@@ -1,63 +1,65 @@
 <div class="container mt-4" *ngIf="isAuthorized">
-  <h2>Painel de Administração</h2>
+  <div class="card shadow-sm p-3 mb-5 bg-body rounded">
+    <h2 class="text-center mb-4">Painel de Administração</h2>
 
-  <!-- Gerenciamento de Contas -->
-  <section class="admin-section">
-    <h3>Gerenciar Contas</h3>
-    <div *ngIf="users.length > 0; else noUsers">
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th>Nome</th>
-            <th>Email</th>
-            <th>Ações</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let user of users">
-            <td>{{ user.name }}</td>
-            <td>{{ user.email }}</td>
-            <td>
-              <button class="btn btn-warning btn-sm" (click)="openEditUserModal(user, editUserModal)">Editar</button>
-              <button class="btn btn-danger btn-sm" (click)="openDeleteUserModal(user, deleteModal)">Excluir</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <ng-template #noUsers>
-      <p>Nenhuma conta encontrada.</p>
-    </ng-template>
-  </section>
+    <!-- Gerenciamento de Contas -->
+    <section class="admin-section">
+      <h3>Gerenciar Contas</h3>
+      <div *ngIf="users.length > 0; else noUsers">
+        <table class="table table-hover table-bordered table-responsive">
+          <thead class="table-dark">
+            <tr>
+              <th>Nome</th>
+              <th>Email</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of users">
+              <td>{{ user.name }}</td>
+              <td>{{ user.email }}</td>
+              <td class="d-flex justify-content-around">
+                <button class="btn btn-warning btn-sm" (click)="openEditUserModal(user, editUserModal)">Editar</button>
+                <button class="btn btn-danger btn-sm" (click)="openDeleteUserModal(user, deleteModal)">Excluir</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <ng-template #noUsers>
+        <p class="text-muted">Nenhuma conta encontrada.</p>
+      </ng-template>
+    </section>
 
-  <!-- Gerenciamento de Livros -->
-  <section class="admin-section mt-5">
-    <h3>Gerenciar Livros</h3>
-    <div *ngIf="books.length > 0; else noBooks">
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th>Título</th>
-            <th>Descrição</th>
-            <th>Ações</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let book of books">
-            <td>{{ book.name }}</td>
-            <td>{{ book.description }}</td>
-            <td>
-              <button class="btn btn-warning btn-sm" (click)="openEditBookModal(book, editBookModal)">Editar</button>
-              <button class="btn btn-danger btn-sm" (click)="openDeleteBookModal(book, deleteModal)">Excluir</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <ng-template #noBooks>
-      <p>Nenhum livro encontrado.</p>
-    </ng-template>
-  </section>
+    <!-- Gerenciamento de Livros -->
+    <section class="admin-section mt-5">
+      <h3>Gerenciar Livros</h3>
+      <div *ngIf="books.length > 0; else noBooks">
+        <table class="table table-hover table-bordered table-responsive">
+          <thead class="table-dark">
+            <tr>
+              <th>Título</th>
+              <th>Descrição</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let book of books">
+              <td>{{ book.name }}</td>
+              <td>{{ book.description }}</td>
+              <td class="d-flex justify-content-around">
+                <button class="btn btn-warning btn-sm" (click)="openEditBookModal(book, editBookModal)">Editar</button>
+                <button class="btn btn-danger btn-sm" (click)="openDeleteBookModal(book, deleteModal)">Excluir</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <ng-template #noBooks>
+        <p class="text-muted">Nenhum livro encontrado.</p>
+      </ng-template>
+    </section>
+  </div>
 </div>
 
 <!-- Modal de confirmação de exclusão -->
@@ -67,7 +69,7 @@
     <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('cancel')"></button>
   </div>
   <div class="modal-body">
-    Tem certeza de que deseja excluir este item?
+    <p>Tem certeza de que deseja excluir este item?</p>
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-secondary" (click)="modal.dismiss('cancel')">Cancelar</button>
@@ -83,12 +85,12 @@
   </div>
   <div class="modal-body">
     <form #editBookForm="ngForm">
-      <div class="form-group">
-        <label for="bookTitle">Título:</label>
+      <div class="form-group mb-3">
+        <label for="bookTitle" class="form-label">Título:</label>
         <input *ngIf="bookToEdit" type="text" id="bookTitle" class="form-control" [(ngModel)]="bookToEdit.name" name="name" required />
       </div>
       <div class="form-group">
-        <label for="bookDescription">Descrição:</label>
+        <label for="bookDescription" class="form-label">Descrição:</label>
         <textarea *ngIf="bookToEdit" id="bookDescription" class="form-control" [(ngModel)]="bookToEdit.description" name="description" required></textarea>
       </div>
     </form>
@@ -107,12 +109,12 @@
   </div>
   <div class="modal-body">
     <form #editUserForm="ngForm">
-      <div class="form-group">
-        <label for="userName">Nome:</label>
+      <div class="form-group mb-3">
+        <label for="userName" class="form-label">Nome:</label>
         <input *ngIf="userToEdit" type="text" id="userName" class="form-control" [(ngModel)]="userToEdit.name" name="name" required />
       </div>
       <div class="form-group">
-        <label for="userEmail">Email:</label>
+        <label for="userEmail" class="form-label">Email:</label>
         <input *ngIf="userToEdit" type="email" id="userEmail" class="form-control" [(ngModel)]="userToEdit.email" name="email" required />
       </div>
     </form>

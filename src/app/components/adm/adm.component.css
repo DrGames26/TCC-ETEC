@@ -1,18 +1,29 @@
 .container {
-    max-width: 900px;
-    margin: 0 auto;
-  }
-  
-  .admin-section {
-    margin-top: 20px;
-  }
-  
-  table th, table td {
-    text-align: left;
-    vertical-align: middle;
-  }
-  
-  button {
-    margin-right: 5px;
-  }
-  
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.admin-section {
+  margin-top: 20px;
+}
+
+.card {
+  border: none;
+}
+
+table th, table td {
+  text-align: left;
+  vertical-align: middle;
+}
+
+button {
+  margin-right: 5px;
+}
+
+.modal-body p {
+  font-size: 1.1em;
+}
+
+.modal-footer .btn {
+  min-width: 80px;
+}
