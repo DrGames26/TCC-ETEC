@@ -71,6 +71,30 @@
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-secondary" (click)="modal.dismiss('cancel')">Cancelar</button>
-    <button type="button" class="btn btn-danger" (click)="modal.close('confirm')">Confirmar</button> <!-- Fechamento da tag button -->
+    <button type="button" class="btn btn-danger" (click)="modal.close('confirm')">Confirmar</button>
+  </div>
+</ng-template>
+
+<!-- Modal de Edição de Livro -->
+<ng-template #editBookModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title">Editar Livro</h5>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('cancel')"></button>
+  </div>
+  <div class="modal-body">
+    <form #editBookForm="ngForm">
+      <div class="form-group">
+        <label for="bookTitle">Título:</label>
+        <input type="text" id="bookTitle" class="form-control" [(ngModel)]="bookToEdit.name" name="name" required />
+      </div>
+      <div class="form-group">
+        <label for="bookDescription">Descrição:</label>
+        <textarea id="bookDescription" class="form-control" [(ngModel)]="bookToEdit.description" name="description" required></textarea>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.dismiss('cancel')">Cancelar</button>
+    <button type="button" class="btn btn-primary" (click)="saveBookChanges()">Salvar</button>
   </div>
 </ng-template>

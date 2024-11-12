@@ -44,4 +44,10 @@ export class LivroService {
   deleteBook(bookId: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/${bookId}`);
   }
+
+  // Atualizar livro
+  updateBook(livro: Livro): Observable<Livro> {
+    return this.http.put<Livro>(`${this.apiUrl}/${livro.id}`, livro);
+  }
 }
+

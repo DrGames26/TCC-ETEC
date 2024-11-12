@@ -16,6 +16,7 @@ export class AdmComponent implements OnInit {
   isAuthorized = false;
   userToDelete: User | null = null;
   bookToDelete: Livro | null = null;
+  bookToEdit: Livro | null = null;
 
   constructor(
     private authService: AuthService,
@@ -52,7 +53,8 @@ export class AdmComponent implements OnInit {
   }
 
   openEditBookModal(book: Livro) {
-    // Lógica para editar livro
+    this.bookToEdit = { ...book };  // Fazendo uma cópia do livro para edição
+    this.modalService.open(this.openEditBookModal, { ariaLabelledBy: 'modal-basic-title' });
   }
 
   openDeleteUserModal(user: User, content: any) {
@@ -93,5 +95,13 @@ export class AdmComponent implements OnInit {
     this.livroService.deleteBook(bookId).subscribe(() => {
       this.books = this.books.filter(book => book.id !== bookId);
     });
+  }
+
+  saveBookChanges() {
+    if (this.bookToEdit) {
+      this.livroService.updateBook(this.bookToEdit).subscribe(() => {
+        this.loadBooks(); // Atualiza a lista de livros após a edição
+      });
+    }
   }
 }
