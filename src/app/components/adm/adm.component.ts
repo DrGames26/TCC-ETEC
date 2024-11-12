@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AuthService } from '../../services/auth.service';
 import { CadastroUsuarioService } from '../../services/cadastro-usuario.service';
-import { LivroService } from '../../services/livro.service';
+import { LivroService, Livro } from '../../services/livro.service';
 import { User } from '../../services/user.model';
 
 @Component({
@@ -12,10 +12,10 @@ import { User } from '../../services/user.model';
 })
 export class AdmComponent implements OnInit {
   users: User[] = [];
-  books: any[] = [];
+  books: Livro[] = [];
   isAuthorized = false;
   userToDelete: User | null = null;
-  bookToDelete: any | null = null;
+  bookToDelete: Livro | null = null;
 
   constructor(
     private authService: AuthService,
@@ -27,25 +27,32 @@ export class AdmComponent implements OnInit {
   ngOnInit(): void {
     if (this.authService.isAuthorized()) {
       this.isAuthorized = true;
-      this.cadastroUsuarioService.listarUsuarios().subscribe((users) => {
-        this.users = users;
-      });
-
-      this.livroService.getLivros().subscribe((books) => {
-        this.books = books;
-      });
+      this.loadUsers();
+      this.loadBooks();
     } else {
       this.isAuthorized = false;
       alert('Você não tem permissão para acessar esta área.');
     }
   }
 
-  openEditUserModal(user: User) {
-    // Abra o modal de edição de usuário aqui
+  private loadUsers() {
+    this.cadastroUsuarioService.listarUsuarios().subscribe((users) => {
+      this.users = users;
+    });
   }
 
-  openEditBookModal(book: any) {
-    // Abra o modal de edição de livro aqui
+  private loadBooks() {
+    this.livroService.getLivros().subscribe((books) => {
+      this.books = books;
+    });
+  }
+
+  openEditUserModal(user: User) {
+    // Lógica para editar usuário
+  }
+
+  openEditBookModal(book: Livro) {
+    // Lógica para editar livro
   }
 
   openDeleteUserModal(user: User, content: any) {
@@ -62,7 +69,7 @@ export class AdmComponent implements OnInit {
     );
   }
 
-  openDeleteBookModal(book: any, content: any) {
+  openDeleteBookModal(book: Livro, content: any) {
     this.bookToDelete = book;
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then(
       (result) => {

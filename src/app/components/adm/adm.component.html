@@ -44,7 +44,7 @@
         </thead>
         <tbody>
           <tr *ngFor="let book of books">
-            <td>{{ book.title }}</td>
+            <td>{{ book.name }}</td>
             <td>{{ book.description }}</td>
             <td>
               <button class="btn btn-warning btn-sm" (click)="openEditBookModal(book)">Editar</button>
@@ -63,7 +63,7 @@
 <!-- Modal de confirmação de exclusão -->
 <ng-template #deleteModal let-modal>
   <div class="modal-header">
-    <h5 class="modal-title" id="modal-basic-title">Confirmação de Exclusão</h5>
+    <h5 class="modal-title">Confirmação de Exclusão</h5>
     <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('cancel')"></button>
   </div>
   <div class="modal-body">
@@ -71,6 +71,6 @@
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-secondary" (click)="modal.dismiss('cancel')">Cancelar</button>
-    <button type="button" class="btn btn-danger" (click)="modal.close('confirm')">Excluir</button>
+    <button type="button" class="btn btn-danger" (click)="modal.close('confirm')">
   </div>
 </ng-template>
