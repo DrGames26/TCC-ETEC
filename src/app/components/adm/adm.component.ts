@@ -16,6 +16,8 @@ export class AdmComponent implements OnInit {
   isAuthorized = false;
   userToDelete: User | null = null;
   bookToDelete: any | null = null;
+  userToEdit: User | null = null;
+  bookToEdit: any | null = null;
 
   constructor(
     private authService: AuthService,
@@ -41,11 +43,13 @@ export class AdmComponent implements OnInit {
   }
 
   openEditUserModal(user: User) {
-    // Abra o modal de edição de usuário aqui
+    this.userToEdit = { ...user };
+    this.modalService.open(this.editUserModal, { ariaLabelledBy: 'modal-basic-title' });
   }
 
   openEditBookModal(book: any) {
-    // Abra o modal de edição de livro aqui
+    this.bookToEdit = { ...book };
+    this.modalService.open(this.editBookModal, { ariaLabelledBy: 'modal-basic-title' });
   }
 
   openDeleteUserModal(user: User, content: any) {
@@ -82,9 +86,25 @@ export class AdmComponent implements OnInit {
     });
   }
 
-  deleteBook(bookId: number) {
-    this.livroService.deleteBook(bookId).subscribe(() => {
+  deleteBook(bookId: number): void {
+    this.livroService.deleteLivro(bookId).subscribe(() => {
       this.books = this.books.filter(book => book.id !== bookId);
     });
+  }
+
+  saveUserChanges(): void {
+    if (this.userToEdit) {
+      this.cadastroUsuarioService.updateUser(this.userToEdit).subscribe(() => {
+        this.users = this.users.map(user => (user.email === this.userToEdit?.email ? this.userToEdit : user));
+      });
+    }
+  }
+
+  saveBookChanges(): void {
+    if (this.bookToEdit) {
+      this.livroService.updateLivro(this.bookToEdit).subscribe(() => {
+        this.books = this.books.map(book => (book.id === this.bookToEdit?.id ? this.bookToEdit : book));
+      });
+    }
   }
 }
