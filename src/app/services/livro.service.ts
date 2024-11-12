@@ -3,13 +3,13 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 export interface Livro {
-  id?: number;
-  name: string;
+  id: number;  // id não é opcional
+  title: string;  // Corrigindo para 'title' para refletir o campo correto
   author: string;
-  description?: string;
+  description: string;  // Corrigido para ser obrigatório
   genre: string;
   picture?: string; 
-  usuarioPublicador?: string;
+  usuarioPublicador: string;  // O campo 'usuarioPublicador' agora é obrigatório
 }
 
 @Injectable({
@@ -33,6 +33,11 @@ export class LivroService {
   // Obtém um livro específico pelo ID
   getLivroPorId(id: number): Observable<Livro> {
     return this.http.get<Livro>(`${this.apiUrl}/${id}`);
+  }
+
+  // Atualiza as informações de um livro
+  editLivro(livro: Livro): Observable<Livro> {
+    return this.http.put<Livro>(`${this.apiUrl}/${livro.id}`, livro);  // Faz a requisição PUT para editar
   }
 
   // Obtém os livros do usuário

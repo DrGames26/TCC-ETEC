@@ -14,8 +14,7 @@ export class AdmComponent implements OnInit {
   users: User[] = [];
   books: any[] = [];
   isAuthorized = false;
-  userToDelete: User | null = null;
-  bookToDelete: any | null = null;
+  bookToEdit: any | null = null; // Livro selecionado para edição
 
   constructor(
     private authService: AuthService,
@@ -30,7 +29,6 @@ export class AdmComponent implements OnInit {
       this.cadastroUsuarioService.listarUsuarios().subscribe((users) => {
         this.users = users;
       });
-
       this.livroService.getLivros().subscribe((books) => {
         this.books = books;
       });
@@ -40,51 +38,20 @@ export class AdmComponent implements OnInit {
     }
   }
 
-  openEditUserModal(user: User) {
-    // Abra o modal de edição de usuário aqui
+  openEditBookModal(book: any, content: any) {
+    this.bookToEdit = { ...book }; // Clona os dados do livro para edição
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
   }
 
-  openEditBookModal(book: any) {
-    // Abra o modal de edição de livro aqui
-  }
-
-  openDeleteUserModal(user: User, content: any) {
-    this.userToDelete = user;
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then(
-      (result) => {
-        if (result === 'confirm') {
-          this.deleteUser(user.email);
-        }
-      },
-      () => {
-        this.userToDelete = null;
-      }
-    );
-  }
-
-  openDeleteBookModal(book: any, content: any) {
-    this.bookToDelete = book;
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then(
-      (result) => {
-        if (result === 'confirm') {
-          this.deleteBook(book.id);
-        }
-      },
-      () => {
-        this.bookToDelete = null;
-      }
-    );
-  }
-
-  deleteUser(userEmail: string): void {
-    this.cadastroUsuarioService.deleteUserByEmail(userEmail).subscribe(() => {
-      this.users = this.users.filter(user => user.email !== userEmail);
-    });
-  }
-
-  deleteBook(bookId: number) {
-    this.livroService.deleteBook(bookId).subscribe(() => {
-      this.books = this.books.filter(book => book.id !== bookId);
-    });
+  saveEditedBook() {
+    if (this.bookToEdit) {
+      this.livroService.editLivro(this.bookToEdit).subscribe(() => {
+        // Atualiza a lista de livros
+        const index = this.books.findIndex((b) => b.id === this.bookToEdit!.id);
+        if (index > -1) this.books[index] = { ...this.bookToEdit };
+        this.bookToEdit = null;
+        this.modalService.dismissAll();
+      });
+    }
   }
 }

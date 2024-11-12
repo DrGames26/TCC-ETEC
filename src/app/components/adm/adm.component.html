@@ -19,7 +19,7 @@
             <td>{{ user.email }}</td>
             <td>
               <button class="btn btn-warning btn-sm" (click)="openEditUserModal(user)">Editar</button>
-              <button class="btn btn-danger btn-sm" (click)="openDeleteUserModal(user, deleteModal)">Excluir</button>
+              <button class="btn btn-danger btn-sm" (click)="openDeleteUserModal(user)">Excluir</button>
             </td>
           </tr>
         </tbody>
@@ -48,7 +48,7 @@
             <td>{{ book.description }}</td>
             <td>
               <button class="btn btn-warning btn-sm" (click)="openEditBookModal(book)">Editar</button>
-              <button class="btn btn-danger btn-sm" (click)="openDeleteBookModal(book, deleteModal)">Excluir</button>
+              <button class="btn btn-danger btn-sm" (click)="openDeleteBookModal(book)">Excluir</button>
             </td>
           </tr>
         </tbody>
