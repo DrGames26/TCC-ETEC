@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AuthService } from '../../services/auth.service';
 import { CadastroUsuarioService } from '../../services/cadastro-usuario.service';
@@ -18,6 +18,10 @@ export class AdmComponent implements OnInit {
   bookToDelete: any | null = null;
   userToEdit: User | null = null;
   bookToEdit: any | null = null;
+
+  // Referências aos modais de edição
+  @ViewChild('editUserModal') editUserModal!: TemplateRef<any>;
+  @ViewChild('editBookModal') editBookModal!: TemplateRef<any>;
 
   constructor(
     private authService: AuthService,
