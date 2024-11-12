@@ -17,6 +17,7 @@ export class AdmComponent implements OnInit {
   userToDelete: User | null = null;
   bookToDelete: Livro | null = null;
   bookToEdit: Livro | null = null;
+  userToEdit: User | null = null;
 
   constructor(
     private authService: AuthService,
@@ -49,7 +50,7 @@ export class AdmComponent implements OnInit {
   }
 
   openEditUserModal(user: User, content: any) {
-    // Lógica para editar usuário
+    this.userToEdit = { ...user }; // Faz uma cópia do usuário para edição
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
   }
 
@@ -105,5 +106,12 @@ export class AdmComponent implements OnInit {
       });
     }
   }
-  
+
+  saveUserChanges() {
+    if (this.userToEdit) {
+      this.cadastroUsuarioService.updateUser(this.userToEdit).subscribe(() => {
+        this.loadUsers(); // Atualiza a lista de usuários após a edição
+      });
+    }
+  }
 }

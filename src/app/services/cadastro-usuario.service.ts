@@ -21,7 +21,15 @@ export class CadastroUsuarioService {
   listarUsuarios(): Observable<User[]> {
     return this.http.get<User[]>(`${this.apiUrl}/users`);
   }
+
+  // Método para excluir um usuário por e-mail
   deleteUserByEmail(email: string): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/users/${email}`);
+  }
+
+  // Novo método para atualizar um usuário
+  updateUser(user: User): Observable<User> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.put<User>(`${this.apiUrl}/users/${user.email}`, user, { headers });
   }
 }
