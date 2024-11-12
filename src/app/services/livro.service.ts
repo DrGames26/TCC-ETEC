@@ -3,17 +3,17 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 export interface Livro {
-  id: number;  // id não é opcional
-  title: string;  // Corrigindo para 'title' para refletir o campo correto
+  id?: number; // id não é opcional
+  name: string;
   author: string;
-  description: string;  // Corrigido para ser obrigatório
+  description: string; // Corrigido para ser obrigatório
   genre: string;
-  picture?: string; 
-  usuarioPublicador: string;  // O campo 'usuarioPublicador' agora é obrigatório
+  picture?: string;
+  usuarioPublicador: string; // O campo 'usuarioPublicador' agora é obrigatório
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LivroService {
   private apiUrl = 'https://sorobooks-backend.onrender.com/api/books'; // URL do backend hospedado
@@ -37,7 +37,7 @@ export class LivroService {
 
   // Atualiza as informações de um livro
   editLivro(livro: Livro): Observable<Livro> {
-    return this.http.put<Livro>(`${this.apiUrl}/${livro.id}`, livro);  // Faz a requisição PUT para editar
+    return this.http.put<Livro>(`${this.apiUrl}/${livro.id}`, livro); // Faz a requisição PUT para editar
   }
 
   // Obtém os livros do usuário
