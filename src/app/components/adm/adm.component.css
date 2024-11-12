@@ -4,29 +4,52 @@
 }
 
 .admin-section {
-  margin-top: 20px;
+  margin-top: 30px;
 }
 
 .card {
-  border: none;
+  border: 1px solid #dee2e6;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.table {
+  width: 100%;
+  table-layout: auto;
+  word-wrap: break-word;
+  border-spacing: 0 10px; /* Espaçamento entre as linhas */
+}
+
+.table th, .table td {
+  text-align: left;
+  vertical-align: middle;
+  white-space: nowrap;
+  padding: 10px 15px;
+}
+
+.table-hover tbody tr:hover {
+  background-color: #f1f1f1;
 }
 
 .table td.descricao-livro {
   white-space: normal;
-  max-width: 200px; 
-  word-wrap: break-word; 
-}
-
-table {
-  width: 100%;
-  table-layout: auto;
+  max-width: 250px;
   word-wrap: break-word;
+  padding: 8px;
 }
 
-table th, table td {
-  text-align: left;
-  vertical-align: middle;
-  white-space: nowrap;
+.table-bordered {
+  border: 1px solid #dee2e6;
+}
+
+.table-bordered th,
+.table-bordered td {
+  border: 1px solid #dee2e6; /* Cor da borda */
+}
+
+.table-dark th {
+  background-color: #343a40;
+  color: #fff;
 }
 
 button {
@@ -35,23 +58,24 @@ button {
 
 .modal-body p {
   font-size: 1.1em;
+  margin-bottom: 15px;
 }
 
 .modal-footer .btn {
   min-width: 80px;
 }
 
-@media (max-width: 576px) {
+@media (max-width: 768px) {
   .card {
-    padding: 10px;
+    padding: 15px;
   }
-  .table-responsive {
-    overflow-x: auto;
-  }
+
   .table th, .table td {
     font-size: 0.9em;
+    padding: 8px;
     white-space: normal;
   }
+
   .modal-body p, .modal-footer .btn {
     font-size: 0.9em;
   }
