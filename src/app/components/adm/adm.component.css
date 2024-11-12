@@ -1,5 +1,5 @@
 .container {
-  max-width: 900px;
+  max-width: 100%;
   margin: 0 auto;
 }
 
@@ -11,9 +11,16 @@
   border: none;
 }
 
+table {
+  width: 100%;
+  table-layout: auto;
+  word-wrap: break-word;
+}
+
 table th, table td {
   text-align: left;
   vertical-align: middle;
+  white-space: nowrap;
 }
 
 button {
@@ -26,4 +33,20 @@ button {
 
 .modal-footer .btn {
   min-width: 80px;
+}
+
+@media (max-width: 576px) {
+  .card {
+    padding: 10px;
+  }
+  .table-responsive {
+    overflow-x: auto;
+  }
+  .table th, .table td {
+    font-size: 0.9em;
+    white-space: normal;
+  }
+  .modal-body p, .modal-footer .btn {
+    font-size: 0.9em;
+  }
 }
