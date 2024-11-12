@@ -2,34 +2,39 @@
   <div class="card shadow-sm p-3 mb-5 bg-body rounded">
     <h2 class="text-center mb-4">Painel de Administração</h2>
 
-    <!-- Gerenciamento de Contas -->
-    <section class="admin-section">
-      <h3>Gerenciar Contas</h3>
-      <div *ngIf="users.length > 0; else noUsers">
-        <table class="table table-hover table-bordered table-responsive">
-          <thead class="table-dark">
-            <tr>
-              <th>Nome</th>
-              <th>Email</th>
-              <th>Ações</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let user of users">
-              <td>{{ user.name }}</td>
-              <td>{{ user.email }}</td>
-              <td class="d-flex justify-content-around">
-                <button class="btn btn-warning btn-sm" (click)="openEditUserModal(user, editUserModal)">Editar</button>
-                <button class="btn btn-danger btn-sm" (click)="openDeleteUserModal(user, deleteModal)">Excluir</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <ng-template #noUsers>
-        <p class="text-muted">Nenhuma conta encontrada.</p>
-      </ng-template>
-    </section>
+   <!-- Gerenciamento de Contas -->
+<section class="admin-section">
+  <h3>Gerenciar Contas</h3>
+  <div *ngIf="users.length > 0; else noUsers">
+    <table class="table table-hover table-bordered table-responsive">
+      <thead class="table-dark">
+        <tr>
+          <th>Nome</th>
+          <th>Email</th>
+          <th>Sexo</th>
+          <th>Telefone</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users">
+          <td>{{ user.name }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.sex }}</td>
+          <td>{{ user.phoneNumber }}</td>
+          <td class="d-flex justify-content-around">
+            <button class="btn btn-warning btn-sm" (click)="openEditUserModal(user, editUserModal)">Editar</button>
+            <button class="btn btn-danger btn-sm" (click)="openDeleteUserModal(user, deleteModal)">Excluir</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <ng-template #noUsers>
+    <p class="text-muted">Nenhuma conta encontrada.</p>
+  </ng-template>
+</section>
+
 
     <!-- Gerenciamento de Livros -->
     <section class="admin-section mt-5">
@@ -113,9 +118,17 @@
         <label for="userName" class="form-label">Nome:</label>
         <input *ngIf="userToEdit" type="text" id="userName" class="form-control" [(ngModel)]="userToEdit.name" name="name" required />
       </div>
-      <div class="form-group">
+      <div class="form-group mb-3">
         <label for="userEmail" class="form-label">Email:</label>
         <input *ngIf="userToEdit" type="email" id="userEmail" class="form-control" [(ngModel)]="userToEdit.email" name="email" required />
+      </div>
+      <div class="form-group mb-3">
+        <label for="userSex" class="form-label">Sexo:</label>
+        <input *ngIf="userToEdit" type="text" id="userSex" class="form-control" [(ngModel)]="userToEdit.sex" name="sex" required />
+      </div>
+      <div class="form-group mb-3">
+        <label for="userPhone" class="form-label">Telefone:</label>
+        <input *ngIf="userToEdit" type="text" id="userPhone" class="form-control" [(ngModel)]="userToEdit.phoneNumber" name="phoneNumber" required />
       </div>
     </form>
   </div>
@@ -124,3 +137,4 @@
     <button type="button" class="btn btn-primary" (click)="saveUserChanges()">Salvar</button>
   </div>
 </ng-template>
+
