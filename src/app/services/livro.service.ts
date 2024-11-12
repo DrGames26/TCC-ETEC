@@ -41,12 +41,7 @@ export class LivroService {
   }
 
   // Exclui um livro pelo ID
-  deleteLivro(bookId: number): Observable<any> {
+  deleteBook(bookId: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/${bookId}`);
-  }
-
-  // Atualiza os dados de um livro
-  updateLivro(livro: Livro): Observable<Livro> {
-    return this.http.put<Livro>(`${this.apiUrl}/${livro.id}`, livro);
   }
 }
