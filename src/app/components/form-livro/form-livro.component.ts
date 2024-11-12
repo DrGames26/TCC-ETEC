@@ -6,23 +6,22 @@ import { AuthService } from 'src/app/services/auth.service';
 @Component({
   selector: 'app-form-livro',
   templateUrl: './form-livro.component.html',
-  styleUrls: ['./form-livro.component.css'],
+  styleUrls: ['./form-livro.component.css']
 })
 export class FormLivroComponent {
   novoLivro: Livro = {
-    id: 0,
     name: '',
-    author: '',
+    author: '', 
     genre: '',
     description: '',
     picture: '',
-    usuarioPublicador: '',
+    usuarioPublicador: '' 
   };
 
   errorMessage: string = '';
 
   constructor(
-    private livroService: LivroService,
+    private livroService: LivroService, 
     private authService: AuthService,
     private router: Router
   ) {}
@@ -42,21 +41,16 @@ export class FormLivroComponent {
     }
 
     // Verifica se todos os campos obrigatórios estão preenchidos
-    if (
-      !this.novoLivro.name ||
-      !this.novoLivro.author ||
-      !this.novoLivro.genre ||
-      !this.novoLivro.description ||
-      !this.novoLivro.picture
-    ) {
+    if (!this.novoLivro.name || !this.novoLivro.author ||
+        !this.novoLivro.genre || !this.novoLivro.description || !this.novoLivro.picture) {
       this.errorMessage = 'Por favor, preencha todos os campos obrigatórios.';
       return;
     }
 
     // Define `usuarioPublicador` com o nome do usuário logado
-    const livroComPostagem = {
+    const livroComPostagem = { 
       ...this.novoLivro,
-      usuarioPublicador: usuarioLogado.name,
+      usuarioPublicador: usuarioLogado.name
     };
 
     // Envia o livro para o serviço
