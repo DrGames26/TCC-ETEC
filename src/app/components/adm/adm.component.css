@@ -17,7 +17,7 @@
   width: 100%;
   table-layout: auto;
   word-wrap: break-word;
-  border-spacing: 0 10px; /* Espaçamento entre as linhas */
+  border-collapse: collapse; /* Para unir as bordas das células */
 }
 
 .table th, .table td {
@@ -25,6 +25,7 @@
   vertical-align: middle;
   white-space: nowrap;
   padding: 10px 15px;
+  border: 1px solid #dee2e6; /* Borda entre as células */
 }
 
 .table-hover tbody tr:hover {
@@ -40,11 +41,6 @@
 
 .table-bordered {
   border: 1px solid #dee2e6;
-}
-
-.table-bordered th,
-.table-bordered td {
-  border: 1px solid #dee2e6; /* Cor da borda */
 }
 
 .table-dark th {
