@@ -35,8 +35,13 @@ export class LivroService {
     return this.http.get<Livro>(`${this.apiUrl}/${id}`);
   }
 
-  // Obtém os livros do usuário (Método que você precisa para a troca)
+  // Obtém os livros do usuário
   getBooksByUsuarioPublicador(usuarioPublicador: string): Observable<Livro[]> {
     return this.http.get<Livro[]>(`${this.apiUrl}/my-books?usuarioPublicador=${usuarioPublicador}`);
+  }
+
+  // Exclui um livro pelo ID
+  deleteBook(bookId: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${bookId}`);
   }
 }

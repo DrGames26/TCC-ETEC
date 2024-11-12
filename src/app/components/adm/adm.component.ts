@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AuthService } from '../../services/auth.service';
 import { CadastroUsuarioService } from '../../services/cadastro-usuario.service';
 import { LivroService } from '../../services/livro.service';
-import { User } from '../../services/user.model'; // Certifique-se de que o caminho esteja correto
+import { User } from '../../services/user.model';
 
 @Component({
   selector: 'app-adm',
@@ -13,18 +14,19 @@ export class AdmComponent implements OnInit {
   users: User[] = [];
   books: any[] = [];
   isAuthorized = false;
+  userToDelete: User | null = null;
+  bookToDelete: any | null = null;
 
   constructor(
     private authService: AuthService,
     private cadastroUsuarioService: CadastroUsuarioService,
-    private livroService: LivroService
+    private livroService: LivroService,
+    private modalService: NgbModal
   ) {}
 
   ngOnInit(): void {
-    // Verifica se o usuário está autorizado
     if (this.authService.isAuthorized()) {
       this.isAuthorized = true;
-      // Carrega os dados apenas se o usuário for autorizado
       this.cadastroUsuarioService.listarUsuarios().subscribe((users) => {
         this.users = users;
       });
@@ -38,24 +40,51 @@ export class AdmComponent implements OnInit {
     }
   }
 
-  // Editar e excluir usuário
-  editUser(user: User) {
-    console.log('Editar usuário', user);
+  openEditUserModal(user: User) {
+    // Abra o modal de edição de usuário aqui
+  }
+
+  openEditBookModal(book: any) {
+    // Abra o modal de edição de livro aqui
+  }
+
+  openDeleteUserModal(user: User, content: any) {
+    this.userToDelete = user;
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then(
+      (result) => {
+        if (result === 'confirm') {
+          this.deleteUser(user.email);
+        }
+      },
+      () => {
+        this.userToDelete = null;
+      }
+    );
+  }
+
+  openDeleteBookModal(book: any, content: any) {
+    this.bookToDelete = book;
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then(
+      (result) => {
+        if (result === 'confirm') {
+          this.deleteBook(book.id);
+        }
+      },
+      () => {
+        this.bookToDelete = null;
+      }
+    );
   }
 
   deleteUser(userEmail: string): void {
-    // Chame o serviço de exclusão de usuários e passe o email ou outro identificador
-    this.cadastroUsuarioService.deleteUserByEmail(userEmail).subscribe(response => {
-      // Lógica após a exclusão
+    this.cadastroUsuarioService.deleteUserByEmail(userEmail).subscribe(() => {
+      this.users = this.users.filter(user => user.email !== userEmail);
     });
   }
 
-  // Editar e excluir livro
-  editBook(book: any) {
-    console.log('Editar livro', book);
-  }
-
   deleteBook(bookId: number) {
-    console.log('Excluir livro', bookId);
+    this.livroService.deleteBook(bookId).subscribe(() => {
+      this.books = this.books.filter(book => book.id !== bookId);
+    });
   }
 }

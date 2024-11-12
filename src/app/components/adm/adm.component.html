@@ -1,62 +1,76 @@
-<div class="container mt-4">
-    <h2>Painel de Administração</h2>
-  
-    <!-- Gerenciamento de Contas -->
-    <section class="admin-section">
-      <h3>Gerenciar Contas</h3>
-      <div *ngIf="users.length > 0; else noUsers">
-        <table class="table table-striped">
-          <thead>
-            <tr>
-              <th>Nome</th>
-              <th>Email</th>
-              <th>Ações</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let user of users">
-              <td>{{ user.name }}</td>
-              <td>{{ user.email }}</td>
-              <td>
-                <button class="btn btn-warning btn-sm" (click)="editUser(user)">Editar</button>
-                <button class="btn btn-danger btn-sm" (click)="deleteUser(user.email)">Excluir</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <ng-template #noUsers>
-        <p>Nenhuma conta encontrada.</p>
-      </ng-template>
-    </section>
-  
-    <!-- Gerenciamento de Livros -->
-    <section class="admin-section mt-5">
-      <h3>Gerenciar Livros</h3>
-      <div *ngIf="books.length > 0; else noBooks">
-        <table class="table table-striped">
-          <thead>
-            <tr>
-              <th>Título</th>
-              <th>Descrição</th>
-              <th>Ações</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let book of books">
-              <td>{{ book.title }}</td>
-              <td>{{ book.description }}</td>
-              <td>
-                <button class="btn btn-warning btn-sm" (click)="editBook(book)">Editar</button>
-                <button class="btn btn-danger btn-sm" (click)="deleteBook(book.id)">Excluir</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <ng-template #noBooks>
-        <p>Nenhum livro encontrado.</p>
-      </ng-template>
-    </section>
+<div class="container mt-4" *ngIf="isAuthorized">
+  <h2>Painel de Administração</h2>
+
+  <!-- Gerenciamento de Contas -->
+  <section class="admin-section">
+    <h3>Gerenciar Contas</h3>
+    <div *ngIf="users.length > 0; else noUsers">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Email</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of users">
+            <td>{{ user.name }}</td>
+            <td>{{ user.email }}</td>
+            <td>
+              <button class="btn btn-warning btn-sm" (click)="openEditUserModal(user)">Editar</button>
+              <button class="btn btn-danger btn-sm" (click)="openDeleteUserModal(user, deleteModal)">Excluir</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <ng-template #noUsers>
+      <p>Nenhuma conta encontrada.</p>
+    </ng-template>
+  </section>
+
+  <!-- Gerenciamento de Livros -->
+  <section class="admin-section mt-5">
+    <h3>Gerenciar Livros</h3>
+    <div *ngIf="books.length > 0; else noBooks">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Título</th>
+            <th>Descrição</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let book of books">
+            <td>{{ book.title }}</td>
+            <td>{{ book.description }}</td>
+            <td>
+              <button class="btn btn-warning btn-sm" (click)="openEditBookModal(book)">Editar</button>
+              <button class="btn btn-danger btn-sm" (click)="openDeleteBookModal(book, deleteModal)">Excluir</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <ng-template #noBooks>
+      <p>Nenhum livro encontrado.</p>
+    </ng-template>
+  </section>
+</div>
+
+<!-- Modal de confirmação de exclusão -->
+<ng-template #deleteModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="modal-basic-title">Confirmação de Exclusão</h5>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('cancel')"></button>
   </div>
-  
+  <div class="modal-body">
+    Tem certeza de que deseja excluir este item?
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.dismiss('cancel')">Cancelar</button>
+    <button type="button" class="btn btn-danger" (click)="modal.close('confirm')">Excluir</button>
+  </div>
+</ng-template>

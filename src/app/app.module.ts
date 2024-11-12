@@ -23,6 +23,7 @@ import { EstanteComponent } from './components/estante/estante.component';
 import { TrocasPendentesComponent } from './components/trocas-pendentes/trocas-pendentes.component';
 import { TrocarLivroComponent } from './components/trocar-livro/trocar-livro.component';
 import { AdmComponent } from './components/adm/adm.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { AdmComponent } from './components/adm/adm.component';
     FormsModule,
     ToastrModule.forRoot(),
     BrowserAnimationsModule,
-    AppRoutingModule  
+    AppRoutingModule,
+    NgbModule  
   ],
   providers: [LivroService, CadastroUsuarioService],
   bootstrap: [AppComponent]
