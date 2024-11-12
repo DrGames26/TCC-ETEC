@@ -85,11 +85,11 @@
     <form>
       <div class="mb-3">
         <label for="userName" class="form-label">Nome</label>
-        <input type="text" class="form-control" id="userName" [(ngModel)]="userToEdit?.name" name="name">
+        <input type="text" class="form-control" id="userName" [(ngModel)]="userToEdit.name" name="name">
       </div>
       <div class="mb-3">
         <label for="userEmail" class="form-label">Email</label>
-        <input type="email" class="form-control" id="userEmail" [(ngModel)]="userToEdit?.email" name="email" disabled>
+        <input type="email" class="form-control" id="userEmail" [(ngModel)]="userToEdit.email" name="email" disabled>
       </div>
       <button type="button" class="btn btn-primary" (click)="saveUserChanges()">Salvar alterações</button>
     </form>

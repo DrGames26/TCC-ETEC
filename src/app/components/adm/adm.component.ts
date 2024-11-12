@@ -46,17 +46,17 @@ export class AdmComponent implements OnInit {
     }
   }
 
-  openEditUserModal(user: User) {
+  openEditUserModal(user: User): void {
     this.userToEdit = { ...user };
     this.modalService.open(this.editUserModal, { ariaLabelledBy: 'modal-basic-title' });
   }
 
-  openEditBookModal(book: any) {
+  openEditBookModal(book: any): void {
     this.bookToEdit = { ...book };
     this.modalService.open(this.editBookModal, { ariaLabelledBy: 'modal-basic-title' });
   }
 
-  openDeleteUserModal(user: User, content: any) {
+  openDeleteUserModal(user: User, content: any): void {
     this.userToDelete = user;
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then(
       (result) => {
@@ -70,7 +70,7 @@ export class AdmComponent implements OnInit {
     );
   }
 
-  openDeleteBookModal(book: any, content: any) {
+  openDeleteBookModal(book: any, content: any): void {
     this.bookToDelete = book;
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then(
       (result) => {
