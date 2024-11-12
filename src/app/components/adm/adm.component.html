@@ -18,7 +18,7 @@
             <td>{{ user.name }}</td>
             <td>{{ user.email }}</td>
             <td>
-              <button class="btn btn-warning btn-sm" (click)="openEditUserModal(user)">Editar</button>
+              <button class="btn btn-warning btn-sm" (click)="openEditUserModal(user, editUserModal)">Editar</button>
               <button class="btn btn-danger btn-sm" (click)="openDeleteUserModal(user, deleteModal)">Excluir</button>
             </td>
           </tr>
@@ -47,7 +47,7 @@
             <td>{{ book.name }}</td>
             <td>{{ book.description }}</td>
             <td>
-              <button class="btn btn-warning btn-sm" (click)="openEditBookModal(book)">Editar</button>
+              <button class="btn btn-warning btn-sm" (click)="openEditBookModal(book, editBookModal)">Editar</button>
               <button class="btn btn-danger btn-sm" (click)="openDeleteBookModal(book, deleteModal)">Excluir</button>
             </td>
           </tr>
@@ -96,5 +96,22 @@
   <div class="modal-footer">
     <button type="button" class="btn btn-secondary" (click)="modal.dismiss('cancel')">Cancelar</button>
     <button type="button" class="btn btn-primary" (click)="saveBookChanges()">Salvar</button>
+  </div>
+</ng-template>
+
+<!-- Modal de Edição de Usuário -->
+<ng-template #editUserModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title">Editar Usuário</h5>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('cancel')"></button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <!-- Adicione os campos de edição de usuário aqui, conforme necessário -->
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.dismiss('cancel')">Cancelar</button>
+    <button type="button" class="btn btn-primary">Salvar</button>
   </div>
 </ng-template>

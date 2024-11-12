@@ -48,13 +48,14 @@ export class AdmComponent implements OnInit {
     });
   }
 
-  openEditUserModal(user: User) {
+  openEditUserModal(user: User, content: any) {
     // Lógica para editar usuário
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
   }
 
-  openEditBookModal(book: Livro) {
+  openEditBookModal(book: Livro, content: any) {
     this.bookToEdit = { ...book };  // Fazendo uma cópia do livro para edição
-    this.modalService.open(this.openEditBookModal, { ariaLabelledBy: 'modal-basic-title' });
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
   }
 
   openDeleteUserModal(user: User, content: any) {
