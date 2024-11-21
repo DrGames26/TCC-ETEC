@@ -63,7 +63,7 @@ export class ExchangeService {
 
   // Recusar solicitação de troca
   rejectExchange(id: number): Observable<any> {
-    return this.http.put(`${this.apiUrl}/${id}/status`, { status: 'REJECTED' }).pipe(
+    return this.http.put(`${this.apiUrl}/${id}/status`, { status: 'REJECTED' }).pipe(  // Enviando status como string
       tap({
         next: () => {
           this.toastr.success('Solicitação de troca recusada!', 'Sucesso');
