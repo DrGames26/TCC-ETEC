@@ -108,5 +108,9 @@ export class AuthService {
     const user = this.getUser();
     return user ? this.authorizedEmails.includes(user.email) : false;
   }
+  getAuthenticatedUserEmail(): string | null {
+    const user = this.getUser();
+    return user ? user.email : null;
+  }
 }
 
