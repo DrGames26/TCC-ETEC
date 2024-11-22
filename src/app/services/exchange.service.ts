@@ -46,7 +46,8 @@ export class ExchangeService {
 
   // Aceitar troca
   acceptExchange(id: number): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/accept/${id}`, {}).pipe(
+    const body = { status: 'accepted' }; // Envia o status como parte da requisição
+    return this.http.put<any>(`${this.apiUrl}/${id}/status`, body).pipe(
       tap({
         next: () => {
           console.log('Troca aceita com sucesso!');
@@ -60,7 +61,8 @@ export class ExchangeService {
 
   // Recusar troca
   rejectExchange(id: number): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/reject/${id}`, {}).pipe(
+    const body = { status: 'rejected' }; // Envia o status como parte da requisição
+    return this.http.put<any>(`${this.apiUrl}/${id}/status`, body).pipe(
       tap({
         next: () => {
           console.log('Troca recusada com sucesso!');
@@ -72,3 +74,4 @@ export class ExchangeService {
     );
   }
 }
+
