@@ -37,10 +37,22 @@ export class TrocasPendentesComponent implements OnInit {
   }
 
   acceptExchange(id: number): void {
+    // Encontre a troca pendente pelo ID
+    const exchange = this.pendentes.find(e => e.id === id);
+    if (!exchange || !exchange.requestedBook || !exchange.requestedBook.phoneNumber) {
+      this.toastr.error('Número de telefone não disponível.', 'Erro');
+      return;
+    }
+
+    // Chama o serviço para aceitar a troca
     this.exchangeService.acceptExchange(id).subscribe(
       () => {
         this.toastr.success('Solicitação de troca aceita!', 'Sucesso');
         this.loadExchanges(); // Recarrega as trocas após aceitar
+
+        // Redireciona para o WhatsApp usando o número de telefone
+        const phoneNumber = exchange.requestedBook.phoneNumber;
+        window.location.href = `https://wa.me/${phoneNumber}`;
       },
       () => {
         this.toastr.error('Erro ao aceitar solicitação.', 'Erro');

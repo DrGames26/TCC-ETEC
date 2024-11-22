@@ -38,39 +38,35 @@ export class ExchangeService {
     return this.http.get<any[]>(`${this.apiUrl}/pending`).pipe(
       tap({
         error: (error) => {
-          console.error('Erro ao obter solicitações pendentes:', error);
-          this.toastr.error('Erro ao carregar solicitações pendentes.', 'Erro');
+          console.error('Erro ao carregar solicitações de troca:', error);
         }
       })
     );
   }
 
-  // Aceitar solicitação de troca
+  // Aceitar troca
   acceptExchange(id: number): Observable<any> {
-    return this.http.put(`${this.apiUrl}/${id}/status`, { status: 'ACCEPTED' }).pipe(
-      tap({
-        next: (response) => {
-          this.toastr.success('Solicitação de troca aceita!', 'Sucesso');
-        },
-        error: (error) => {
-          console.error('Erro ao aceitar solicitação de troca:', error);
-          this.toastr.error('Erro ao aceitar solicitação.', 'Erro');
-        }
-      })
-    );
-  }
-  
-
-  // Recusar solicitação de troca
-  rejectExchange(id: number): Observable<any> {
-    return this.http.put(`${this.apiUrl}/${id}/status`, { status: 'REJECTED' }).pipe(  // Enviando status como string
+    return this.http.put<any>(`${this.apiUrl}/accept/${id}`, {}).pipe(
       tap({
         next: () => {
-          this.toastr.success('Solicitação de troca recusada!', 'Sucesso');
+          console.log('Troca aceita com sucesso!');
         },
         error: (error) => {
-          console.error('Erro ao recusar solicitação de troca:', error);
-          this.toastr.error('Erro ao recusar solicitação.', 'Erro');
+          console.error('Erro ao aceitar troca:', error);
+        }
+      })
+    );
+  }
+
+  // Recusar troca
+  rejectExchange(id: number): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/reject/${id}`, {}).pipe(
+      tap({
+        next: () => {
+          console.log('Troca recusada com sucesso!');
+        },
+        error: (error) => {
+          console.error('Erro ao recusar troca:', error);
         }
       })
     );
