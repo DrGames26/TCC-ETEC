@@ -16,9 +16,9 @@ export class FormLivroComponent {
     genre: '',
     description: '',
     picture: '',
-    usuarioPublicador: '' 
+    usuarioPublicador: '',
+    phoneNumber: '' 
   };
-  
 
   errorMessage: string = '';
 
@@ -35,7 +35,7 @@ export class FormLivroComponent {
       return;
     }
 
-    // Pega o nome do usuário logado
+    // Pega os dados do usuário logado
     const usuarioLogado = this.authService.getUser();
     if (!usuarioLogado || !usuarioLogado.name) {
       this.errorMessage = 'Erro ao identificar o usuário logado. Tente novamente.';
@@ -49,10 +49,11 @@ export class FormLivroComponent {
       return;
     }
 
-    // Define `usuarioPublicador` com o nome do usuário logado
+    // Define os dados do livro com as informações do usuário logado
     const livroComPostagem = { 
       ...this.novoLivro,
-      usuarioPublicador: usuarioLogado.name
+      usuarioPublicador: usuarioLogado.name,
+      phoneNumber: usuarioLogado.phoneNumber 
     };
 
     // Envia o livro para o serviço
@@ -67,7 +68,8 @@ export class FormLivroComponent {
           genre: '', 
           description: '', 
           picture: '', 
-          usuarioPublicador: '' 
+          usuarioPublicador: '', 
+          phoneNumber: '' 
         };
         this.errorMessage = ''; // Limpa a mensagem de erro
         this.router.navigate(['/livros']); // Redireciona para a página de livros
