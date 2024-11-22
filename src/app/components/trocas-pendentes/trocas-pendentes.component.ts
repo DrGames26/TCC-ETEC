@@ -39,15 +39,20 @@ export class TrocasPendentesComponent implements OnInit {
   acceptExchange(id: number): void {
     // Encontre a troca pendente pelo ID
     const exchange = this.pendentes.find(e => e.id === id);
-    if (!exchange || !exchange.offeredBook || !exchange.offeredBook.phoneNumber) {
-      this.toastr.error('Número de telefone do solicitante não disponível.', 'Erro');
-      console.log('Troca não encontrada ou número de telefone ausente', exchange);
+    if (!exchange || !exchange.offeredBook || !exchange.offeredBook.phoneNumber || !exchange.requestedBook) {
+      this.toastr.error('Informações da troca incompletas.', 'Erro');
+      console.log('Troca não encontrada ou informações ausentes', exchange);
       return;
     }
 
-    // Exibe o número de telefone do solicitante (dono do offeredBook)
-    const phoneNumber = exchange.offeredBook.phoneNumber;
-    console.log('Número de telefone do solicitante:', phoneNumber);
+    // Informações necessárias
+    const phoneNumber = exchange.offeredBook.phoneNumber; // Número do solicitante
+    const requestedBook = exchange.requestedBook; // Livro solicitado
+
+    // Monta a mensagem com informações do livro solicitado
+    const message = `Olá, estou aceitando a troca do livro "${requestedBook.title}" (autor: ${requestedBook.author}). Podemos alinhar os detalhes?`;
+
+    console.log('Mensagem gerada para o WhatsApp:', message);
 
     // Chama o serviço para aceitar a troca
     this.exchangeService.acceptExchange(id).subscribe(
@@ -55,8 +60,8 @@ export class TrocasPendentesComponent implements OnInit {
         this.toastr.success('Solicitação de troca aceita!', 'Sucesso');
         this.loadExchanges(); // Recarrega as trocas após aceitar
 
-        // Redireciona para o WhatsApp usando o número de telefone do solicitante
-        window.location.href = `https://wa.me/${phoneNumber}`;
+        // Redireciona para o WhatsApp com a mensagem personalizada
+        window.location.href = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
       },
       () => {
         this.toastr.error('Erro ao aceitar solicitação.', 'Erro');
