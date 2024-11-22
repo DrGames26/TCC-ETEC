@@ -50,7 +50,7 @@ export class TrocasPendentesComponent implements OnInit {
     const requestedBook = exchange.requestedBook; // Livro solicitado
 
     // Monta a mensagem com informações do livro solicitado
-    const message = `Olá, estou aceitando a troca do livro "${requestedBook.title}" (autor: ${requestedBook.author}). Podemos alinhar os detalhes?`;
+    const message = `Olá, estou aceitando a troca do livro "${requestedBook.name}" (autor: ${requestedBook.author}). Podemos alinhar os detalhes?`;
 
     console.log('Mensagem gerada para o WhatsApp:', message);
 
