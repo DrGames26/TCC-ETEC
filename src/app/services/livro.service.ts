@@ -10,6 +10,7 @@ export interface Livro {
   genre: string;
   picture?: string;
   usuarioPublicador?: string;
+  phoneNumber?: string
 }
 
 @Injectable({

@@ -60,10 +60,12 @@ export class TrocarLivroComponent implements OnInit {
       requestedBook: {
         id: this.livroDesejado.id,
       },
-      requester: this.authService.getUser()?.email || ''
+      requester: this.authService.getUser()?.email || '',
+      requesterPhoneNumber: this.authService.getUser()?.phoneNumber || ''  // Incluindo o número de telefone
     };
 
     console.log('Requester:', troca.requester);
+    console.log('PhoneNumber:', troca.requesterPhoneNumber); // Para garantir que o número de telefone está sendo enviado corretamente
 
     // Solicitar a troca
     this.exchangeService.requestExchange(troca).subscribe(
