@@ -13,7 +13,10 @@
         <input [(ngModel)]="novoLivro.genre" name="genre" placeholder="Gênero" required class="input-campo">
       </div>
       <div class="campo-formulario">
-        <input [(ngModel)]="novoLivro.picture" name="picture" placeholder="URL da Imagem" required class="input-campo">
+        <input type="file" (change)="onFileSelected($event)" accept="image/*" class="input-campo">
+        <div *ngIf="previewUrl">
+          <img [src]="previewUrl" alt="Preview da Imagem" class="preview-imagem">
+        </div>
       </div>
       <div class="campo-formulario">
         <textarea [(ngModel)]="novoLivro.description" name="description" placeholder="Descrição" required class="input-campo"></textarea>

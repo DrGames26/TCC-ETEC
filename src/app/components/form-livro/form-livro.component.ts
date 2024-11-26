@@ -10,73 +10,80 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class FormLivroComponent {
   novoLivro: Livro = {
-    id: 0, // Inicializa o id com 0, que é esperado pelo tipo Livro
+    id: 0,
     name: '',
     author: '',
     genre: '',
     description: '',
     picture: '',
     usuarioPublicador: '',
-    phoneNumber: '' 
+    phoneNumber: ''
   };
 
+  selectedFile: File | null = null;
+  previewUrl: string | null = null;
   errorMessage: string = '';
 
   constructor(
-    private livroService: LivroService, 
+    private livroService: LivroService,
     private authService: AuthService,
     private router: Router
   ) {}
 
+  onFileSelected(event: any): void {
+    const file = event.target.files[0];
+    if (file) {
+      this.selectedFile = file;
+
+      // Gera o preview da imagem
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.previewUrl = reader.result as string;
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
   adicionarLivro(): void {
-    // Verifica se o usuário está logado
     if (!this.authService.isLoggedIn()) {
       this.errorMessage = 'Você precisa estar logado para adicionar um livro.';
       return;
     }
 
-    // Pega os dados do usuário logado
     const usuarioLogado = this.authService.getUser();
     if (!usuarioLogado || !usuarioLogado.name) {
       this.errorMessage = 'Erro ao identificar o usuário logado. Tente novamente.';
       return;
     }
 
-    // Verifica se todos os campos obrigatórios estão preenchidos
     if (!this.novoLivro.name || !this.novoLivro.author ||
-        !this.novoLivro.genre || !this.novoLivro.description || !this.novoLivro.picture) {
+        !this.novoLivro.genre || !this.novoLivro.description) {
       this.errorMessage = 'Por favor, preencha todos os campos obrigatórios.';
       return;
     }
 
-    // Define os dados do livro com as informações do usuário logado
-    const livroComPostagem = { 
-      ...this.novoLivro,
-      usuarioPublicador: usuarioLogado.name,
-      phoneNumber: usuarioLogado.phoneNumber 
-    };
+    if (!this.selectedFile) {
+      this.errorMessage = 'Por favor, selecione uma imagem.';
+      return;
+    }
 
-    // Envia o livro para o serviço
-    this.livroService.addLivro(livroComPostagem).subscribe(
-      (livro) => {
-        console.log('Livro adicionado com sucesso:', livro);
-        // Reinicia os campos após adicionar o livro, mantendo o id
-        this.novoLivro = { 
-          id: 0, // mantém o id
-          name: '', 
-          author: '', 
-          genre: '', 
-          description: '', 
-          picture: '', 
-          usuarioPublicador: '', 
-          phoneNumber: '' 
-        };
-        this.errorMessage = ''; // Limpa a mensagem de erro
-        this.router.navigate(['/livros']); // Redireciona para a página de livros
+    const formData = new FormData();
+    formData.append('name', this.novoLivro.name);
+    formData.append('author', this.novoLivro.author);
+    formData.append('genre', this.novoLivro.genre);
+    formData.append('description', this.novoLivro.description);
+    formData.append('usuarioPublicador', usuarioLogado.name);
+    formData.append('phoneNumber', usuarioLogado.phoneNumber || '');
+    formData.append('picture', this.selectedFile); // Anexa o arquivo
+
+    this.livroService.addLivro(formData).subscribe(
+      () => {
+        console.log('Livro adicionado com sucesso');
+        this.router.navigate(['/livros']);
       },
       (error) => {
         console.error('Erro ao adicionar livro:', error);
-        this.errorMessage = 'Erro ao adicionar livro. Tente novamente mais tarde.'; // Mensagem de erro genérica
+        this.errorMessage = 'Erro ao adicionar livro. Tente novamente mais tarde.';
       }
     );
   }

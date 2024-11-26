@@ -27,8 +27,8 @@ export class LivroService {
   }
 
   // Adicionar livro
-  addLivro(livro: Livro): Observable<Livro> {
-    return this.http.post<Livro>(`${this.apiUrl}/add`, livro);
+  addLivro(livro: FormData): Observable<any> {
+    return this.http.post(`${this.apiUrl}/add`, livro);
   }
 
   // Obter livro pelo ID
