@@ -5,22 +5,37 @@
   gap: 20px;
 }
 
-.livro {
-  width: 100%;
+.card {
   max-width: 300px;
-  cursor: pointer;
-  transition: transform 0.3s ease;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.livro:hover {
+.card:hover {
   transform: scale(1.05);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 .card-img-top {
   height: 200px;
   object-fit: cover;
+  border-bottom: 1px solid #ddd;
 }
 
 .card-body {
+  padding: 15px;
   text-align: center;
+}
+
+.card-title {
+  font-size: 1.2em;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.card-text {
+  font-size: 0.9em;
+  margin-bottom: 5px;
 }

@@ -2,11 +2,17 @@
   <div *ngFor="let livro of livros" class="col-md-4 mb-4">
     <div class="card">
       <!-- Verifica se a imagem está disponível e a exibe -->
-      <img *ngIf="livro.picture" class="card-img-top" [src]="'data:image/jpeg;base64,' + livro.picture" alt="Imagem do Livro">
+      <img *ngIf="livro.picture" class="card-img-top" 
+           [src]="'data:image/jpeg;base64,' + livro.picture" 
+           alt="Imagem do Livro">
       
       <div class="card-body">
         <h5 class="card-title">{{ livro.name }}</h5>
         <p class="card-text">Autor: {{ livro.author }}</p>
+        <p class="card-text">Gênero: {{ livro.genre }}</p>
+        <p class="card-text" *ngIf="livro.phoneNumber">
+          Contato: <a [href]="'tel:' + livro.phoneNumber">{{ livro.phoneNumber }}</a>
+        </p>
         <p class="card-text">Publicado por: {{ livro.usuarioPublicador }}</p>
         <button class="btn btn-primary" (click)="navegarParaDetalhes(livro.id)">Ver Detalhes</button>
       </div>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router'; // Importa o Router
+import { Router } from '@angular/router';
 import { LivroService, Livro } from 'src/app/services/livro.service';
 
 @Component({
@@ -18,29 +18,25 @@ export class ListaLivrosComponent implements OnInit {
 
   carregarLivros(): void {
     this.livroService.getLivros().subscribe(
-      (data) => {
-        // Converte o byte[] para base64
-        this.livros = data.map((livro: Livro) => {
+      (data: Livro[]) => {
+        this.livros = data.map((livro) => {
+          // Configura fallback para imagem e outros dados opcionais
           if (livro.picture) {
             livro.picture = this.convertToBase64(livro.picture);
           }
           return livro;
         });
 
-        // Ordena os livros por ID do maior para o menor
-        this.livros.sort((a: Livro, b: Livro) => (b.id || 0) - (a.id || 0));
+        // Ordena os livros por ID em ordem decrescente
+        this.livros.sort((a, b) => b.id - a.id);
       },
       (error) => console.error('Erro ao carregar livros:', error)
     );
   }
 
-  convertToBase64(byteArray: any): string {
-    let binaryString = '';
-    const bytes = new Uint8Array(byteArray);
-    bytes.forEach((byte) => {
-      binaryString += String.fromCharCode(byte);
-    });
-    return btoa(binaryString);
+  convertToBase64(base64String: string): string {
+    // Retorna a string Base64 diretamente
+    return base64String;
   }
 
   navegarParaDetalhes(id: number): void {
