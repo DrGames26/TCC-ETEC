@@ -14,8 +14,8 @@
       </div>
       <div class="campo-formulario">
         <input type="file" (change)="onFileSelected($event)" accept="image/*" class="input-campo">
-        <div *ngIf="previewUrl">
-          <img [src]="previewUrl" alt="Preview da Imagem" class="preview-imagem">
+        <div *ngIf="previewUrl" class="mt-3">
+          <img [src]="previewUrl" alt="Preview da Imagem" class="img-fluid" style="max-width: 200px; height: auto;">
         </div>
       </div>
       <div class="campo-formulario">
