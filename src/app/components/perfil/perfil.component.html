@@ -38,26 +38,24 @@
 <ng-template #editProfileModal let-modal>
   <div class="modal-header">
     <h5 class="modal-title">Editar Perfil</h5>
-    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('cancel')"></button>
+    <button type="button" class="btn-close" (click)="modal.dismiss('Fechar')"></button>
   </div>
   <div class="modal-body">
-    <form #editProfileForm="ngForm">
-      <div class="form-group mb-3">
-        <label for="userName" class="form-label">Nome:</label>
-        <input *ngIf="userToEdit" type="text" id="userName" class="form-control" [(ngModel)]="userToEdit.name" name="name" required />
+    <form (ngSubmit)="updateProfile()">
+      <!-- Formulário de edição com imagem -->
+      <div class="mb-3">
+        <label for="name" class="form-label">Nome</label>
+        <input [(ngModel)]="user.name" id="name" name="name" type="text" class="form-control">
       </div>
-      <div class="form-group mb-3">
-        <label for="userPhone" class="form-label">Telefone:</label>
-        <input *ngIf="userToEdit" type="text" id="userPhone" class="form-control" [(ngModel)]="userToEdit.phoneNumber" name="phoneNumber" required />
+      <div class="mb-3">
+        <label for="phone" class="form-label">Telefone</label>
+        <input [(ngModel)]="user.phoneNumber" id="phone" name="phone" type="text" class="form-control">
       </div>
-      <div class="form-group mb-3">
-        <label for="userProfilePicture" class="form-label">Foto de Perfil:</label>
-        <input type="file" id="userProfilePicture" class="form-control" (change)="onFileSelected($event)" />
+      <div class="mb-3">
+        <label for="profilePicture" class="form-label">Nova Foto de Perfil</label>
+        <input [(ngModel)]="profilePicture" id="profilePicture" name="profilePicture" type="file" class="form-control">
       </div>
+      <button type="submit" class="btn btn-success">Salvar Alterações</button>
     </form>
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" (click)="modal.dismiss('cancel')">Cancelar</button>
-    <button type="button" class="btn btn-primary" (click)="saveProfileChanges(modal)">Salvar</button>
   </div>
 </ng-template>
