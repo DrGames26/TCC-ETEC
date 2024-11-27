@@ -10,13 +10,14 @@ export class AuthService {
   // Lista de e-mails autorizados para acessar abas restritas
   authorizedEmails: string[] = [
     'felipechiav@gmail.com',
+    'felipechiav2@gmail.com',
     'gabrielacciari7@gmail.com',
     'gacarneirk@gmail.com',
     'hellenmascarettidasilva11@gmail.com',
     'isabella.esteves1610@gmail.com'
   ];
 
-  private apiUrl = 'https://sorobooks-backend-lu3a.onrender.com/api'; // URL base da API
+  private apiUrl = 'api'; // URL base da API
   private userSubject = new BehaviorSubject<any>(null); // Armazena o usuário autenticado
   public user$ = this.userSubject.asObservable(); // Observable para acessar o usuário
 
