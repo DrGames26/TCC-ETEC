@@ -11,7 +11,7 @@
     <div class="livros-container">
       <div *ngFor="let livro of livros | slice:0:5" class="livro" (click)="navegarParaDetalhes(livro.id)">
         <!-- Adiciona o prefixo Base64 à imagem -->
-        <img *ngIf="livro.picture" [src]="'data:image/jpeg;base64,' + livro.picture" alt="Imagem do Livro">
+        <img *ngIf="livro.picture" class="card-img-top" [src]="'data:image/jpeg;base64,' + livro.picture" alt="Imagem do Livro">
         <h3>{{ livro.name }}</h3>
         <p>Autor: {{ livro.author }}</p>
         <p>Publicado por: {{ livro.usuarioPublicador }}</p>
