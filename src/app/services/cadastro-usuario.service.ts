@@ -7,7 +7,7 @@ import { User } from './user.model'; // Verifique se o caminho está correto
   providedIn: 'root'
 })
 export class CadastroUsuarioService {
-  private apiUrl = 'https://sorobooks-backend.onrender.com/api'; // URL da sua API
+  private apiUrl = 'https://sorobooks-backend-lu3a.onrender.com/api'; // URL da sua API
 
   constructor(private http: HttpClient) {}
 
