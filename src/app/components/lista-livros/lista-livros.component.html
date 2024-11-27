@@ -1,6 +1,6 @@
 <div class="livros-container row">
   <div *ngFor="let livro of livros" class="col-md-4 mb-4">
-    <div class="card">
+    <div class="card mt-5">
       <!-- Exibe a imagem com proporção mantida -->
       <img *ngIf="livro.picture" class="card-img-top" 
            [src]="'data:image/jpeg;base64,' + livro.picture" 
