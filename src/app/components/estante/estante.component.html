@@ -1,17 +1,20 @@
-    <div class="container mt-4">
-      
-    <div class="text-center bg-light p-4 rounded shadow-sm">
-      <h1 style="color: #8d573a;">Meus Livros</h1>
-      </div>
+<div class="container mt-4">
+  <div class="text-center bg-light p-4 rounded shadow-sm">
+    <h1 style="color: #8d573a;">Meus Livros</h1>
+  </div>
 
-      <div class="livros-container position-relative">
-    <div *ngFor="let livro of livros" class="livro" (click)="navegarParaDetalhes(livro.id!)">
-      <img *ngIf="livro.picture" [src]="livro.picture" alt="Imagem do Livro">
-      <h3>{{ livro.name }}</h3>
-      <p>Autor: {{ livro.author }}</p>
-      <p>Publicado por: {{ livro.usuarioPublicador }}</p>
+  <div class="row mt-4">
+    <div *ngFor="let livro of livros" class="col-md-4 col-sm-6 mb-4">
+      <div class="card">
+        <!-- Verifica se a imagem é Base64 e, caso contrário, ajusta -->
+        <img *ngIf="livro.picture" [src]="livro.picture.startsWith('data:image') ? livro.picture : 'data:image/jpeg;base64,' + livro.picture" class="card-img-top" alt="Imagem do Livro">
+        <div class="card-body">
+          <h5 class="card-title">{{ livro.name }}</h5>
+          <p class="card-text"><strong>Autor:</strong> {{ livro.author }}</p>
+          <p class="card-text"><strong>Publicado por:</strong> {{ livro.usuarioPublicador }}</p>
+          <button *ngIf="livro.id" class="btn btn-custom" (click)="navegarParaDetalhes(livro.id)">Ver Detalhes</button>
+        </div>
+      </div>
     </div>
   </div>
-
-  </div>
-  
+</div>
