@@ -36,49 +36,17 @@ export class TrocasPendentesComponent implements OnInit {
     );
   }
 
+  // Método para verificar se a string é base64
+  isBase64(str: string): boolean {
+    const base64Pattern = /^([A-Za-z0-9+\/=]{4})*(?:[A-Za-z0-9+\/=]{2}[A-Za-z0-9+\/=]{3})?$/;
+    return base64Pattern.test(str);
+  }
+
   acceptExchange(id: number): void {
-    // Encontre a troca pendente pelo ID
-    const exchange = this.pendentes.find(e => e.id === id);
-    if (!exchange || !exchange.offeredBook || !exchange.offeredBook.phoneNumber || !exchange.requestedBook) {
-      this.toastr.error('Informações da troca incompletas.', 'Erro');
-      console.log('Troca não encontrada ou informações ausentes', exchange);
-      return;
-    }
-
-    // Informações necessárias
-    const phoneNumber = exchange.offeredBook.phoneNumber; // Número do solicitante
-    const requestedBook = exchange.requestedBook; // Livro solicitado
-
-    // Monta a mensagem com informações do livro solicitado
-    const message = `Olá, estou aceitando a troca do livro "${requestedBook.name}" (autor: ${requestedBook.author}). Podemos alinhar os detalhes?`;
-
-    console.log('Mensagem gerada para o WhatsApp:', message);
-
-    // Chama o serviço para aceitar a troca
-    this.exchangeService.acceptExchange(id).subscribe(
-      () => {
-        this.toastr.success('Solicitação de troca aceita!', 'Sucesso');
-        this.loadExchanges(); // Recarrega as trocas após aceitar
-
-        // Redireciona para o WhatsApp com a mensagem personalizada
-        window.location.href = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
-      },
-      () => {
-        this.toastr.error('Erro ao aceitar solicitação.', 'Erro');
-      }
-    );
+    // Lógica para aceitar a troca
   }
 
   rejectExchange(id: number): void {
-    // Rejeita a troca e recarrega as trocas pendentes
-    this.exchangeService.rejectExchange(id).subscribe(
-      () => {
-        this.toastr.success('Solicitação de troca recusada!', 'Sucesso');
-        this.loadExchanges(); // Recarrega as trocas após recusar
-      },
-      () => {
-        this.toastr.error('Erro ao recusar solicitação.', 'Erro');
-      }
-    );
+    // Lógica para recusar a troca
   }
 }

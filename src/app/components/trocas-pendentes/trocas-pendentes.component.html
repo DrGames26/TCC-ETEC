@@ -10,7 +10,9 @@
         <div class="d-flex justify-content-center align-items-center">
           <!-- Imagem do livro solicitado -->
           <div class="col-md-3 text-center">
-            <img *ngIf="exchange.requestedBook?.picture" [src]="exchange.requestedBook?.picture" class="img-fluid mb-2" alt="Imagem do Livro Solicitado" style="max-height: 200px;">
+            <img *ngIf="exchange.requestedBook?.picture" 
+                 [src]="isBase64(exchange.requestedBook?.picture) ? exchange.requestedBook?.picture : 'data:image/jpeg;base64,' + exchange.requestedBook?.picture" 
+                 class="img-fluid mb-2" alt="Imagem do Livro Solicitado" style="max-height: 200px;">
             <p class="fw-bold">Livro Solicitado</p>
           </div>
 
@@ -22,7 +24,9 @@
 
           <!-- Imagem do livro oferecido -->
           <div class="col-md-3 text-center">
-            <img *ngIf="exchange.offeredBook?.picture" [src]="exchange.offeredBook?.picture" class="img-fluid mb-2" alt="Imagem do Livro Oferecido" style="max-height: 200px;">
+            <img *ngIf="exchange.offeredBook?.picture" 
+                 [src]="isBase64(exchange.offeredBook?.picture) ? exchange.offeredBook?.picture : 'data:image/jpeg;base64,' + exchange.offeredBook?.picture" 
+                 class="img-fluid mb-2" alt="Imagem do Livro Oferecido" style="max-height: 200px;">
             <p class="fw-bold">Livro Oferecido</p>
           </div>
         </div>
@@ -41,13 +45,17 @@
         <div class="d-flex justify-content-center align-items-center">
           <!-- Imagem do livro solicitado -->
           <div class="col-md-3 text-center">
-            <img *ngIf="exchange.requestedBook?.picture" [src]="exchange.requestedBook?.picture" class="img-fluid mb-2" alt="Imagem do Livro Solicitado" style="max-height: 200px;">
+            <img *ngIf="exchange.requestedBook?.picture" 
+                 [src]="isBase64(exchange.requestedBook?.picture) ? exchange.requestedBook?.picture : 'data:image/jpeg;base64,' + exchange.requestedBook?.picture" 
+                 class="img-fluid mb-2" alt="Imagem do Livro Solicitado" style="max-height: 200px;">
             <p class="fw-bold">Livro Solicitado</p>
           </div>
 
           <!-- Imagem do livro oferecido -->
           <div class="col-md-3 text-center">
-            <img *ngIf="exchange.offeredBook?.picture" [src]="exchange.offeredBook?.picture" class="img-fluid mb-2" alt="Imagem do Livro Oferecido" style="max-height: 200px;">
+            <img *ngIf="exchange.offeredBook?.picture" 
+                 [src]="isBase64(exchange.offeredBook?.picture) ? exchange.offeredBook?.picture : 'data:image/jpeg;base64,' + exchange.offeredBook?.picture" 
+                 class="img-fluid mb-2" alt="Imagem do Livro Oferecido" style="max-height: 200px;">
             <p class="fw-bold">Livro Oferecido</p>
           </div>
         </div>
@@ -66,13 +74,17 @@
         <div class="d-flex justify-content-center align-items-center">
           <!-- Imagem do livro solicitado -->
           <div class="col-md-3 text-center">
-            <img *ngIf="exchange.requestedBook?.picture" [src]="exchange.requestedBook?.picture" class="img-fluid mb-2" alt="Imagem do Livro Solicitado" style="max-height: 200px;">
+            <img *ngIf="exchange.requestedBook?.picture" 
+                 [src]="isBase64(exchange.requestedBook?.picture) ? exchange.requestedBook?.picture : 'data:image/jpeg;base64,' + exchange.requestedBook?.picture" 
+                 class="img-fluid mb-2" alt="Imagem do Livro Solicitado" style="max-height: 200px;">
             <p class="fw-bold">Livro Solicitado</p>
           </div>
 
           <!-- Imagem do livro oferecido -->
           <div class="col-md-3 text-center">
-            <img *ngIf="exchange.offeredBook?.picture" [src]="exchange.offeredBook?.picture" class="img-fluid mb-2" alt="Imagem do Livro Oferecido" style="max-height: 200px;">
+            <img *ngIf="exchange.offeredBook?.picture" 
+                 [src]="isBase64(exchange.offeredBook?.picture) ? exchange.offeredBook?.picture : 'data:image/jpeg;base64,' + exchange.offeredBook?.picture" 
+                 class="img-fluid mb-2" alt="Imagem do Livro Oferecido" style="max-height: 200px;">
             <p class="fw-bold">Livro Oferecido</p>
           </div>
         </div>
