@@ -9,8 +9,7 @@
         <!-- Exibição da imagem de perfil, se disponível -->
         <div *ngIf="user.profilePicture; else noProfilePicture">
           <p class="mb-0"><strong>Foto de Perfil:</strong></p>
-          <!-- Verifica se a imagem é Base64 e, caso contrário, ajusta -->
-          <img [src]="user.profilePicture.startsWith('data:image') ? user.profilePicture : 'data:image/jpeg;base64,' + user.profilePicture" alt="Foto de perfil" class="img-fluid mb-3" style="width: 150px; height: auto;">
+          <img [src]="user.profilePicture" alt="Foto de perfil" class="img-fluid mb-3" style="width: 150px; height: auto;">
         </div>
         <ng-template #noProfilePicture>
           <p><em>Foto de perfil não disponível.</em></p>
@@ -38,24 +37,26 @@
 <ng-template #editProfileModal let-modal>
   <div class="modal-header">
     <h5 class="modal-title">Editar Perfil</h5>
-    <button type="button" class="btn-close" (click)="modal.dismiss('Fechar')"></button>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('cancel')"></button>
   </div>
   <div class="modal-body">
-    <form (ngSubmit)="updateProfile()">
-      <!-- Formulário de edição com imagem -->
-      <div class="mb-3">
-        <label for="name" class="form-label">Nome</label>
-        <input [(ngModel)]="user.name" id="name" name="name" type="text" class="form-control">
+    <form #editProfileForm="ngForm">
+      <div class="form-group mb-3">
+        <label for="userName" class="form-label">Nome:</label>
+        <input *ngIf="userToEdit" type="text" id="userName" class="form-control" [(ngModel)]="userToEdit.name" name="name" required />
       </div>
-      <div class="mb-3">
-        <label for="phone" class="form-label">Telefone</label>
-        <input [(ngModel)]="user.phoneNumber" id="phone" name="phone" type="text" class="form-control">
+      <div class="form-group mb-3">
+        <label for="userPhone" class="form-label">Telefone:</label>
+        <input *ngIf="userToEdit" type="text" id="userPhone" class="form-control" [(ngModel)]="userToEdit.phoneNumber" name="phoneNumber" required />
       </div>
-      <div class="mb-3">
-        <label for="profilePicture" class="form-label">Nova Foto de Perfil</label>
-        <input [(ngModel)]="profilePicture" id="profilePicture" name="profilePicture" type="file" class="form-control">
+      <div class="form-group mb-3">
+        <label for="userProfilePicture" class="form-label">Foto de Perfil:</label>
+        <input type="file" id="userProfilePicture" class="form-control" (change)="onFileSelected($event)" />
       </div>
-      <button type="submit" class="btn btn-success">Salvar Alterações</button>
     </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.dismiss('cancel')">Cancelar</button>
+    <button type="button" class="btn btn-primary" (click)="saveProfileChanges(modal)">Salvar</button>
   </div>
 </ng-template>

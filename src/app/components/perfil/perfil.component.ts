@@ -42,21 +42,7 @@ export class PerfilComponent implements OnInit {
   onFileSelected(event: any) {
     if (event.target.files.length > 0) {
       const file = event.target.files[0];
-      const reader = new FileReader();
-      
-      // Lê o arquivo como uma URL base64
-      reader.readAsDataURL(file);
-      
-      reader.onload = () => {
-        if (reader.result) {
-          // A imagem em Base64 será armazenada em profilePicture
-          this.userToEdit!.profilePicture = reader.result as string;
-        }
-      };
-      
-      reader.onerror = (error) => {
-        console.error('Erro ao ler o arquivo', error);
-      };
+      this.userToEdit!.profilePicture = URL.createObjectURL(file);
     }
   }
 
