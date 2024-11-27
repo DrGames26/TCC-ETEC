@@ -3,7 +3,7 @@ services:
   - type: static
     name: sorobooks
     env: static
-    url: https://sorobooks.onrender.com
+    url: https://sorobooks-p83s.onrender.com
     routes:
       - src: /(.*)
         dest: /index.html

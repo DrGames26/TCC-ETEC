@@ -14,10 +14,12 @@ export class AuthService {
     'gabrielacciari7@gmail.com',
     'gacarneirk@gmail.com',
     'hellenmascarettidasilva11@gmail.com',
-    'isabella.esteves1610@gmail.com'
+    'isabella.esteves1610@gmail.com',
   ];
 
-  private apiUrl = 'api'; // URL base da API
+  // URL base do backend hospedado no Render
+  private apiUrl = 'https://sorobooks-backend-lu3a.onrender.com/api';
+
   private userSubject = new BehaviorSubject<any>(null); // Armazena o usuário autenticado
   public user$ = this.userSubject.asObservable(); // Observable para acessar o usuário
 
@@ -52,7 +54,7 @@ export class AuthService {
           email: response.email,
           sex: response.sex,
           profilePicture: response.profilePicture,
-          phoneNumber: response.phoneNumber
+          phoneNumber: response.phoneNumber,
         };
         this.userSubject.next(user); // Atualiza o BehaviorSubject com o usuário completo
         localStorage.setItem('user', JSON.stringify(user)); // Salva no localStorage
@@ -75,7 +77,7 @@ export class AuthService {
           email: response.email,
           sex: response.sex,
           profilePicture: response.profilePicture,
-          phoneNumber: response.phoneNumber
+          phoneNumber: response.phoneNumber,
         };
         this.userSubject.next(updatedUserData);
         localStorage.setItem('user', JSON.stringify(updatedUserData));
@@ -110,4 +112,3 @@ export class AuthService {
     return user ? this.authorizedEmails.includes(user.email) : false;
   }
 }
-
