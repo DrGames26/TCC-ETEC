@@ -19,6 +19,8 @@
         <p class="mb-2"><strong>Email:</strong> {{ user.email }}</p>
         <p class="mb-2"><strong>Gênero:</strong> {{ user.sex }}</p>
         <p class="mb-2"><strong>Telefone:</strong> {{ user.phoneNumber }}</p>
+        
+        <button class="btn btn-warning mt-3" (click)="openEditProfileModal(editProfileModal)">Editar Perfil</button>
       </div>
     </div>
   </div>
@@ -28,5 +30,33 @@
   <div class="text-center mt-5">
     <h2>Você ainda não está logado.</h2>
     <a routerLink="/login" class="btn btn-primary mt-3">Faça Login</a>
+  </div>
+</ng-template>
+
+<!-- Modal de Edição de Perfil -->
+<ng-template #editProfileModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title">Editar Perfil</h5>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('cancel')"></button>
+  </div>
+  <div class="modal-body">
+    <form #editProfileForm="ngForm">
+      <div class="form-group mb-3">
+        <label for="userName" class="form-label">Nome:</label>
+        <input *ngIf="userToEdit" type="text" id="userName" class="form-control" [(ngModel)]="userToEdit.name" name="name" required />
+      </div>
+      <div class="form-group mb-3">
+        <label for="userPhone" class="form-label">Telefone:</label>
+        <input *ngIf="userToEdit" type="text" id="userPhone" class="form-control" [(ngModel)]="userToEdit.phoneNumber" name="phoneNumber" required />
+      </div>
+      <div class="form-group mb-3">
+        <label for="userProfilePicture" class="form-label">Foto de Perfil:</label>
+        <input type="file" id="userProfilePicture" class="form-control" (change)="onFileSelected($event)" />
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.dismiss('cancel')">Cancelar</button>
+    <button type="button" class="btn btn-primary" (click)="saveProfileChanges(modal)">Salvar</button>
   </div>
 </ng-template>

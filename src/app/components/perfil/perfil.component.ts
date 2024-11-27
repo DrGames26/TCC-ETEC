@@ -1,23 +1,63 @@
-// perfil.component.ts
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
+import { User } from '../../services/user.model';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-perfil',
   templateUrl: './perfil.component.html',
 })
 export class PerfilComponent implements OnInit {
-  user: any;
+  user: User | null = null;
+  userToEdit: User | null = null;
 
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private modalService: NgbModal
+  ) {}
 
   ngOnInit() {
     this.authService.user$.subscribe((user) => {
       this.user = user;
+      this.userToEdit = { 
+        name: user?.name || '', 
+        email: user?.email || '', 
+        password: user?.password || '', 
+        dateOfBirth: user?.dateOfBirth || '', 
+        sex: user?.sex || '', 
+        profilePicture: user?.profilePicture || '', 
+        phoneNumber: user?.phoneNumber || ''
+      };
     });
   }
 
   logout() {
     this.authService.logout();
+  }
+
+  openEditProfileModal(content: any) {
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
+  }
+
+  onFileSelected(event: any) {
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+      this.userToEdit!.profilePicture = URL.createObjectURL(file);
+    }
+  }
+
+  saveProfileChanges(modal: any) {
+    if (this.userToEdit && this.user) {
+      // Chamando o método updateUser do AuthService
+      this.authService.updateUser(this.user.email, this.userToEdit).subscribe(
+        (updatedUser) => {
+          this.user = updatedUser; // Atualiza o usuário após a edição
+          modal.close();
+        },
+        (error) => {
+          console.error('Erro ao salvar as mudanças do perfil', error);
+        }
+      );
+    }
   }
 }
