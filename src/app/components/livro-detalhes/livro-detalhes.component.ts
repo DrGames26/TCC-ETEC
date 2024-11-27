@@ -23,7 +23,13 @@ export class LivroDetalhesComponent implements OnInit {
 
   carregarLivro(id: number): void {
     this.livroService.getLivroPorId(id).subscribe(
-      (livro) => this.livro = livro,
+      (livro) => {
+        // Verifica se a imagem está em Base64 e ajusta a string para o formato correto
+        if (livro.picture && !livro.picture.startsWith('data:image')) {
+          livro.picture = 'data:image/jpeg;base64,' + livro.picture;
+        }
+        this.livro = livro;
+      },
       (error) => console.error('Erro ao carregar o livro:', error)
     );
   }
