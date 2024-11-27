@@ -11,8 +11,6 @@
         <p class="card-text">Autor: {{ livro.author }}</p>
         <p class="card-text">Gênero: {{ livro.genre }}</p>
         <p class="card-text">Telefone: {{ livro.phoneNumber }}</p>
-          Contato: <a [href]="'tel:' + livro.phoneNumber">{{ livro.phoneNumber }}</a>
-        </p>
         <p class="card-text">Publicado por: {{ livro.usuarioPublicador }}</p>
         <button class="btn btn-primary" (click)="navegarParaDetalhes(livro.id)">Ver Detalhes</button>
       </div>
