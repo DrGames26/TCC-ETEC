@@ -9,7 +9,8 @@
         <!-- Exibição da imagem de perfil, se disponível -->
         <div *ngIf="user.profilePicture; else noProfilePicture">
           <p class="mb-0"><strong>Foto de Perfil:</strong></p>
-          <img [src]="user.profilePicture" alt="Foto de perfil" class="img-fluid mb-3" style="width: 150px; height: auto;">
+          <!-- Verifica se a imagem é Base64 e, caso contrário, ajusta -->
+          <img [src]="user.profilePicture.startsWith('data:image') ? user.profilePicture : 'data:image/jpeg;base64,' + user.profilePicture" alt="Foto de perfil" class="img-fluid mb-3" style="width: 150px; height: auto;">
         </div>
         <ng-template #noProfilePicture>
           <p><em>Foto de perfil não disponível.</em></p>
