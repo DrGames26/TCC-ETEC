@@ -13,13 +13,18 @@ export class HomeComponent implements OnInit {
 
   constructor(private livroService: LivroService, private router: Router) {}
 
-  ngOnInit(): void {
-    this.livroService.getLivros().subscribe((data: any) => {
-      // Ordena os livros por ID do maior para o menor (mais recentes aparecem primeiro)
-      this.livros = data.sort((a: any, b: any) => (b.id || 0) - (a.id || 0));
-      console.log(this.livros);  // Para verificar os livros carregados
-    });
-  }
+ngOnInit(): void {
+  this.livroService.getLivros().subscribe((data: any) => {
+    // Converte as imagens para Base64 e ordena os livros por ID
+    this.livros = data.map((livro: any) => {
+      if (livro.picture) {
+        livro.picture = 'data:image/jpeg;base64,' + livro.picture; // Adiciona o prefixo Base64
+      }
+      return livro;
+    }).sort((a: any, b: any) => (b.id || 0) - (a.id || 0)); // Ordena os mais recentes
+    console.log(this.livros); // Para verificar os livros carregados
+  });
+}
 
   // Método para navegar para a página de detalhes do livro
   navegarParaDetalhes(livroId: number): void {
