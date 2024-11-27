@@ -1,20 +1,63 @@
-<div class="container mt-4">
-  <div class="text-center bg-light p-4 rounded shadow-sm">
-    <h1 style="color: #8d573a;">Meus Livros</h1>
-  </div>
-
-  <div class="row mt-4">
-    <div *ngFor="let livro of livros" class="col-md-4 col-sm-6 mb-4">
-      <div class="card">
-        <!-- Verifica se a imagem é Base64 e, caso contrário, ajusta -->
-        <img *ngIf="livro.picture" [src]="livro.picture.startsWith('data:image') ? livro.picture : 'data:image/jpeg;base64,' + livro.picture" class="card-img-top" alt="Imagem do Livro">
-        <div class="card-body">
-          <h5 class="card-title">{{ livro.name }}</h5>
-          <p class="card-text"><strong>Autor:</strong> {{ livro.author }}</p>
-          <p class="card-text"><strong>Publicado por:</strong> {{ livro.usuarioPublicador }}</p>
-          <button *ngIf="livro.id" class="btn btn-custom" (click)="navegarParaDetalhes(livro.id)">Ver Detalhes</button>
+<div class="profile-container container mt-5" *ngIf="user; else noUser">
+  <div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <h2 style="color: #8d573a; font-weight: bold;">Seu Perfil</h2>
+      <button (click)="logout()" class="btn btn-danger">SAIR</button>
+    </div>
+    <div class="card-body">
+      <div class="profile-details">
+        <!-- Exibição da imagem de perfil, se disponível -->
+        <div *ngIf="user.profilePicture; else noProfilePicture">
+          <p class="mb-0"><strong>Foto de Perfil:</strong></p>
+          <!-- Verifica se a imagem é Base64 e, caso contrário, ajusta -->
+          <img [src]="user.profilePicture.startsWith('data:image') ? user.profilePicture : 'data:image/jpeg;base64,' + user.profilePicture" alt="Foto de perfil" class="img-fluid mb-3" style="width: 150px; height: auto;">
         </div>
+        <ng-template #noProfilePicture>
+          <p><em>Foto de perfil não disponível.</em></p>
+        </ng-template>
+
+        <p class="mb-2"><strong>Nome:</strong> {{ user.name }}</p>
+        <p class="mb-2"><strong>Email:</strong> {{ user.email }}</p>
+        <p class="mb-2"><strong>Gênero:</strong> {{ user.sex }}</p>
+        <p class="mb-2"><strong>Telefone:</strong> {{ user.phoneNumber }}</p>
+        
+        <button class="btn btn-warning mt-3" (click)="openEditProfileModal(editProfileModal)">Editar Perfil</button>
       </div>
     </div>
   </div>
 </div>
+
+<ng-template #noUser>
+  <div class="text-center mt-5">
+    <h2>Você ainda não está logado.</h2>
+    <a routerLink="/login" class="btn btn-primary mt-3">Faça Login</a>
+  </div>
+</ng-template>
+
+<!-- Modal de Edição de Perfil -->
+<ng-template #editProfileModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title">Editar Perfil</h5>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('cancel')"></button>
+  </div>
+  <div class="modal-body">
+    <form #editProfileForm="ngForm">
+      <div class="form-group mb-3">
+        <label for="userName" class="form-label">Nome:</label>
+        <input *ngIf="userToEdit" type="text" id="userName" class="form-control" [(ngModel)]="userToEdit.name" name="name" required />
+      </div>
+      <div class="form-group mb-3">
+        <label for="userPhone" class="form-label">Telefone:</label>
+        <input *ngIf="userToEdit" type="text" id="userPhone" class="form-control" [(ngModel)]="userToEdit.phoneNumber" name="phoneNumber" required />
+      </div>
+      <div class="form-group mb-3">
+        <label for="userProfilePicture" class="form-label">Foto de Perfil:</label>
+        <input type="file" id="userProfilePicture" class="form-control" (change)="onFileSelected($event)" />
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.dismiss('cancel')">Cancelar</button>
+    <button type="button" class="btn btn-primary" (click)="saveProfileChanges(modal)">Salvar</button>
+  </div>
+</ng-template>
