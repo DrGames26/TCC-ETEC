@@ -17,8 +17,11 @@ export class HomeComponent implements OnInit {
     this.livroService.getLivros().subscribe((data: any) => {
       // Verifica se a imagem está em Base64 e converte corretamente
       this.livros = data.map((livro: any) => {
-        if (livro.picture && !livro.picture.startsWith('data:image')) {
-          livro.picture = 'data:image/jpeg;base64,' + livro.picture; // Adiciona o prefixo Base64 se necessário
+        if (livro.picture) {
+          // Verifica se a imagem já possui o prefixo Base64
+          if (!livro.picture.startsWith('data:image')) {
+            livro.picture = 'data:image/jpeg;base64,' + livro.picture; // Adiciona o prefixo Base64 se necessário
+          }
         }
         return livro;
       }).sort((a: any, b: any) => (b.id || 0) - (a.id || 0)); // Ordena os mais recentes
