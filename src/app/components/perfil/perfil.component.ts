@@ -48,11 +48,15 @@ export class PerfilComponent implements OnInit {
 
   saveProfileChanges(modal: any) {
     if (this.userToEdit && this.user) {
-      // Chamando o método updateUser do AuthService
+      // Verifica se a senha está vazia antes de tentar remover
+      if (this.userToEdit.password && this.userToEdit.password.trim() === '') {
+        this.userToEdit.password = undefined; // Define como indefinido para evitar uso do `delete`
+      }
+  
       this.authService.updateUser(this.user.email, this.userToEdit).subscribe(
         (updatedUser) => {
-          this.user = updatedUser; // Atualiza o usuário após a edição
-          modal.close();
+          this.user = updatedUser; // Atualiza o usuário no frontend
+          modal.close(); // Fecha o modal
         },
         (error) => {
           console.error('Erro ao salvar as mudanças do perfil', error);

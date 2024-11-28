@@ -1,38 +1,3 @@
-<div class="profile-container container mt-5" *ngIf="user; else noUser">
-  <div class="card">
-    <div class="card-header d-flex justify-content-between align-items-center">
-      <h2 style="color: #8d573a; font-weight: bold;">Seu Perfil</h2>
-      <button (click)="logout()" class="btn btn-danger">SAIR</button>
-    </div>
-    <div class="card-body">
-      <div class="profile-details">
-        <!-- Exibição da imagem de perfil, se disponível -->
-        <div *ngIf="user.profilePicture; else noProfilePicture">
-          <p class="mb-0"><strong>Foto de Perfil:</strong></p>
-          <img [src]="user.profilePicture" alt="Foto de perfil" class="img-fluid mb-3" style="width: 150px; height: auto;">
-        </div>
-        <ng-template #noProfilePicture>
-          <p><em>Foto de perfil não disponível.</em></p>
-        </ng-template>
-
-        <p class="mb-2"><strong>Nome:</strong> {{ user.name }}</p>
-        <p class="mb-2"><strong>Email:</strong> {{ user.email }}</p>
-        <p class="mb-2"><strong>Gênero:</strong> {{ user.sex }}</p>
-        <p class="mb-2"><strong>Telefone:</strong> {{ user.phoneNumber }}</p>
-        
-        <button class="btn btn-warning mt-3" (click)="openEditProfileModal(editProfileModal)">Editar Perfil</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<ng-template #noUser>
-  <div class="text-center mt-5">
-    <h2>Você ainda não está logado.</h2>
-    <a routerLink="/login" class="btn btn-primary mt-3">Faça Login</a>
-  </div>
-</ng-template>
-
 <!-- Modal de Edição de Perfil -->
 <ng-template #editProfileModal let-modal>
   <div class="modal-header">
@@ -47,7 +12,12 @@
       </div>
       <div class="form-group mb-3">
         <label for="userPhone" class="form-label">Telefone:</label>
-        <input *ngIf="userToEdit" type="text" id="userPhone" class="form-control" [(ngModel)]="userToEdit.phoneNumber" name="phoneNumber" required />
+        <input *ngIf="userToEdit" type="text" id="userPhone" class="form-control" [(ngModel)]="userToEdit.phoneNumber" name="phoneNumber" />
+      </div>
+      <div class="form-group mb-3">
+        <label for="userPassword" class="form-label">Nova Senha:</label>
+        <input *ngIf="userToEdit" type="password" id="userPassword" class="form-control" [(ngModel)]="userToEdit.password" name="password" />
+        <small class="form-text text-muted">Deixe em branco para manter a senha atual.</small>
       </div>
       <div class="form-group mb-3">
         <label for="userProfilePicture" class="form-label">Foto de Perfil:</label>
