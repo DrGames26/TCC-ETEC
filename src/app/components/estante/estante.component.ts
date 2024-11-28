@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { LivroService, Livro } from 'src/app/services/livro.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-estante',
@@ -11,11 +12,14 @@ import { Router } from '@angular/router';
 export class EstanteComponent implements OnInit {
   livros: Livro[] = [];
   userName: string | null = null;
+  livroToDelete: Livro | null = null;
+  livroToEdit: Livro | null = null;  // Para armazenar o livro sendo editado
 
   constructor(
     private livroService: LivroService,
     private authService: AuthService, // Injeta o AuthService
-    private router: Router
+    private router: Router,
+    private modalService: NgbModal
   ) {}
 
   ngOnInit(): void {
@@ -28,19 +32,53 @@ export class EstanteComponent implements OnInit {
     }
   }
 
-  carregarLivrosDaEstante(): void {
-    this.livroService.getLivros().subscribe(
-      (data) => {
-        // Filtra os livros para exibir apenas os publicados pelo usuário logado
-        this.livros = data
-          .filter((livro: Livro) => livro.usuarioPublicador === this.userName)
-          .sort((a: Livro, b: Livro) => (b.id || 0) - (a.id || 0));
+  private carregarLivrosDaEstante() {
+    this.livroService.getLivros().subscribe((livros) => {
+      // Filtra os livros para mostrar apenas os do usuário logado
+      this.livros = livros.filter(livro => livro.usuarioPublicador === this.userName);
+    });
+  }
+
+  openEditBookModal(livro: Livro, content: any) {
+    // Atribui o livro a ser editado
+    this.livroToEdit = livro;
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
+  }
+
+  openDeleteBookModal(livro: Livro, content: any) {
+    this.livroToDelete = livro;
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then(
+      (result) => {
+        if (result === 'confirm') {
+          this.deleteBook(livro.id);
+        }
       },
-      (error) => console.error('Erro ao carregar livros da estante:', error)
+      () => {
+        this.livroToDelete = null;
+      }
     );
   }
 
-  navegarParaDetalhes(id: number): void {
-    this.router.navigate(['/livro', id]);
+  deleteBook(bookId: number) {
+    this.livroService.deleteBook(bookId).subscribe(() => {
+      this.livros = this.livros.filter(livro => livro.id !== bookId);
+    });
+  }
+
+  updateBook(livro: Livro) {
+    // Chama o método updateBook do serviço para atualizar o livro
+    if (this.livroToEdit) {
+      this.livroService.updateBook(this.livroToEdit).subscribe((updatedLivro) => {
+        // Atualiza o livro na lista local
+        const index = this.livros.findIndex(l => l.id === updatedLivro.id);
+        if (index !== -1) {
+          this.livros[index] = updatedLivro;
+        }
+      });
+    }
+  }
+
+  navegarParaDetalhes(bookId: number) {
+    this.router.navigate([`/livro/${bookId}`]);
   }
 }

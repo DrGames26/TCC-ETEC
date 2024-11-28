@@ -12,8 +12,17 @@
           <h5 class="card-title">{{ livro.name }}</h5>
           <p class="card-text"><i class="bi bi-person-fill"></i> <strong>Autor:</strong> {{ livro.author }}</p>
           <p class="card-text"><i class="bi bi-person-lines-fill"></i> <strong>Publicado por:</strong> {{ livro.usuarioPublicador }}</p>
+          
           <button *ngIf="livro.id" class="btn btn-custom w-100" (click)="navegarParaDetalhes(livro.id)">
             <i class="bi bi-eye-fill"></i> Ver Detalhes
+          </button>
+          
+          <!-- Botões de Editar e Excluir só visíveis para o usuário que postou o livro -->
+          <button *ngIf="livro.usuarioPublicador === userName" class="btn btn-warning btn-sm mt-2" (click)="openEditBookModal(livro, editBookModal)">
+            <i class="bi bi-pencil-fill"></i> Editar
+          </button>
+          <button *ngIf="livro.usuarioPublicador === userName" class="btn btn-danger btn-sm mt-2" (click)="openDeleteBookModal(livro, deleteModal)">
+            <i class="bi bi-trash-fill"></i> Excluir
           </button>
         </div>
       </div>
