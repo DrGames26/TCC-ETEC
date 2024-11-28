@@ -1,3 +1,21 @@
+<div *ngIf="user; else loading">
+  <h1>Perfil de {{ user.name }}</h1>
+  <button (click)="openEditProfileModal(editProfileModal)">Editar Perfil</button>
+
+  <div>
+    <p>Email: {{ user.email }}</p>
+    <p>Telefone: {{ user.phoneNumber }}</p>
+    <p>Data de Nascimento: {{ user.dateOfBirth }}</p>
+    <p>Sexo: {{ user.sex }}</p>
+    <p>Foto de Perfil: <img [src]="user.profilePicture" alt="Foto de perfil" width="100" /></p>
+  </div>
+</div>
+
+<ng-template #loading>
+  <p>Carregando...</p>
+</ng-template>
+
+<!-- Modal de edição de perfil -->
 <ng-template #editProfileModal let-modal>
   <div class="modal-header">
     <h5 class="modal-title">Editar Perfil</h5>

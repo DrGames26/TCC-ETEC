@@ -17,17 +17,20 @@ export class PerfilComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    // Verificar se o usuário está sendo carregado corretamente
     this.authService.user$.subscribe((user) => {
-      this.user = user;
-      this.userToEdit = { 
-        name: user?.name || '', 
-        email: user?.email || '', 
-        password: user?.password || '', 
-        dateOfBirth: user?.dateOfBirth || '', 
-        sex: user?.sex || '', 
-        profilePicture: user?.profilePicture || '', 
-        phoneNumber: user?.phoneNumber || ''
-      };
+      if (user) {
+        this.user = user;
+        this.userToEdit = { 
+          name: user.name || '', 
+          email: user.email || '', 
+          password: user.password || '', 
+          dateOfBirth: user.dateOfBirth || '', 
+          sex: user.sex || '', 
+          profilePicture: user.profilePicture || '', 
+          phoneNumber: user.phoneNumber || ''
+        };
+      }
     });
   }
 
@@ -48,7 +51,7 @@ export class PerfilComponent implements OnInit {
 
   saveProfileChanges(modal: any) {
     if (this.userToEdit && this.user) {
-      // Verifica se a senha está vazia antes de tentar remover
+      // Verifica se a senha está vazia antes de tentar removê-la
       if (this.userToEdit.password && this.userToEdit.password.trim() === '') {
         this.userToEdit.password = undefined; // Define como indefinido para evitar uso do `delete`
       }
