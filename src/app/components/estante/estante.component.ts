@@ -11,17 +11,18 @@ import { Router } from '@angular/router';
 export class EstanteComponent implements OnInit {
   livros: Livro[] = [];
   userName: string | null = null;
+  bookToEdit: Livro | null = null;
 
   constructor(
     private livroService: LivroService,
-    private authService: AuthService, // Injeta o AuthService
+    private authService: AuthService,
     private router: Router
   ) {}
 
   ngOnInit(): void {
-    const user = this.authService.getUser(); // Obtém o usuário logado
+    const user = this.authService.getUser();
     if (user) {
-      this.userName = user.name; // Atribui o nome do usuário logado
+      this.userName = user.name;
       this.carregarLivrosDaEstante();
     } else {
       console.error("Usuário não autenticado.");
@@ -31,7 +32,6 @@ export class EstanteComponent implements OnInit {
   carregarLivrosDaEstante(): void {
     this.livroService.getLivros().subscribe(
       (data) => {
-        // Filtra os livros para exibir apenas os publicados pelo usuário logado
         this.livros = data
           .filter((livro: Livro) => livro.usuarioPublicador === this.userName)
           .sort((a: Livro, b: Livro) => (b.id || 0) - (a.id || 0));
@@ -40,7 +40,37 @@ export class EstanteComponent implements OnInit {
     );
   }
 
-  navegarParaDetalhes(id: number): void {
-    this.router.navigate(['/livro', id]);
+  openEditBookModal(livro: Livro, modal: any): void {
+    this.bookToEdit = { ...livro }; // Cria uma cópia do livro para edição
+    modal.open();
+  }
+
+  updateBook(): void {
+    if (this.bookToEdit) {
+      this.livroService.updateBook(this.bookToEdit).subscribe(
+        () => {
+          this.carregarLivrosDaEstante(); // Atualiza a lista de livros após a edição
+          alert('Livro atualizado com sucesso.');
+        },
+        (error) => console.error('Erro ao atualizar livro:', error)
+      );
+    }
+  }
+
+  openDeleteBookModal(livro: Livro, modal: any): void {
+    this.bookToEdit = livro; // Armazena o livro a ser excluído
+    modal.open();
+  }
+
+  deleteBook(): void {
+    if (this.bookToEdit) {
+      this.livroService.deleteBook(this.bookToEdit.id).subscribe(
+        () => {
+          this.carregarLivrosDaEstante(); // Atualiza a lista de livros após a exclusão
+          alert('Livro excluído com sucesso.');
+        },
+        (error) => console.error('Erro ao excluir livro:', error)
+      );
+    }
   }
 }
