@@ -10,9 +10,9 @@
             <img *ngIf="livroDesejado.picture" [src]="livroDesejado.picture.startsWith('data:image') ? livroDesejado.picture : 'data:image/jpeg;base64,' + livroDesejado.picture" class="card-img-top" alt="Imagem do livro">
             <div class="card-body">
               <h5 class="card-title">{{ livroDesejado.name }}</h5>
-              <p class="card-text"><strong>Autor:</strong> {{ livroDesejado.author }}</p>
-              <p class="card-text"><strong>Telefone:</strong> {{ livroDesejado.phoneNumber }}</p>
-              <p class="card-text"><strong>Descrição:</strong> {{ livroDesejado.description }}</p>
+              <p class="card-text"><i class="bi bi-person-fill"></i> <strong>Autor:</strong> {{ livroDesejado.author }}</p>
+              <p class="card-text"><i class="bi bi-telephone-fill"></i> <strong>Telefone:</strong> {{ livroDesejado.phoneNumber }}</p>
+              <p class="card-text"><i class="bi bi-file-earmark-text-fill"></i> <strong>Descrição:</strong> {{ livroDesejado.description }}</p>
             </div>
           </div>
         </div>
@@ -31,8 +31,10 @@
             <img *ngIf="livro.picture" [src]="livro.picture.startsWith('data:image') ? livro.picture : 'data:image/jpeg;base64,' + livro.picture" class="card-img-top" alt="Imagem do livro">
             <div class="card-body">
               <h5 class="card-title">{{ livro.name }}</h5>
-              <p class="card-text"><strong>Autor:</strong> {{ livro.author }}</p>
-              <button *ngIf="livro.id" class="btn btn-custom" (click)="offerExchange(livro.id)">Oferecer para troca</button>
+              <p class="card-text"><i class="bi bi-person-fill"></i> <strong>Autor:</strong> {{ livro.author }}</p>
+              <button *ngIf="livro.id" class="btn btn-custom" (click)="offerExchange(livro.id)">
+                <i class="bi bi-arrow-repeat"></i> Oferecer para troca
+              </button>
             </div>
           </div>
         </div>
