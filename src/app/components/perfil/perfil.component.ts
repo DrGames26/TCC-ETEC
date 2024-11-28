@@ -58,11 +58,16 @@ export class PerfilComponent implements OnInit {
 
   saveProfileChanges(modal: any) {
     if (this.userToEdit && this.user) {
+      if (this.userToEdit.profilePicture?.startsWith('data:image')) {
+        // Remove o prefixo base64
+        this.userToEdit.profilePicture = this.userToEdit.profilePicture.split(',')[1];
+      }
+  
       // Verifica se a senha está vazia antes de tentar removê-la
       if (this.userToEdit.password && this.userToEdit.password.trim() === '') {
         this.userToEdit.password = undefined; // Define como indefinido para evitar uso do `delete`
       }
-
+  
       this.authService.updateUser(this.user.email, this.userToEdit).subscribe(
         (updatedUser) => {
           this.user = updatedUser; // Atualiza o usuário no frontend
@@ -73,5 +78,5 @@ export class PerfilComponent implements OnInit {
         }
       );
     }
-  }
+  }  
 }
