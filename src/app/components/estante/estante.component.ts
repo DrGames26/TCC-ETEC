@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { LivroService } from '../../services/livro.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Livro } from '../../services/livro.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-estante',
@@ -16,23 +17,29 @@ export class EstanteComponent implements OnInit {
 
   constructor(
     private livroService: LivroService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
     this.loadLivros();
-    this.userName = 'usuarioExemplo'; // Aqui você pega o nome do usuário logado
+    const user = this.authService.getUser();
+    if (user) {
+      this.userName = user.name;
+    }
   }
 
   private loadLivros() {
-    this.livroService.getLivros().subscribe((livros) => {
-      this.livros = livros;
-    });
+    const user = this.authService.getUser();
+    if (user) {
+      this.livroService.getBooksByUsuarioPublicador(user.name).subscribe((livros) => {
+        this.livros = livros;
+      });
+    }
   }
 
   // Método para navegar para a página de detalhes do livro
   navegarParaDetalhes(livroId: number) {
-    // Aqui você redireciona o usuário para a página de detalhes do livro
     console.log('Ver detalhes do livro com ID:', livroId);
   }
 
@@ -42,19 +49,18 @@ export class EstanteComponent implements OnInit {
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
   }
 
-// Abre o modal de exclusão do livro
-openDeleteBookModal(livro: Livro, content: any) {
-  this.livroToDelete = livro; // Armazena o livro a ser excluído
-  this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then(
-    (result) => {
-      if (result === 'confirm' && this.livroToDelete) {  // Verifica se livroToDelete não é null
-        this.deleteBook(this.livroToDelete.id);
-      }
-    },
-    () => {}
-  );
-}
-
+  // Abre o modal de exclusão do livro
+  openDeleteBookModal(livro: Livro, content: any) {
+    this.livroToDelete = livro; // Armazena o livro a ser excluído
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then(
+      (result) => {
+        if (result === 'confirm' && this.livroToDelete) {
+          this.deleteBook(this.livroToDelete.id);
+        }
+      },
+      () => {}
+    );
+  }
 
   // Função de excluir o livro
   deleteBook(bookId: number) {
