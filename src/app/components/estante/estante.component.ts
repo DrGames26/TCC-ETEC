@@ -12,6 +12,7 @@ export class EstanteComponent implements OnInit {
   livros: Livro[] = [];
   userName: string = ''; // Variável para armazenar o nome do usuário logado
   bookToEdit: Livro | null = null;
+  livroToDelete: Livro | null = null; // Variável para armazenar o livro a ser deletado
 
   constructor(
     private livroService: LivroService,
@@ -43,6 +44,7 @@ export class EstanteComponent implements OnInit {
 
   // Abre o modal de exclusão do livro
   openDeleteBookModal(livro: Livro, content: any) {
+    this.livroToDelete = livro; // Armazena o livro a ser excluído
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then(
       (result) => {
         if (result === 'confirm') {
