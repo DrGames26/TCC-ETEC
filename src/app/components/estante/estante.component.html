@@ -5,14 +5,16 @@
 
   <div class="row mt-4">
     <div *ngFor="let livro of livros" class="col-md-4 col-sm-6 mb-4">
-      <div class="card">
+      <div class="card livro">
         <!-- Verifica se a imagem é Base64 e, caso contrário, ajusta -->
         <img *ngIf="livro.picture" [src]="livro.picture.startsWith('data:image') ? livro.picture : 'data:image/jpeg;base64,' + livro.picture" class="card-img-top" alt="Imagem do Livro">
         <div class="card-body">
           <h5 class="card-title">{{ livro.name }}</h5>
-          <p class="card-text"><strong>Autor:</strong> {{ livro.author }}</p>
-          <p class="card-text"><strong>Publicado por:</strong> {{ livro.usuarioPublicador }}</p>
-          <button *ngIf="livro.id" class="btn btn-custom" (click)="navegarParaDetalhes(livro.id)">Ver Detalhes</button>
+          <p class="card-text"><i class="bi bi-person-fill"></i> <strong>Autor:</strong> {{ livro.author }}</p>
+          <p class="card-text"><i class="bi bi-person-lines-fill"></i> <strong>Publicado por:</strong> {{ livro.usuarioPublicador }}</p>
+          <button *ngIf="livro.id" class="btn btn-custom w-100" (click)="navegarParaDetalhes(livro.id)">
+            <i class="bi bi-eye-fill"></i> Ver Detalhes
+          </button>
         </div>
       </div>
     </div>
