@@ -6,7 +6,7 @@
       <div class="card-body">
         <div class="row">
           <div class="col-md-4">
-            <img [src]="user.profilePicture" alt="Foto de perfil" class="img-fluid" width="150" />
+            <img *ngIf="user.profilePicture" [src]="user.profilePicture.startsWith('data:image') ? user.profilePicture : 'data:image/jpeg;base64,' + user.profilePicture" alt="Foto de perfil" class="img-fluid" width="150" />
           </div>
           <div class="col-md-8">
             <h4>{{ user.name }}</h4>
