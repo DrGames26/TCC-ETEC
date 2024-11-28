@@ -7,12 +7,14 @@
       <div class="col-md-8">
         <div class="card-body">
           <h2 class="card-title">{{ livro.name }}</h2>
-          <p class="card-text"><strong>Autor:</strong> {{ livro.author }}</p>
-          <p class="card-text"><strong>Gênero:</strong> {{ livro.genre }}</p>
-          <p class="card-text"><strong>Descrição:</strong> {{ livro.description }}</p>
-          <p class="card-text"><strong>Publicado por:</strong> {{ livro.usuarioPublicador }}</p>
+          <p class="card-text"><i class="bi bi-person-fill"></i> <strong>Autor:</strong> {{ livro.author }}</p>
+          <p class="card-text"><i class="bi bi-book-fill"></i> <strong>Gênero:</strong> {{ livro.genre }}</p>
+          <p class="card-text"><i class="bi bi-file-earmark-text"></i> <strong>Descrição:</strong> {{ livro.description }}</p>
+          <p class="card-text"><i class="bi bi-person-lines-fill"></i> <strong>Publicado por:</strong> {{ livro.usuarioPublicador }}</p>
           <!-- Botão para troca -->
-          <button class="btn btn-custom mt-3" (click)="trocarLivro()">Trocar Livro</button>
+          <button class="btn btn-custom mt-3" (click)="trocarLivro()">
+            <i class="bi bi-arrow-repeat"></i> Trocar Livro
+          </button>
         </div>
       </div>
     </div>
