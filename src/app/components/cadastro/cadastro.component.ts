@@ -95,11 +95,16 @@ export class CadastroComponent {
       const file = input.files[0];
       const reader = new FileReader();
       reader.onload = () => {
-        this.user.profilePicture = reader.result as string;
+        const result = reader.result as string;
+        // Remove o prefixo `data:image/jpeg;base64,` ou similar
+        const base64Prefix = 'base64,';
+        const base64String = result.substring(result.indexOf(base64Prefix) + base64Prefix.length);
+        this.user.profilePicture = base64String;
       };
       reader.readAsDataURL(file);
     }
   }
+  
 
   private isValidEmail(email: string): boolean {
     const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
