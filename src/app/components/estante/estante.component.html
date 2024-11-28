@@ -7,13 +7,15 @@
       <div class="card">
         <img
           *ngIf="livro.picture"
-          [src]="livro.picture"
+          [src]="'data:image/png;base64,' + livro.picture"
           alt="Imagem do Livro"
           class="card-img-top"
         />
         <div class="card-body">
           <h5 class="card-title">{{ livro.name }}</h5>
-          <p class="card-text"><strong>Autor:</strong> {{ livro.author }}</p>
+          <p class="card-text">
+            <strong>Autor:</strong> {{ livro.author }}
+          </p>
           <p class="card-text" *ngIf="livro.description">
             <strong>Descrição:</strong> {{ livro.description }}
           </p>
@@ -134,11 +136,7 @@
           >
             Cancelar
           </button>
-          <button
-            type="button"
-            class="btn btn-danger"
-            (click)="excluirLivro()"
-          >
+          <button type="button"class="btn btn-danger"(click)="excluirLivro()">
             Excluir
           </button>
         </div>
