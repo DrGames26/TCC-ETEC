@@ -21,6 +21,7 @@ export class CadastroComponent {
   };
 
   errorMessage: string = '';
+  successMessage: string = '';
 
   constructor(
     private cadastroUsuarioService: CadastroUsuarioService,
@@ -29,7 +30,8 @@ export class CadastroComponent {
   ) {}
 
   onSubmit() {
-    this.errorMessage = '';
+    this.errorMessage = ''; // Limpar erros anteriores
+    this.successMessage = ''; // Limpar mensagens de sucesso
 
     // Validação dos campos
     if (!this.user.name) {
@@ -48,6 +50,10 @@ export class CadastroComponent {
       this.errorMessage = 'A senha é obrigatória.';
       return;
     }
+    if (!this.isValidPassword(this.user.password)) {
+      this.errorMessage = 'A senha deve ter no mínimo 6 caracteres.';
+      return;
+    }
     if (!this.user.dateOfBirth) {
       this.errorMessage = 'A data de nascimento é obrigatória.';
       return;
@@ -61,10 +67,11 @@ export class CadastroComponent {
     this.cadastroUsuarioService.cadastrarUsuario(this.user).subscribe(
       (response: User) => {
         console.log('Usuário cadastrado com sucesso!', response);
-        this.errorMessage = '';
+        this.successMessage = 'Usuário cadastrado com sucesso!';
+        this.errorMessage = ''; // Limpar mensagem de erro em caso de sucesso
         
         // Loga automaticamente após o cadastro
-        this.authService.login({ email: this.user.email, password: this.user.password }).subscribe(
+        this.authService.login({ email: this.user.email, password: this.user.password ?? '' }).subscribe(
           () => {
             this.router.navigate(['/perfil']); // Redireciona para a página de perfil
           },
@@ -88,5 +95,10 @@ export class CadastroComponent {
   private isValidEmail(email: string): boolean {
     const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     return emailPattern.test(email);
+  }
+
+  // Validação simples de senha (mínimo de 6 caracteres)
+  private isValidPassword(password: string): boolean {
+    return password.length >= 6;
   }
 }
