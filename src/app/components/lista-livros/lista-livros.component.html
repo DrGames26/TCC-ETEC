@@ -1,19 +1,22 @@
-<div class="livros-container row">
-  <div *ngFor="let livro of livros" class="col-md-4 mb-4">
-    <div class="card mt-5">
+<div class="livros-container row justify-content-center">
+  <div *ngFor="let livro of livros" class="col-sm-6 col-md-4 col-lg-3 mb-4">
+    <div class="card shadow-sm h-100">
       <!-- Exibe a imagem com proporção mantida -->
-      <img *ngIf="livro.picture" class="card-img-top" 
+      <img *ngIf="livro.picture" 
+           class="card-img-top img-fluid p-3" 
            [src]="'data:image/jpeg;base64,' + livro.picture" 
            alt="Imagem do Livro">
       
-      <div class="card-body">
-        <h5 class="card-title">{{ livro.name }}</h5>
-        <p class="card-text">Autor: {{ livro.author }}</p>
-        <p class="card-text">Gênero: {{ livro.genre }}</p>
-        <p class="card-text">Telefone: {{ livro.phoneNumber }}</p>
-
-        <p class="card-text">Publicado por: {{ livro.usuarioPublicador }}</p>
-        <button class="btn btn-primary" (click)="navegarParaDetalhes(livro.id)">Ver Detalhes</button>
+      <div class="card-body d-flex flex-column">
+        <h5 class="card-title text-truncate" title="{{ livro.name }}">{{ livro.name }}</h5>
+        <p class="card-text">Autor: <span class="text-muted">{{ livro.author }}</span></p>
+        <p class="card-text">Gênero: <span class="text-muted">{{ livro.genre }}</span></p>
+        <p class="card-text">Telefone: <span class="text-muted">{{ livro.phoneNumber }}</span></p>
+        <p class="card-text">Publicado por: <span class="text-muted">{{ livro.usuarioPublicador }}</span></p>
+        
+        <div class="mt-auto">
+          <button class="btn btn-primary btn-block" (click)="navegarParaDetalhes(livro.id)">Ver Detalhes</button>
+        </div>
       </div>
     </div>
   </div>
