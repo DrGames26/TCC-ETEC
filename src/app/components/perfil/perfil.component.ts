@@ -45,7 +45,14 @@ export class PerfilComponent implements OnInit {
   onFileSelected(event: any) {
     if (event.target.files.length > 0) {
       const file = event.target.files[0];
-      this.userToEdit!.profilePicture = URL.createObjectURL(file);
+
+      // Converter o arquivo para base64
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        // A variável reader.result vai ser o base64 da imagem
+        this.userToEdit!.profilePicture = reader.result as string;
+      };
+      reader.readAsDataURL(file);  // Converte o arquivo para base64
     }
   }
 
@@ -55,7 +62,7 @@ export class PerfilComponent implements OnInit {
       if (this.userToEdit.password && this.userToEdit.password.trim() === '') {
         this.userToEdit.password = undefined; // Define como indefinido para evitar uso do `delete`
       }
-  
+
       this.authService.updateUser(this.user.email, this.userToEdit).subscribe(
         (updatedUser) => {
           this.user = updatedUser; // Atualiza o usuário no frontend
