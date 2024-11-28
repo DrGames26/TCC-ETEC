@@ -1,20 +1,21 @@
 <div *ngIf="user; else loading">
   <div class="container mt-4">
-    <h1 class="text-center mb-4">Perfil de {{ user.name }}</h1>
+    <h1 class="text-center mb-4">Perfil</h1>
     
     <div class="card mb-4">
       <div class="card-body">
         <div class="row">
           <div class="col-md-4">
-            <img [src]="user.profilePicture" alt="Foto de perfil" class="img-fluid rounded-circle" width="150" />
+            <img [src]="user.profilePicture" alt="Foto de perfil" class="img-fluid" width="150" />
           </div>
           <div class="col-md-8">
             <h4>{{ user.name }}</h4>
             <p><strong>Email:</strong> {{ user.email }}</p>
-            <p><strong>Telefone:</strong> {{ user.phoneNumber }}</p>
-            <p><strong>Data de Nascimento:</strong> {{ user.dateOfBirth }}</p>
-            <p><strong>Sexo:</strong> {{ user.sex }}</p>
+            <p><strong>Telefone:</strong> {{ user.phoneNumber }}</p>  
+          </div>
+          <div class="col-md-12 text-end">
             <button class="btn btn-warning mt-3" (click)="openEditProfileModal(editProfileModal)">Editar Perfil</button>
+            <button class="btn btn-danger mt-3 ms-2" (click)="logout()">Sair</button>
           </div>
         </div>
       </div>
