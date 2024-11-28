@@ -4,7 +4,7 @@
   <!-- Listagem de livros -->
   <div class="row livros-container">
     <div *ngFor="let livro of livros" class="col-md-4 mb-3">
-      <div class="card livro">
+      <div class="card livro shadow-sm border-light">
         <img
           *ngIf="livro.picture"
           [src]="'data:image/png;base64,' + livro.picture"
@@ -14,20 +14,20 @@
         <div class="card-body">
           <h5 class="card-title">{{ livro.name }}</h5>
           <div class="livro-info">
-            <p><strong>Autor:</strong> {{ livro.author }}</p>
+            <p><strong><i class="bi bi-person"></i> Autor:</strong> {{ livro.author }}</p>
             <p *ngIf="livro.description">
-              <strong>Descrição:</strong> {{ livro.description }}
+              <strong><i class="bi bi-file-earmark-text"></i> Descrição:</strong> {{ livro.description }}
             </p>
-            <p><strong>Gênero:</strong> {{ livro.genre }}</p>
+            <p><strong><i class="bi bi-tags"></i> Gênero:</strong> {{ livro.genre }}</p>
           </div>
           <div class="livro-actions">
             <button
-              class="btn btn-primary me-2"
+              class="btn btn-warning me-2"
               (click)="editarLivro(livro)"
               data-bs-toggle="modal"
               data-bs-target="#editBookModal"
             >
-              Editar
+              <i class="bi bi-pencil"></i> Editar
             </button>
             <button
               class="btn btn-danger"
@@ -35,7 +35,7 @@
               data-bs-toggle="modal"
               data-bs-target="#deleteBookModal"
             >
-              Excluir
+              <i class="bi bi-trash"></i> Excluir
             </button>
           </div>
         </div>
@@ -77,14 +77,7 @@
             </div>
             <div class="mb-3">
               <label for="bookAuthor" class="form-label">Autor</label>
-              <input
-                [(ngModel)]="bookToEdit.author"
-                name="author"
-                type="text"
-                class="form-control"
-                id="bookAuthor"
-                placeholder="Autor do Livro"
-              />
+              <input [(ngModel)]="bookToEdit.author" name="author" type="text" class="form-control" id="bookAuthor"  placeholder="Autor do Livro"/>
             </div>
             <div class="mb-3">
               <label for="bookDescription" class="form-label">Descrição</label>
@@ -96,7 +89,9 @@
                 placeholder="Descrição"
               ></textarea>
             </div>
-            <button type="submit" class="btn btn-success">Salvar</button>
+            <button type="submit" class="btn btn-success w-100">
+              <i class="bi bi-save"></i> Salvar
+            </button>
           </form>
         </div>
       </div>
@@ -138,7 +133,7 @@
             Cancelar
           </button>
           <button type="button" class="btn btn-danger" (click)="excluirLivro()">
-            Excluir
+            <i class="bi bi-trash"></i> Excluir
           </button>
         </div>
       </div>
