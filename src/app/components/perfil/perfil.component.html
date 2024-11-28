@@ -1,111 +1,122 @@
-<div *ngIf="user; else loading">
-  <div class="container mt-4">
-    <div class="row justify-content-center">
-      <div class="col-lg-8">
-        <!-- Cabeçalho do perfil -->
-        <div class="text-center mb-4">
-          <h1 class="display-4">Perfil</h1>
-          <p class="text-muted">Veja e edite suas informações</p>
-        </div>
-
-        <!-- Cartão de perfil -->
-        <div class="card shadow-sm mb-4">
-          <div class="card-body">
-            <div class="row align-items-center">
-              <!-- Imagem do usuário -->
-              <div class="col-md-4 text-center mb-3 mb-md-0">
-                <img 
-                *ngIf="user?.profilePicture" 
-                [src]="user.profilePicture?.startsWith('data:image') ? user.profilePicture : 'data:image/jpeg;base64,' + user.profilePicture" 
-                alt="Foto de perfil" 
-                class="img-fluid w-100 rounded"
-                style="max-height: 300px; object-fit: cover"
-              />              
-              </div>
-              <!-- Informações do usuário -->
-              <div class="col-md-8">
-                <h4 class="mb-2">{{ user.name }}</h4>
-                <p class="mb-1"><i class="bi bi-envelope-fill"></i> <strong>Email:</strong> {{ user.email }}</p>
-                <p class="mb-1" *ngIf="user.phoneNumber">
-                  <i class="bi bi-telephone-fill"></i> <strong>Telefone:</strong> {{ user.phoneNumber }}
-                </p>
-                <div class="mt-3 text-end">
-                  <button class="btn btn-warning" (click)="openEditProfileModal(editProfileModal)">
-                    <i class="bi bi-pencil-square"></i> Editar Perfil
-                  </button>
-                  <button class="btn btn-danger ms-2" (click)="logout()">
-                    <i class="bi bi-box-arrow-right"></i> Sair
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<ng-template #loading>
-  <div class="container text-center mt-5">
-    <div class="spinner-border text-primary" role="status">
-      <span class="visually-hidden">Carregando...</span>
-    </div>
-    <p class="mt-3">Carregando...</p>
-  </div>
-</ng-template>
-
-<!-- Modal de edição de perfil -->
-<ng-template #editProfileModal let-modal>
-  <div class="modal-header">
-    <h5 class="modal-title">Editar Perfil</h5>
-    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('cancel')"></button>
-  </div>
-  <div class="modal-body">
-    <form #editProfileForm="ngForm">
+<div class="container">
+  <div class="form-container shadow p-4 rounded">
+    <h2 class="text-center mb-4"><i class="bi bi-person-circle"></i> CRIE SUA CONTA</h2>
+    <p class="text-muted text-center">Os campos com "*" são obrigatórios</p>
+    <form (ngSubmit)="onSubmit()" #userForm="ngForm">
+      <!-- Nome -->
       <div class="form-group mb-3">
-        <label for="userName" class="form-label">Nome:</label>
+        <label for="name"><i class="bi bi-person-fill"></i> * Nome:</label>
         <input
-          *ngIf="userToEdit"
           type="text"
-          id="userName"
+          id="name"
           class="form-control"
-          [(ngModel)]="userToEdit.name"
+          [(ngModel)]="user.name"
           name="name"
           required
+          placeholder="Seu nome"
+          aria-required="true"
         />
       </div>
+
+      <!-- Email -->
       <div class="form-group mb-3">
-        <label for="userPhone" class="form-label">Telefone:</label>
+        <label for="email"><i class="bi bi-envelope-fill"></i> * Email:</label>
         <input
-          *ngIf="userToEdit"
-          type="text"
-          id="userPhone"
+          type="email"
+          id="email"
           class="form-control"
-          [(ngModel)]="userToEdit.phoneNumber"
-          name="phoneNumber"
+          [(ngModel)]="user.email"
+          name="email"
+          required
+          placeholder="Seu endereço de email"
+          aria-required="true"
         />
       </div>
+
+      <!-- Senha -->
       <div class="form-group mb-3">
-        <label for="userPassword" class="form-label">Nova Senha:</label>
+        <label for="password"><i class="bi bi-lock-fill"></i> * Senha:</label>
         <input
-          *ngIf="userToEdit"
           type="password"
-          id="userPassword"
+          id="password"
           class="form-control"
-          [(ngModel)]="userToEdit.password"
+          [(ngModel)]="user.password"
           name="password"
+          required
+          placeholder="Sua senha"
+          aria-required="true"
         />
-        <small class="form-text text-muted">Deixe em branco para manter a senha atual.</small>
       </div>
+
+      <!-- Data de Nascimento -->
       <div class="form-group mb-3">
-        <label for="userProfilePicture" class="form-label">Foto de Perfil:</label>
-        <input type="file" id="userProfilePicture" class="form-control" (change)="onFileSelected($event)" />
+        <label for="dateOfBirth"><i class="bi bi-calendar-event-fill"></i> * Data de Nascimento:</label>
+        <input
+          type="date"
+          id="dateOfBirth"
+          class="form-control"
+          [(ngModel)]="user.dateOfBirth"
+          name="dateOfBirth"
+          required
+          aria-required="true"
+        />
       </div>
+
+      <!-- Gênero -->
+      <div class="form-group mb-3">
+        <label for="sex"><i class="bi bi-gender-ambiguous"></i> * Gênero:</label>
+        <select
+          id="sex"
+          class="form-control"
+          [(ngModel)]="user.sex"
+          name="sex"
+          required
+          aria-required="true"
+        >
+          <option value="">Selecione...</option>
+          <option value="Masculino">Masculino</option>
+          <option value="Feminino">Feminino</option>
+          <option value="Outro">Outro</option>
+        </select>
+      </div>
+
+      <!-- WhatsApp -->
+      <div class="form-group mb-3">
+        <label for="phoneNumber"><i class="bi bi-telephone-fill"></i> WhatsApp:</label>
+        <input
+          type="tel"
+          id="phoneNumber"
+          class="form-control"
+          [(ngModel)]="user.phoneNumber"
+          name="phoneNumber"
+          placeholder="Seu telefone"
+        />
+      </div>
+
+      <!-- Foto de Perfil -->
+      <div class="form-group mb-3">
+        <label for="profilePicture"><i class="bi bi-image-fill"></i> Foto de Perfil:</label>
+        <input
+          type="file"
+          id="profilePicture"
+          class="form-control"
+          (change)="onFileSelected($event)"
+          accept="image/*"
+        />
+        <div *ngIf="user.profilePicture" class="mt-3">
+          <img
+            [src]="user.profilePicture"
+            alt="Foto de perfil"
+            class="img-thumbnail"
+            style="max-height: 150px; object-fit: cover"
+          />
+        </div>
+      </div>
+
+      <!-- Botão de Cadastro -->
+      <button type="submit" class="btn btn-primary w-100">
+        <i class="bi bi-check-circle-fill"></i> Cadastrar
+      </button>
     </form>
   </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" (click)="modal.dismiss('cancel')">Cancelar</button>
-    <button type="button" class="btn btn-primary" (click)="saveProfileChanges(modal)">Salvar</button>
-  </div>
-</ng-template>
+</div>
