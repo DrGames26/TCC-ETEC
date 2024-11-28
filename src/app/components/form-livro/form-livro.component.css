@@ -1,88 +1,104 @@
 /* Container principal */
 .container-formulario {
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #ded8c3;
-  }
-  
-  /* Caixa do formulário */
-  .caixa-formulario {
-    width: 90%;
-    max-width: 500px;
-    background-color: #8d573a;
-    border-radius: 15px;
-    padding: 30px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-    transition: transform 0.3s ease;
-  }
-  
-  .caixa-formulario:hover {
-    transform: scale(1.03);
-  }
-  
-  /* Título do formulário */
-  .titulo-formulario {
-    color: #000;
-    text-align: center;
-    font-size: 1.5rem;
-    margin-bottom: 20px;
-    font-weight: bold;
-  }
-  
-  /* Campos do formulário */
-  .campo-formulario {
-    margin-bottom: 15px;
-  }
-  
-  .input-campo {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #7a5a4d;
-    border-radius: 5px;
-    font-size: 1rem;
-    color: #333;
-    background-color: #fdfdfd;
-  }
-  
-  .input-campo::placeholder {
-    color: #7a5a4d;
-  }
-  
-  .input-campo:focus {
-    outline: none;
-    border-color: #b48f6b;
-    box-shadow: 0 0 5px rgba(180, 143, 107, 0.5);
-  }
-  
-  /* Mensagem de erro */
-  .mensagem-erro {
-    background-color: #ffdddd;
-    color: #d9534f;
-    padding: 10px;
-    border-radius: 5px;
-    font-size: 0.9rem;
-    text-align: center;
-    margin-bottom: 10px;
-  }
-  
-  /* Botão de envio */
-  .btn-enviar {
-    width: 100%;
-    padding: 10px;
-    background-color: #8d573a;
-    font-weight: bold;
-    color: #ffffff;
-    font-size: 1.1rem;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .btn-enviar:hover {
-    background-color: #a06a4e;
-    color: #ffffff;
-  }
-  
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f5f5f5;
+}
+
+/* Caixa do formulário */
+.caixa-formulario {
+  width: 90%;
+  max-width: 500px;
+  background-color: #ffffff;
+  border-radius: 15px;
+  padding: 30px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.caixa-formulario:hover {
+  transform: scale(1.03);
+}
+
+/* Título do formulário */
+.titulo-formulario {
+  color: #333;
+  text-align: center;
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+/* Campos do formulário */
+.campo-formulario {
+  margin-bottom: 15px;
+}
+
+.campo-formulario label {
+  font-size: 1rem;
+  color: #333;
+  font-weight: bold;
+  display: block;
+  margin-bottom: 5px;
+}
+
+/* Estilo dos campos */
+.input-campo, textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+  color: #333;
+  background-color: #f9f9f9;
+}
+
+.input-campo:focus, textarea:focus {
+  outline: none;
+  border-color: #5cb85c;
+  box-shadow: 0 0 5px rgba(92, 184, 92, 0.5);
+}
+
+.input-campo::placeholder, textarea::placeholder {
+  color: #888;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+/* Mensagem de erro */
+.mensagem-erro {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+/* Botão de envio */
+.btn-enviar {
+  width: 100%;
+  padding: 12px;
+  background-color: #5cb85c;
+  color: #fff;
+  font-weight: bold;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-enviar:hover {
+  background-color: #4cae4c;
+}
+
+input[type="file"] {
+  padding: 10px 0;
+}
