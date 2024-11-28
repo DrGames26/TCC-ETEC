@@ -1,10 +1,11 @@
-/* Garante que todos os cards tenham a mesma altura */
+/* Garante que todos os cards tenham uma altura maior */
 .livro-card {
   display: flex;
   flex-direction: column;
   height: 100%; /* Altura total do card */
-  max-height: 400px; /* Definindo altura máxima para os cards */
+  max-height: 500px; /* Aumentado para maior altura do card */
   box-sizing: border-box; /* Para que o padding não afete a altura do card */
+  padding: 10px; /* Adicionado padding ao redor do card */
 }
 
 /* Corpo do card */
@@ -12,7 +13,7 @@
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  padding: 15px;
+  padding: 20px; /* Aumentado o padding interno para espaçamento maior */
   overflow: hidden; /* Impede que o conteúdo ultrapasse o card */
 }
 
@@ -25,19 +26,19 @@
 .card-img-top {
   width: 100%; /* Garante que a imagem ocupe toda a largura do card */
   height: auto; /* A altura será ajustada automaticamente para manter a proporção */
-  max-height: 200px; /* Define uma altura máxima para a imagem */
+  max-height: 250px; /* Aumentado para exibir uma imagem maior */
   object-fit: contain; /* Exibe a imagem inteira, sem cortar */
 }
 
 /* Responsividade: Para telas menores */
 @media (max-width: 768px) {
   .card-img-top {
-    max-height: 150px; /* Menor altura para imagens em telas pequenas */
+    max-height: 200px; /* Ajustado para imagens maiores em telas menores */
   }
 }
 
 @media (max-width: 576px) {
   .card-img-top {
-    max-height: 120px; /* Para telas muito pequenas */
+    max-height: 150px; /* Ajustado para telas muito pequenas */
   }
 }
