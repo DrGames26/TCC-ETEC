@@ -17,7 +17,7 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s, box-shadow 0.2s ease-in-out;
   height: 100%;
-  min-height: 380px; /* Altura mínima fixa para os cards */
+  min-height: 420px; /* Ajuste para garantir altura mínima consistente */
 }
 
 .livro:hover {
@@ -28,7 +28,7 @@
 .card-img-top {
   width: 100%;
   height: 200px; /* Tamanho fixo para a imagem */
-  object-fit: contain; /* A imagem não será cortada */
+  object-fit: contain; /* A imagem não será cortada e será ajustada */
   border-radius: 4px;
   margin-bottom: 15px;
 }
