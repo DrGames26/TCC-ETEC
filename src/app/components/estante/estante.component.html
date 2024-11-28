@@ -5,10 +5,8 @@
     </div>
 
     <div class="row mt-4">
-      <!-- Filtra apenas os livros do usuário logado -->
       <div *ngFor="let livro of livros.filter(l => l.usuarioPublicador === user.name)" class="col-md-4 col-sm-6 mb-4">
         <div class="card livro">
-          <!-- Verifica se a imagem é Base64 e, caso contrário, ajusta -->
           <img *ngIf="livro.picture" 
                [src]="livro.picture.startsWith('data:image') ? livro.picture : 'data:image/jpeg;base64,' + livro.picture" 
                class="card-img-top" alt="Imagem do Livro">
@@ -20,8 +18,7 @@
             <button *ngIf="livro.id" class="btn btn-custom w-100" (click)="navegarParaDetalhes(livro.id)">
               <i class="bi bi-eye-fill"></i> Ver Detalhes
             </button>
-            
-            <!-- Botões de Editar e Excluir visíveis apenas para o usuário que postou o livro -->
+
             <button *ngIf="livro.usuarioPublicador === user.name" class="btn btn-warning btn-sm mt-2" (click)="openEditBookModal(livro, editBookModal)">
               <i class="bi bi-pencil-fill"></i> Editar
             </button>
@@ -35,7 +32,6 @@
   </div>
 </div>
 
-<!-- Modal de Edição do Livro -->
 <ng-template #editBookModal let-modal>
   <div class="modal-header">
     <h5 class="modal-title">Editar Livro</h5>
@@ -59,7 +55,6 @@
   </div>
 </ng-template>
 
-<!-- Modal de Exclusão do Livro -->
 <ng-template #deleteModal let-modal>
   <div class="modal-header">
     <h5 class="modal-title">Confirmação de Exclusão</h5>
@@ -70,7 +65,6 @@
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-secondary" (click)="modal.dismiss('cancel')">Cancelar</button>
-    <button type="button" class="btn btn-danger" 
-            (click)="livroToDelete ? deleteBook(livroToDelete.id) : null">Confirmar</button>
+    <button type="button" class="btn btn-danger" (click)="livroToDelete ? deleteBook(livroToDelete.id) : null">Confirmar</button>
   </div>
 </ng-template>

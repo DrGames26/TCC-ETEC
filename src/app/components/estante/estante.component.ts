@@ -11,9 +11,9 @@ import { AuthService } from '../../services/auth.service';
 })
 export class EstanteComponent implements OnInit {
   livros: Livro[] = [];
-  userName: string = ''; // Variável para armazenar o nome do usuário logado
+  user: any = null; // Alterado para user em vez de userName
   bookToEdit: Livro | null = null;
-  livroToDelete: Livro | null = null; // Variável para armazenar o livro a ser deletado
+  livroToDelete: Livro | null = null;
 
   constructor(
     private livroService: LivroService,
@@ -23,35 +23,28 @@ export class EstanteComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadLivros();
-    const user = this.authService.getUser();
-    if (user) {
-      this.userName = user.name;
-    }
+    this.user = this.authService.getUser(); // Alterado para pegar o usuário completo
   }
 
   private loadLivros() {
-    const user = this.authService.getUser();
-    if (user) {
-      this.livroService.getBooksByUsuarioPublicador(user.name).subscribe((livros) => {
+    if (this.user) {
+      this.livroService.getBooksByUsuarioPublicador(this.user.name).subscribe((livros) => {
         this.livros = livros;
       });
     }
   }
 
-  // Método para navegar para a página de detalhes do livro
   navegarParaDetalhes(livroId: number) {
     console.log('Ver detalhes do livro com ID:', livroId);
   }
 
-  // Abre o modal de edição do livro
   openEditBookModal(livro: Livro, content: any) {
-    this.bookToEdit = { ...livro };  // Faz uma cópia do livro para edição
+    this.bookToEdit = { ...livro };
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
   }
 
-  // Abre o modal de exclusão do livro
   openDeleteBookModal(livro: Livro, content: any) {
-    this.livroToDelete = livro; // Armazena o livro a ser excluído
+    this.livroToDelete = livro;
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then(
       (result) => {
         if (result === 'confirm' && this.livroToDelete) {
@@ -62,18 +55,16 @@ export class EstanteComponent implements OnInit {
     );
   }
 
-  // Função de excluir o livro
   deleteBook(bookId: number) {
     this.livroService.deleteBook(bookId).subscribe(() => {
       this.livros = this.livros.filter(livro => livro.id !== bookId);
     });
   }
 
-  // Função para salvar as alterações do livro
   saveBookChanges() {
     if (this.bookToEdit) {
       this.livroService.updateBook(this.bookToEdit).subscribe(() => {
-        this.loadLivros(); // Atualiza a lista de livros após a edição
+        this.loadLivros();
       });
     }
   }
