@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { LivroService, Livro } from 'src/app/services/livro.service';
-import { AuthService } from 'src/app/services/auth.service';
-import { Router } from '@angular/router';
+import { LivroService } from '../../services/livro.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Livro } from '../../services/livro.service';
 
 @Component({
   selector: 'app-estante',
@@ -11,81 +10,62 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class EstanteComponent implements OnInit {
   livros: Livro[] = [];
-  userName: string | null = null;
-  livroToDelete: Livro | null = null;
-  livroToEdit: Livro | null = null;  // Para armazenar o livro sendo editado
+  userName: string = ''; // Variável para armazenar o nome do usuário logado
+  bookToEdit: Livro | null = null;
 
   constructor(
     private livroService: LivroService,
-    private authService: AuthService, // Injeta o AuthService
-    private router: Router,
     private modalService: NgbModal
   ) {}
 
   ngOnInit(): void {
-    const user = this.authService.getUser(); // Obtém o usuário logado
-    if (user) {
-      this.userName = user.name; // Atribui o nome do usuário logado
-      this.carregarLivrosDaEstante();
-    } else {
-      console.error("Usuário não autenticado.");
-    }
+    this.loadLivros();
+    this.userName = 'usuarioExemplo'; // Aqui você pega o nome do usuário logado
   }
 
-  private carregarLivrosDaEstante() {
+  private loadLivros() {
     this.livroService.getLivros().subscribe((livros) => {
-      // Filtra os livros para mostrar apenas os do usuário logado
-      this.livros = livros.filter(livro => livro.usuarioPublicador === this.userName);
+      this.livros = livros;
     });
   }
 
-  openEditBookModal(livro: Livro) {
-    // Atribui o livro a ser editado
-    this.livroToEdit = livro;
-    this.modalService.open('#editBookModal', { ariaLabelledBy: 'modal-basic-title' });
+  // Método para navegar para a página de detalhes do livro
+  navegarParaDetalhes(livroId: number) {
+    // Aqui você redireciona o usuário para a página de detalhes do livro
+    console.log('Ver detalhes do livro com ID:', livroId);
   }
 
-  openDeleteBookModal(livro: Livro) {
-    this.livroToDelete = livro;
-    this.modalService.open('#deleteModal', { ariaLabelledBy: 'modal-basic-title' }).result.then(
+  // Abre o modal de edição do livro
+  openEditBookModal(livro: Livro, content: any) {
+    this.bookToEdit = { ...livro };  // Faz uma cópia do livro para edição
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
+  }
+
+  // Abre o modal de exclusão do livro
+  openDeleteBookModal(livro: Livro, content: any) {
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then(
       (result) => {
         if (result === 'confirm') {
-          this.deleteBook();
+          this.deleteBook(livro.id);
         }
       },
-      () => {
-        this.livroToDelete = null;
-      }
+      () => {}
     );
   }
 
-  deleteBook() {
-    if (this.livroToDelete) {
-      this.livroService.deleteBook(this.livroToDelete.id).subscribe(() => {
-        this.livros = this.livros.filter(livro => livro.id !== this.livroToDelete?.id);
+  // Função de excluir o livro
+  deleteBook(bookId: number) {
+    this.livroService.deleteBook(bookId).subscribe(() => {
+      this.livros = this.livros.filter(livro => livro.id !== bookId);
+    });
+  }
+
+  // Função para salvar as alterações do livro
+  saveBookChanges() {
+    if (this.bookToEdit) {
+      this.livroService.updateBook(this.bookToEdit).subscribe(() => {
+        this.loadLivros(); // Atualiza a lista de livros após a edição
       });
-    }
-  }
-
-  updateBook() {
-    if (this.livroToEdit) {
-      this.livroService.updateBook(this.livroToEdit).subscribe((updatedLivro) => {
-        const index = this.livros.findIndex(l => l.id === updatedLivro.id);
-        if (index !== -1) {
-          this.livros[index] = updatedLivro;
-        }
-      });
-    }
-  }
-
-  navegarParaDetalhes(bookId: number) {
-    this.router.navigate([`/livro/${bookId}`]);
-  }
-
-  onFileSelected(event: any): void {
-    const file = event.target.files[0];
-    if (file) {
-      // Aqui você pode processar o arquivo, por exemplo, convertê-lo para Base64 ou enviá-lo para o servidor
     }
   }
 }
