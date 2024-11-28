@@ -1,44 +1,21 @@
-<!-- Livro Escolhido -->
-<div class="container mt-5">
-  <div class="row">
-    <div class="col-12 text-center"> <!-- Alinha o título -->
-      <h3>Livro escolhido</h3>
-      <div *ngIf="livroDesejado" class="row justify-content-center"> <!-- Centraliza o card -->
-        <div class="col-md-4 col-sm-6">
-          <div class="card">
-            <!-- Verifica se a imagem é Base64 e, caso contrário, ajusta -->
-            <img *ngIf="livroDesejado.picture" [src]="livroDesejado.picture.startsWith('data:image') ? livroDesejado.picture : 'data:image/jpeg;base64,' + livroDesejado.picture" class="card-img-top" alt="Imagem do livro">
-            <div class="card-body">
-              <h5 class="card-title">{{ livroDesejado.name }}</h5>
-              <p class="card-text"><i class="bi bi-person-fill"></i> <strong>Autor:</strong> {{ livroDesejado.author }}</p>
-              <p class="card-text"><i class="bi bi-telephone-fill"></i> <strong>Telefone:</strong> {{ livroDesejado.phoneNumber }}</p>
-              <p class="card-text"><i class="bi bi-file-earmark-text-fill"></i> <strong>Descrição:</strong> {{ livroDesejado.description }}</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+<div class="container mt-4">
+  <!-- Área de boas-vindas -->
+  <div class="text-center bg-light p-3 rounded shadow-sm">
+    <h1>Bem-vindo ao Sorobooks!</h1>
+    <p class="lead">Descubra e troque livros incríveis com outros leitores.</p>
   </div>
 
-  <!-- Meus Livros -->
-  <div class="row mt-4">
-    <div class="col-12">
-      <h3 class="text-center">Trocar por</h3>
-      <div class="row">
-        <div *ngFor="let livro of meusLivros" class="col-md-4 col-sm-6 mb-4">
-          <div class="card">
-            <!-- Verifica se a imagem é Base64 e, caso contrário, ajusta -->
-            <img *ngIf="livro.picture" [src]="livro.picture.startsWith('data:image') ? livro.picture : 'data:image/jpeg;base64,' + livro.picture" class="card-img-top" alt="Imagem do livro">
-            <div class="card-body">
-              <h5 class="card-title">{{ livro.name }}</h5>
-              <p class="card-text"><i class="bi bi-person-fill"></i> <strong>Autor:</strong> {{ livro.author }}</p>
-              <button *ngIf="livro.id" class="btn btn-custom" (click)="offerExchange(livro.id)">
-                <i class="bi bi-arrow-repeat"></i> Oferecer para troca
-              </button>
-            </div>
-          </div>
-        </div>
+  <!-- Livros adicionados recentemente -->
+  <section class="mt-5">
+    <h2 class="text-center mb-4" style="font-size: 2rem; color: #8d573a;">Livros adicionados recentemente</h2>
+    <div class="livros-container">
+      <div *ngFor="let livro of livros | slice:0:5" class="livro" (click)="navegarParaDetalhes(livro.id)">
+        <!-- Verifica se a imagem existe antes de tentar exibi-la -->
+        <img *ngIf="livro.picture" [src]="livro.picture" alt="Imagem do Livro" class="img-fluid">
+        <h3>{{ livro.name }}</h3>
+        <p><i class="bi bi-person-fill"></i> Autor: {{ livro.author }}</p>
+        <p><i class="bi bi-person-circle"></i> Publicado por: {{ livro.usuarioPublicador }}</p>
       </div>
     </div>
-  </div>
+  </section>
 </div>
