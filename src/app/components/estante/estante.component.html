@@ -67,7 +67,9 @@
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-secondary" (click)="modal.dismiss('cancel')">Cancelar</button>
-    <button type="button" class="btn btn-danger" (click)="deleteBook(livroToDelete.id)">Confirmar</button>
+    <button type="button" class="btn btn-danger" 
+            (click)="livroToDelete ? deleteBook(livroToDelete.id) : null">Confirmar</button>
   </div>
 </ng-template>
+
 

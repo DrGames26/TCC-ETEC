@@ -42,18 +42,19 @@ export class EstanteComponent implements OnInit {
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
   }
 
-  // Abre o modal de exclusão do livro
-  openDeleteBookModal(livro: Livro, content: any) {
-    this.livroToDelete = livro; // Armazena o livro a ser excluído
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then(
-      (result) => {
-        if (result === 'confirm') {
-          this.deleteBook(livro.id);
-        }
-      },
-      () => {}
-    );
-  }
+// Abre o modal de exclusão do livro
+openDeleteBookModal(livro: Livro, content: any) {
+  this.livroToDelete = livro; // Armazena o livro a ser excluído
+  this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then(
+    (result) => {
+      if (result === 'confirm' && this.livroToDelete) {  // Verifica se livroToDelete não é null
+        this.deleteBook(this.livroToDelete.id);
+      }
+    },
+    () => {}
+  );
+}
+
 
   // Função de excluir o livro
   deleteBook(bookId: number) {
