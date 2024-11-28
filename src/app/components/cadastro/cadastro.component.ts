@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { CadastroUsuarioService } from '../../services/cadastro-usuario.service';
-import { AuthService } from '../../services/auth.service'; // Importe o AuthService
+import { AuthService } from '../../services/auth.service';
 import { User } from '../../services/user.model';
 
 @Component({
@@ -25,15 +25,14 @@ export class CadastroComponent {
 
   constructor(
     private cadastroUsuarioService: CadastroUsuarioService,
-    private authService: AuthService, // Injete o AuthService
+    private authService: AuthService,
     private router: Router
   ) {}
 
   onSubmit() {
-    this.errorMessage = ''; // Limpar erros anteriores
-    this.successMessage = ''; // Limpar mensagens de sucesso
+    this.errorMessage = '';
+    this.successMessage = '';
 
-    // Validação dos campos
     if (!this.user.name) {
       this.errorMessage = 'O nome é obrigatório.';
       return;
@@ -63,21 +62,19 @@ export class CadastroComponent {
       return;
     }
 
-    // Chamada ao serviço para cadastrar o usuário
     this.cadastroUsuarioService.cadastrarUsuario(this.user).subscribe(
       (response: User) => {
         console.log('Usuário cadastrado com sucesso!', response);
         this.successMessage = 'Usuário cadastrado com sucesso!';
-        this.errorMessage = ''; // Limpar mensagem de erro em caso de sucesso
+        this.errorMessage = '';
 
-        // Loga automaticamente após o cadastro
         this.authService.login({ email: this.user.email, password: this.user.password ?? '' }).subscribe(
           () => {
-            this.router.navigate(['/perfil']); // Redireciona para a página de perfil
+            this.router.navigate(['/perfil']);
           },
           (error) => {
             console.error('Erro ao realizar login', error);
-            this.errorMessage = 'Erro ao logar. Tente novamente mais tarde.'; // Mensagem de erro no login
+            this.errorMessage = 'Erro ao logar. Tente novamente mais tarde.';
           }
         );
       },
@@ -92,12 +89,23 @@ export class CadastroComponent {
     );
   }
 
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files[0]) {
+      const file = input.files[0];
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.user.profilePicture = reader.result as string;
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
   private isValidEmail(email: string): boolean {
     const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     return emailPattern.test(email);
   }
 
-  // Validação simples de senha (mínimo de 6 caracteres)
   private isValidPassword(password: string): boolean {
     return password.length >= 6;
   }
