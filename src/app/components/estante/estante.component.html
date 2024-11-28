@@ -29,3 +29,63 @@
     </div>
   </div>
 </div>
+
+<!-- Modal de Edição do Livro -->
+<div class="modal" tabindex="-1" role="dialog" #editBookModal>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Editar Livro</h5>
+        <button type="button" class="close" (click)="modalService.dismissAll()">
+          <span>&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form (ngSubmit)="updateBook(livroToEdit)">
+          <div class="form-group">
+            <label for="livroName">Nome do Livro</label>
+            <input type="text" class="form-control" id="livroName" [(ngModel)]="livroToEdit?.name" name="name" required>
+          </div>
+          <div class="form-group">
+            <label for="livroAuthor">Autor</label>
+            <input type="text" class="form-control" id="livroAuthor" [(ngModel)]="livroToEdit?.author" name="author" required>
+          </div>
+          <div class="form-group">
+            <label for="livroDescription">Descrição</label>
+            <textarea class="form-control" id="livroDescription" [(ngModel)]="livroToEdit?.description" name="description"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="livroGenre">Gênero</label>
+            <input type="text" class="form-control" id="livroGenre" [(ngModel)]="livroToEdit?.genre" name="genre" required>
+          </div>
+          <div class="form-group">
+            <label for="livroPicture">Imagem</label>
+            <input type="file" class="form-control" id="livroPicture" (change)="onFileSelected($event)">
+          </div>
+          <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de Exclusão de Livro -->
+<div class="modal" tabindex="-1" role="dialog" #deleteModal>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Confirmar Exclusão</h5>
+        <button type="button" class="close" (click)="modalService.dismissAll()">
+          <span>&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Tem certeza de que deseja excluir este livro?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="modalService.dismissAll()">Cancelar</button>
+        <button type="button" class="btn btn-danger" (click)="deleteBook(livroToDelete?.id)">Excluir</button>
+      </div>
+    </div>
+  </div>
+</div>
