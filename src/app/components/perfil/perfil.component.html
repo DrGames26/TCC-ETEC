@@ -1,21 +1,43 @@
 <div *ngIf="user; else loading">
   <div class="container mt-4">
-    <h1 class="text-center mb-4">Perfil</h1>
-    
-    <div class="card mb-4">
-      <div class="card-body">
-        <div class="row">
-          <div class="col-md-4">
-            <img *ngIf="user.profilePicture" [src]="user.profilePicture.startsWith('data:image') ? user.profilePicture : 'data:image/jpeg;base64,' + user.profilePicture" alt="Foto de perfil" class="img-fluid" width="150" />
-          </div>
-          <div class="col-md-8">
-            <h4>{{ user.name }}</h4>
-            <p><strong>Email:</strong> {{ user.email }}</p>
-            <p><strong>Telefone:</strong> {{ user.phoneNumber }}</p>  
-          </div>
-          <div class="col-md-12 text-end">
-            <button class="btn btn-warning mt-3" (click)="openEditProfileModal(editProfileModal)">Editar Perfil</button>
-            <button class="btn btn-danger mt-3 ms-2" (click)="logout()">Sair</button>
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <!-- Cabeçalho do perfil -->
+        <div class="text-center mb-4">
+          <h1 class="display-4">Perfil</h1>
+          <p class="text-muted">Veja e edite suas informações</p>
+        </div>
+
+        <!-- Cartão de perfil -->
+        <div class="card shadow-sm mb-4">
+          <div class="card-body">
+            <div class="row align-items-center">
+              <!-- Imagem do usuário -->
+              <div class="col-md-4 text-center mb-3 mb-md-0">
+                <img
+                  [src]="user.profilePicture.startsWith('data:image') ? user.profilePicture : 'data:image/jpeg;base64,' + user.profilePicture"
+                  alt="Foto de perfil"
+                  class="img-fluid rounded-circle border"
+                  style="max-width: 100%; max-height: 250px; object-fit: cover;"
+                />
+              </div>
+              <!-- Informações do usuário -->
+              <div class="col-md-8">
+                <h4 class="mb-2">{{ user.name }}</h4>
+                <p class="mb-1"><i class="bi bi-envelope-fill"></i> <strong>Email:</strong> {{ user.email }}</p>
+                <p class="mb-1" *ngIf="user.phoneNumber">
+                  <i class="bi bi-telephone-fill"></i> <strong>Telefone:</strong> {{ user.phoneNumber }}
+                </p>
+                <div class="mt-3 text-end">
+                  <button class="btn btn-warning" (click)="openEditProfileModal(editProfileModal)">
+                    <i class="bi bi-pencil-square"></i> Editar Perfil
+                  </button>
+                  <button class="btn btn-danger ms-2" (click)="logout()">
+                    <i class="bi bi-box-arrow-right"></i> Sair
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -24,8 +46,11 @@
 </div>
 
 <ng-template #loading>
-  <div class="container text-center">
-    <p>Carregando...</p>
+  <div class="container text-center mt-5">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Carregando...</span>
+    </div>
+    <p class="mt-3">Carregando...</p>
   </div>
 </ng-template>
 
@@ -39,15 +64,37 @@
     <form #editProfileForm="ngForm">
       <div class="form-group mb-3">
         <label for="userName" class="form-label">Nome:</label>
-        <input *ngIf="userToEdit" type="text" id="userName" class="form-control" [(ngModel)]="userToEdit.name" name="name" required />
+        <input
+          *ngIf="userToEdit"
+          type="text"
+          id="userName"
+          class="form-control"
+          [(ngModel)]="userToEdit.name"
+          name="name"
+          required
+        />
       </div>
       <div class="form-group mb-3">
         <label for="userPhone" class="form-label">Telefone:</label>
-        <input *ngIf="userToEdit" type="text" id="userPhone" class="form-control" [(ngModel)]="userToEdit.phoneNumber" name="phoneNumber" />
+        <input
+          *ngIf="userToEdit"
+          type="text"
+          id="userPhone"
+          class="form-control"
+          [(ngModel)]="userToEdit.phoneNumber"
+          name="phoneNumber"
+        />
       </div>
       <div class="form-group mb-3">
         <label for="userPassword" class="form-label">Nova Senha:</label>
-        <input *ngIf="userToEdit" type="password" id="userPassword" class="form-control" [(ngModel)]="userToEdit.password" name="password" />
+        <input
+          *ngIf="userToEdit"
+          type="password"
+          id="userPassword"
+          class="form-control"
+          [(ngModel)]="userToEdit.password"
+          name="password"
+        />
         <small class="form-text text-muted">Deixe em branco para manter a senha atual.</small>
       </div>
       <div class="form-group mb-3">
