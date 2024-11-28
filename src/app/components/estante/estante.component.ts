@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LivroService, Livro } from 'src/app/services/livro.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
 
 @Component({
@@ -16,7 +17,8 @@ export class EstanteComponent implements OnInit {
   constructor(
     private livroService: LivroService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private modalService: NgbModal // Adicionado o serviço NgbModal
   ) {}
 
   ngOnInit(): void {
@@ -40,9 +42,9 @@ export class EstanteComponent implements OnInit {
     );
   }
 
-  openEditBookModal(livro: Livro, modal: any): void {
+  openEditBookModal(livro: Livro, content: any): void {
     this.bookToEdit = { ...livro }; // Cria uma cópia do livro para edição
-    modal.open();
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
   }
 
   updateBook(): void {
@@ -57,9 +59,18 @@ export class EstanteComponent implements OnInit {
     }
   }
 
-  openDeleteBookModal(livro: Livro, modal: any): void {
+  openDeleteBookModal(livro: Livro, content: any): void {
     this.bookToEdit = livro; // Armazena o livro a ser excluído
-    modal.open();
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then(
+      (result) => {
+        if (result === 'confirm') {
+          this.deleteBook(); // Chama a exclusão do livro
+        }
+      },
+      () => {
+        this.bookToEdit = null;
+      }
+    );
   }
 
   deleteBook(): void {

@@ -1,67 +1,37 @@
-<div class="container mt-4">
-  <div class="text-center bg-light p-4 rounded shadow-sm">
-    <h1 style="color: #8d573a;">Meus Livros</h1>
-  </div>
-
-  <div class="row mt-4">
-    <div *ngFor="let livro of livros" class="col-md-4 col-sm-6 mb-4">
-      <div class="card livro">
-        <img *ngIf="livro.picture" [src]="livro.picture.startsWith('data:image') ? livro.picture : 'data:image/jpeg;base64,' + livro.picture" class="card-img-top" alt="Imagem do Livro">
-        <div class="card-body">
-          <h5 class="card-title">{{ livro.name }}</h5>
-          <p class="card-text"><i class="bi bi-person-fill"></i> <strong>Autor:</strong> {{ livro.author }}</p>
-          <p class="card-text"><i class="bi bi-person-lines-fill"></i> <strong>Publicado por:</strong> {{ livro.usuarioPublicador }}</p>
-          <button *ngIf="livro.id" class="btn btn-warning btn-sm" (click)="openEditBookModal(livro, editBookModal)">
-            <i class="bi bi-pencil"></i> Editar
-          </button>
-          <button *ngIf="livro.id" class="btn btn-danger btn-sm" (click)="openDeleteBookModal(livro, deleteModal)">
-            <i class="bi bi-trash"></i> Excluir
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
+<!-- Lista de Livros -->
+<div *ngFor="let livro of livros" class="livro-item">
+  <h4>{{ livro.titulo }}</h4>
+  <button class="btn btn-primary" (click)="openEditBookModal(livro, editModal)">Editar</button>
+  <button class="btn btn-danger" (click)="openDeleteBookModal(livro, deleteModal)">Excluir</button>
 </div>
 
-<!-- Modal de Edição de Livro -->
-<ng-template #editBookModal let-modal>
+<!-- Modal para Editar Livro -->
+<ng-template #editModal let-modal>
   <div class="modal-header">
     <h5 class="modal-title">Editar Livro</h5>
-    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('cancel')"></button>
+    <button type="button" class="btn-close" (click)="modal.dismiss()"></button>
   </div>
   <div class="modal-body">
-    <form #editBookForm="ngForm">
-      <div class="form-group mb-3">
-        <label for="bookTitle" class="form-label">Título:</label>
-        <input *ngIf="bookToEdit" type="text" id="bookTitle" class="form-control" [(ngModel)]="bookToEdit.name" name="name" required />
-      </div>
-      <div class="form-group mb-3">
-        <label for="bookAuthor" class="form-label">Autor:</label>
-        <input *ngIf="bookToEdit" type="text" id="bookAuthor" class="form-control" [(ngModel)]="bookToEdit.author" name="author" required />
-      </div>
-      <div class="form-group mb-3">
-        <label for="bookDescription" class="form-label">Descrição:</label>
-        <textarea *ngIf="bookToEdit" id="bookDescription" class="form-control" [(ngModel)]="bookToEdit.description" name="description"></textarea>
-      </div>
-    </form>
+    <input [(ngModel)]="bookToEdit?.titulo" class="form-control" placeholder="Título do Livro">
+    <textarea [(ngModel)]="bookToEdit?.descricao" class="form-control" placeholder="Descrição"></textarea>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" (click)="modal.dismiss('cancel')">Cancelar</button>
-    <button type="button" class="btn btn-primary" (click)="updateBook(); modal.close('confirm')">Salvar alterações</button>
+    <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Cancelar</button>
+    <button type="button" class="btn btn-success" (click)="updateBook(); modal.close()">Salvar</button>
   </div>
 </ng-template>
 
-<!-- Modal de Exclusão de Livro -->
+<!-- Modal para Excluir Livro -->
 <ng-template #deleteModal let-modal>
   <div class="modal-header">
-    <h5 class="modal-title">Confirmação de Exclusão</h5>
-    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('cancel')"></button>
+    <h5 class="modal-title">Excluir Livro</h5>
+    <button type="button" class="btn-close" (click)="modal.dismiss()"></button>
   </div>
   <div class="modal-body">
-    <p>Tem certeza que deseja excluir este livro?</p>
+    <p>Tem certeza que deseja excluir o livro "{{ bookToEdit?.titulo }}"?</p>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" (click)="modal.dismiss('cancel')">Cancelar</button>
-    <button type="button" class="btn btn-danger" (click)="deleteBook(); modal.close('confirm')">Confirmar</button>
+    <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Cancelar</button>
+    <button type="button" class="btn btn-danger" (click)="deleteBook(); modal.close()">Excluir</button>
   </div>
 </ng-template>
