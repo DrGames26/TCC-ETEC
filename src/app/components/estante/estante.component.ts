@@ -39,18 +39,18 @@ export class EstanteComponent implements OnInit {
     });
   }
 
-  openEditBookModal(livro: Livro, content: any) {
+  openEditBookModal(livro: Livro) {
     // Atribui o livro a ser editado
     this.livroToEdit = livro;
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
+    this.modalService.open('#editBookModal', { ariaLabelledBy: 'modal-basic-title' });
   }
 
-  openDeleteBookModal(livro: Livro, content: any) {
+  openDeleteBookModal(livro: Livro) {
     this.livroToDelete = livro;
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then(
+    this.modalService.open('#deleteModal', { ariaLabelledBy: 'modal-basic-title' }).result.then(
       (result) => {
         if (result === 'confirm') {
-          this.deleteBook(livro.id);
+          this.deleteBook();
         }
       },
       () => {
@@ -59,17 +59,17 @@ export class EstanteComponent implements OnInit {
     );
   }
 
-  deleteBook(bookId: number) {
-    this.livroService.deleteBook(bookId).subscribe(() => {
-      this.livros = this.livros.filter(livro => livro.id !== bookId);
-    });
+  deleteBook() {
+    if (this.livroToDelete) {
+      this.livroService.deleteBook(this.livroToDelete.id).subscribe(() => {
+        this.livros = this.livros.filter(livro => livro.id !== this.livroToDelete?.id);
+      });
+    }
   }
 
-  updateBook(livro: Livro) {
-    // Chama o método updateBook do serviço para atualizar o livro
+  updateBook() {
     if (this.livroToEdit) {
       this.livroService.updateBook(this.livroToEdit).subscribe((updatedLivro) => {
-        // Atualiza o livro na lista local
         const index = this.livros.findIndex(l => l.id === updatedLivro.id);
         if (index !== -1) {
           this.livros[index] = updatedLivro;

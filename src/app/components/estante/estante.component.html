@@ -18,10 +18,10 @@
           </button>
           
           <!-- Botões de Editar e Excluir só visíveis para o usuário que postou o livro -->
-          <button *ngIf="livro.usuarioPublicador === userName" class="btn btn-warning btn-sm mt-2" (click)="openEditBookModal(livro, editBookModal)">
+          <button *ngIf="livro.usuarioPublicador === userName" class="btn btn-warning btn-sm mt-2" (click)="openEditBookModal(livro)">
             <i class="bi bi-pencil-fill"></i> Editar
           </button>
-          <button *ngIf="livro.usuarioPublicador === userName" class="btn btn-danger btn-sm mt-2" (click)="openDeleteBookModal(livro, deleteModal)">
+          <button *ngIf="livro.usuarioPublicador === userName" class="btn btn-danger btn-sm mt-2" (click)="openDeleteBookModal(livro)">
             <i class="bi bi-trash-fill"></i> Excluir
           </button>
         </div>
@@ -41,7 +41,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <form (ngSubmit)="updateBook(livroToEdit)">
+        <form (ngSubmit)="updateBook()">
           <div class="form-group">
             <label for="livroName">Nome do Livro</label>
             <input type="text" class="form-control" id="livroName" [(ngModel)]="livroToEdit?.name" name="name" required>
@@ -84,7 +84,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" (click)="modalService.dismissAll()">Cancelar</button>
-        <button type="button" class="btn btn-danger" (click)="deleteBook(livroToDelete?.id)">Excluir</button>
+        <button type="button" class="btn btn-danger" (click)="deleteBook()">Excluir</button>
       </div>
     </div>
   </div>
