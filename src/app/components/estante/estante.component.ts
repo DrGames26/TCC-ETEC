@@ -1,87 +1,54 @@
 import { Component, OnInit } from '@angular/core';
-import { LivroService, Livro } from 'src/app/services/livro.service';
-import { AuthService } from 'src/app/services/auth.service';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Router } from '@angular/router';
+import { Livro, LivroService } from 'src/app/services/livro.service';
 
 @Component({
   selector: 'app-estante',
   templateUrl: './estante.component.html',
-  styleUrls: ['./estante.component.css']
+  styleUrls: ['./estante.component.css'],
 })
 export class EstanteComponent implements OnInit {
   livros: Livro[] = [];
-  userName: string | null = null;
-  bookToEdit: Livro | null = null;
+  bookToEdit: Livro = {
+    id: 0,
+    name: '',
+    author: '',
+    genre: '',
+    description: '',
+  };
 
-  constructor(
-    private livroService: LivroService,
-    private authService: AuthService,
-    private router: Router,
-    private modalService: NgbModal // Adicionado o serviço NgbModal
-  ) {}
+  constructor(private livroService: LivroService) {}
 
   ngOnInit(): void {
-    const user = this.authService.getUser();
-    if (user) {
-      this.userName = user.name;
-      this.carregarLivrosDaEstante();
-    } else {
-      console.error("Usuário não autenticado.");
-    }
+    this.carregarLivros();
   }
 
-  carregarLivrosDaEstante(): void {
-    this.livroService.getLivros().subscribe(
-      (data) => {
-        this.livros = data
-          .filter((livro: Livro) => livro.usuarioPublicador === this.userName)
-          .sort((a: Livro, b: Livro) => (b.id || 0) - (a.id || 0));
-      },
-      (error) => console.error('Erro ao carregar livros da estante:', error)
-    );
+  carregarLivros(): void {
+    this.livroService.getLivros().subscribe((data) => (this.livros = data));
   }
 
-  openEditBookModal(livro: Livro, content: any): void {
-    this.bookToEdit = { ...livro }; // Cria uma cópia do livro para edição
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
+  editarLivro(livro: Livro): void {
+    this.bookToEdit = { ...livro };
   }
 
-  updateBook(): void {
-    if (this.bookToEdit) {
-      this.livroService.updateBook(this.bookToEdit).subscribe(
-        () => {
-          this.carregarLivrosDaEstante(); // Atualiza a lista de livros após a edição
-          alert('Livro atualizado com sucesso.');
-        },
-        (error) => console.error('Erro ao atualizar livro:', error)
-      );
-    }
+  salvarEdicao(): void {
+    this.livroService.updateBook(this.bookToEdit).subscribe(() => {
+      this.carregarLivros();
+      const modal = document.getElementById('editBookModal') as HTMLElement;
+      modal?.classList.remove('show');
+    });
   }
 
-  openDeleteBookModal(livro: Livro, content: any): void {
-    this.bookToEdit = livro; // Armazena o livro a ser excluído
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then(
-      (result) => {
-        if (result === 'confirm') {
-          this.deleteBook(); // Chama a exclusão do livro
-        }
-      },
-      () => {
-        this.bookToEdit = null;
-      }
-    );
+  confirmarExclusao(livro: Livro): void {
+    this.bookToEdit = livro;
   }
 
-  deleteBook(): void {
-    if (this.bookToEdit) {
-      this.livroService.deleteBook(this.bookToEdit.id).subscribe(
-        () => {
-          this.carregarLivrosDaEstante(); // Atualiza a lista de livros após a exclusão
-          alert('Livro excluído com sucesso.');
-        },
-        (error) => console.error('Erro ao excluir livro:', error)
-      );
+  excluirLivro(): void {
+    if (this.bookToEdit.id) {
+      this.livroService.deleteBook(this.bookToEdit.id).subscribe(() => {
+        this.carregarLivros();
+        const modal = document.getElementById('deleteBookModal') as HTMLElement;
+        modal?.classList.remove('show');
+      });
     }
   }
 }
