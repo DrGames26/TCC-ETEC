@@ -2,9 +2,9 @@
   <h2 class="mb-4">Minha Estante</h2>
 
   <!-- Listagem de livros -->
-  <div class="row">
+  <div class="row livros-container">
     <div *ngFor="let livro of livros" class="col-md-4 mb-3">
-      <div class="card">
+      <div class="card livro">
         <img
           *ngIf="livro.picture"
           [src]="'data:image/png;base64,' + livro.picture"
@@ -13,31 +13,31 @@
         />
         <div class="card-body">
           <h5 class="card-title">{{ livro.name }}</h5>
-          <p class="card-text">
-            <strong>Autor:</strong> {{ livro.author }}
-          </p>
-          <p class="card-text" *ngIf="livro.description">
-            <strong>Descrição:</strong> {{ livro.description }}
-          </p>
-          <p class="card-text">
-            <strong>Gênero:</strong> {{ livro.genre }}
-          </p>
-          <button
-            class="btn btn-primary me-2"
-            (click)="editarLivro(livro)"
-            data-bs-toggle="modal"
-            data-bs-target="#editBookModal"
-          >
-            Editar
-          </button>
-          <button
-            class="btn btn-danger"
-            (click)="confirmarExclusao(livro)"
-            data-bs-toggle="modal"
-            data-bs-target="#deleteBookModal"
-          >
-            Excluir
-          </button>
+          <div class="livro-info">
+            <p><strong>Autor:</strong> {{ livro.author }}</p>
+            <p *ngIf="livro.description">
+              <strong>Descrição:</strong> {{ livro.description }}
+            </p>
+            <p><strong>Gênero:</strong> {{ livro.genre }}</p>
+          </div>
+          <div class="livro-actions">
+            <button
+              class="btn btn-primary me-2"
+              (click)="editarLivro(livro)"
+              data-bs-toggle="modal"
+              data-bs-target="#editBookModal"
+            >
+              Editar
+            </button>
+            <button
+              class="btn btn-danger"
+              (click)="confirmarExclusao(livro)"
+              data-bs-toggle="modal"
+              data-bs-target="#deleteBookModal"
+            >
+              Excluir
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -125,7 +125,8 @@
         <div class="modal-body">
           <p>
             Tem certeza que deseja excluir o livro
-            <strong>{{ bookToEdit.name }}</strong>?
+            <strong>{{ bookToEdit.name }}</strong
+            >?
           </p>
         </div>
         <div class="modal-footer">
@@ -136,7 +137,7 @@
           >
             Cancelar
           </button>
-          <button type="button"class="btn btn-danger"(click)="excluirLivro()">
+          <button type="button" class="btn btn-danger" (click)="excluirLivro()">
             Excluir
           </button>
         </div>
