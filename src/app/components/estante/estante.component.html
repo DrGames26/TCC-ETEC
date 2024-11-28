@@ -1,31 +1,34 @@
-<div class="container mt-4">
-  <div class="text-center bg-light p-4 rounded shadow-sm">
-    <h1 style="color: #8d573a;">Meus Livros</h1>
-  </div>
+<div *ngIf="user; else loading">
+  <div class="container mt-4">
+    <div class="text-center bg-light p-4 rounded shadow-sm">
+      <h1 style="color: #8d573a;">Meus Livros</h1>
+    </div>
 
-  <div class="row mt-4">
-    <div *ngFor="let livro of livros" class="col-md-4 col-sm-6 mb-4">
-      <div class="card livro">
-        <!-- Verifica se a imagem é Base64 e, caso contrário, ajusta -->
-        <img *ngIf="livro.picture" 
-             [src]="livro.picture.startsWith('data:image') ? livro.picture : 'data:image/jpeg;base64,' + livro.picture" 
-             class="card-img-top" alt="Imagem do Livro">
-        <div class="card-body">
-          <h5 class="card-title">{{ livro.name }}</h5>
-          <p class="card-text"><i class="bi bi-person-fill"></i> <strong>Autor:</strong> {{ livro.author }}</p>
-          <p class="card-text"><i class="bi bi-person-lines-fill"></i> <strong>Publicado por:</strong> {{ livro.usuarioPublicador }}</p>
-          
-          <button *ngIf="livro.id" class="btn btn-custom w-100" (click)="navegarParaDetalhes(livro.id)">
-            <i class="bi bi-eye-fill"></i> Ver Detalhes
-          </button>
-          
-          <!-- Botões de Editar e Excluir visíveis apenas para o usuário que postou o livro -->
-          <button *ngIf="livro.usuarioPublicador === userName" class="btn btn-warning btn-sm mt-2" (click)="openEditBookModal(livro, editBookModal)">
-            <i class="bi bi-pencil-fill"></i> Editar
-          </button>
-          <button *ngIf="livro.usuarioPublicador === userName" class="btn btn-danger btn-sm mt-2" (click)="openDeleteBookModal(livro, deleteModal)">
-            <i class="bi bi-trash-fill"></i> Excluir
-          </button>
+    <div class="row mt-4">
+      <!-- Filtra apenas os livros do usuário logado -->
+      <div *ngFor="let livro of livros.filter(l => l.usuarioPublicador === user.name)" class="col-md-4 col-sm-6 mb-4">
+        <div class="card livro">
+          <!-- Verifica se a imagem é Base64 e, caso contrário, ajusta -->
+          <img *ngIf="livro.picture" 
+               [src]="livro.picture.startsWith('data:image') ? livro.picture : 'data:image/jpeg;base64,' + livro.picture" 
+               class="card-img-top" alt="Imagem do Livro">
+          <div class="card-body">
+            <h5 class="card-title">{{ livro.name }}</h5>
+            <p class="card-text"><i class="bi bi-person-fill"></i> <strong>Autor:</strong> {{ livro.author }}</p>
+            <p class="card-text"><i class="bi bi-person-lines-fill"></i> <strong>Publicado por:</strong> {{ livro.usuarioPublicador }}</p>
+            
+            <button *ngIf="livro.id" class="btn btn-custom w-100" (click)="navegarParaDetalhes(livro.id)">
+              <i class="bi bi-eye-fill"></i> Ver Detalhes
+            </button>
+            
+            <!-- Botões de Editar e Excluir visíveis apenas para o usuário que postou o livro -->
+            <button *ngIf="livro.usuarioPublicador === user.name" class="btn btn-warning btn-sm mt-2" (click)="openEditBookModal(livro, editBookModal)">
+              <i class="bi bi-pencil-fill"></i> Editar
+            </button>
+            <button *ngIf="livro.usuarioPublicador === user.name" class="btn btn-danger btn-sm mt-2" (click)="openDeleteBookModal(livro, deleteModal)">
+              <i class="bi bi-trash-fill"></i> Excluir
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -71,5 +74,3 @@
             (click)="livroToDelete ? deleteBook(livroToDelete.id) : null">Confirmar</button>
   </div>
 </ng-template>
-
-
