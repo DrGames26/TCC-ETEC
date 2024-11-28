@@ -2,39 +2,42 @@
 .livro-card {
   display: flex;
   flex-direction: column;
-  height: 100%;
-  max-height: 100%; /* Garante que a altura máxima do card não seja ultrapassada */
+  height: 100%; /* Altura total do card */
+  max-height: 400px; /* Definindo altura máxima para os cards */
+  box-sizing: border-box; /* Para que o padding não afete a altura do card */
 }
 
-/* Configuração para o corpo do card, fazendo com que ele ocupe o espaço disponível */
+/* Corpo do card */
 .card-body {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  padding: 15px; /* Alinha o conteúdo no card */
+  padding: 15px;
+  overflow: hidden; /* Impede que o conteúdo ultrapasse o card */
 }
 
-/* As ações no card vão para a parte inferior */
+/* As ações do livro vão para a parte inferior */
 .livro-actions {
-  margin-top: auto; /* Faz com que os botões fiquem na parte inferior */
+  margin-top: auto; /* Faz os botões ficarem na parte inferior */
 }
 
 /* Ajustes na imagem do livro */
 .card-img-top {
-  height: 200px; /* Definindo uma altura fixa para as imagens */
-  object-fit: cover; /* Garante que a imagem não distorça e preencha o espaço */
-  width: 100%; /* Faz com que a imagem ocupe toda a largura do card */
+  width: 100%; /* Garante que a imagem ocupe toda a largura do card */
+  height: auto; /* A altura será ajustada automaticamente para manter a proporção */
+  max-height: 200px; /* Define uma altura máxima para a imagem */
+  object-fit: contain; /* Exibe a imagem inteira, sem cortar */
 }
 
-/* Responsividade: Para telas menores, podemos ajustar a altura da imagem */
+/* Responsividade: Para telas menores */
 @media (max-width: 768px) {
   .card-img-top {
-    height: 180px; /* Menor altura para telas pequenas */
+    max-height: 150px; /* Menor altura para imagens em telas pequenas */
   }
 }
 
 @media (max-width: 576px) {
   .card-img-top {
-    height: 150px; /* Ainda menor para telas muito pequenas */
+    max-height: 120px; /* Para telas muito pequenas */
   }
 }
