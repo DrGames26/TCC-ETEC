@@ -69,7 +69,7 @@ export class CadastroComponent {
         console.log('Usuário cadastrado com sucesso!', response);
         this.successMessage = 'Usuário cadastrado com sucesso!';
         this.errorMessage = ''; // Limpar mensagem de erro em caso de sucesso
-        
+
         // Loga automaticamente após o cadastro
         this.authService.login({ email: this.user.email, password: this.user.password ?? '' }).subscribe(
           () => {
