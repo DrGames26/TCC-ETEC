@@ -81,4 +81,11 @@ export class EstanteComponent implements OnInit {
   navegarParaDetalhes(bookId: number) {
     this.router.navigate([`/livro/${bookId}`]);
   }
+
+  onFileSelected(event: any): void {
+    const file = event.target.files[0];
+    if (file) {
+      // Aqui você pode processar o arquivo, por exemplo, convertê-lo para Base64 ou enviá-lo para o servidor
+    }
+  }
 }
