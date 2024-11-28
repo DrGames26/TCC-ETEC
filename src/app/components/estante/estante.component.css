@@ -1,11 +1,12 @@
-/* Garante que todos os cards tenham uma altura maior */
+/* Garantir que os cards tenham uma altura consistente */
 .livro-card {
   display: flex;
   flex-direction: column;
   height: 100%; /* Altura total do card */
-  max-height: 500px; /* Aumentado para maior altura do card */
-  box-sizing: border-box; /* Para que o padding não afete a altura do card */
-  padding: 10px; /* Adicionado padding ao redor do card */
+  max-height: 500px;
+  box-sizing: border-box;
+  padding: 10px;
+  overflow: hidden; /* Impede que conteúdo extra ultrapasse o card */
 }
 
 /* Corpo do card */
@@ -13,32 +14,35 @@
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  padding: 20px; /* Aumentado o padding interno para espaçamento maior */
-  overflow: hidden; /* Impede que o conteúdo ultrapasse o card */
+  padding: 20px;
+  overflow: hidden;
 }
 
-/* As ações do livro vão para a parte inferior */
+/* Garantir que a descrição não ocupe todo o espaço */
+.livro-info p {
+  margin-bottom: 10px; /* Espaço entre os parágrafos */
+  max-height: 60px; /* Limitar a altura máxima da descrição */
+  overflow: hidden; /* Esconde o texto que ultrapassar a altura */
+  text-overflow: ellipsis; /* Adiciona reticências ao texto cortado */
+  white-space: nowrap; /* Mantém o texto em uma linha */
+}
+
+/* Fixar as ações na parte inferior */
 .livro-actions {
-  margin-top: auto; /* Faz os botões ficarem na parte inferior */
+  margin-top: auto;
+  display: flex;
+  gap: 10px; /* Espaço entre os botões */
 }
 
-/* Ajustes na imagem do livro */
+/* Ajustes adicionais para botões */
+.livro-actions button {
+  flex: 1; /* Os botões ocupam o mesmo tamanho */
+}
+
+/* Ajustes na imagem */
 .card-img-top {
-  width: 100%; /* Garante que a imagem ocupe toda a largura do card */
-  height: auto; /* A altura será ajustada automaticamente para manter a proporção */
-  max-height: 250px; /* Aumentado para exibir uma imagem maior */
-  object-fit: contain; /* Exibe a imagem inteira, sem cortar */
-}
-
-/* Responsividade: Para telas menores */
-@media (max-width: 768px) {
-  .card-img-top {
-    max-height: 200px; /* Ajustado para imagens maiores em telas menores */
-  }
-}
-
-@media (max-width: 576px) {
-  .card-img-top {
-    max-height: 150px; /* Ajustado para telas muito pequenas */
-  }
+  width: 100%;
+  height: auto;
+  max-height: 200px; /* Tamanho consistente para imagens */
+  object-fit: contain;
 }
