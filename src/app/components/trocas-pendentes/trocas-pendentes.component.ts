@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ExchangeService } from '../../services/exchange.service'; // Serviço que busca os dados
-import { AuthService } from '../../services/auth.service'; // Serviço de autenticação
 import { ToastrService } from 'ngx-toastr'; // Para exibir mensagens de notificação
+import { AuthService } from '../../services/auth.service'; // Serviço de autenticação
 
 @Component({
   selector: 'app-trocas-pendentes',
@@ -12,16 +12,14 @@ export class TrocasPendentesComponent implements OnInit {
   pendentes: any[] = [];
   aceitas: any[] = [];
   recusadas: any[] = [];
-  userEmail: string = '';
 
   constructor(
     private exchangeService: ExchangeService, // Serviço que interage com o backend
-    private authService: AuthService, // Serviço de autenticação
-    private toastr: ToastrService // Para exibir notificações
+    private toastr: ToastrService, // Para exibir notificações
+    private authService: AuthService // Para obter o usuário autenticado
   ) {}
 
   ngOnInit(): void {
-    this.userEmail = this.authService.getUser()?.email; // Obtém o e-mail do usuário autenticado
     this.loadExchanges(); // Chama o método que carrega as trocas
   }
 
@@ -29,26 +27,27 @@ export class TrocasPendentesComponent implements OnInit {
     // Chama o serviço para buscar as trocas pendentes do backend
     this.exchangeService.getPendingExchanges().subscribe(
       (data) => {
-        // Filtra as trocas de acordo com o status (PENDING, ACCEPTED, REJECTED) e o e-mail do usuário
+        // Filtra as trocas de acordo com o status (PENDING, ACCEPTED, REJECTED)
+        const userEmail = this.authService.getUser()?.email; // Obtém o e-mail do usuário autenticado
+
+        // Filtra as trocas que pertencem ao usuário autenticado
         this.pendentes = data.filter(exchange => 
-          exchange.status === 'PENDING' && this.isUserEligible(exchange)
+          exchange.status === 'PENDING' &&
+          (exchange.requestedBook.usuarioPublicador === userEmail || exchange.offeredBook.usuarioPublicador === userEmail)
         );
         this.aceitas = data.filter(exchange => 
-          exchange.status === 'ACCEPTED' && this.isUserEligible(exchange)
+          exchange.status === 'ACCEPTED' &&
+          (exchange.requestedBook.usuarioPublicador === userEmail || exchange.offeredBook.usuarioPublicador === userEmail)
         );
         this.recusadas = data.filter(exchange => 
-          exchange.status === 'REJECTED' && this.isUserEligible(exchange)
+          exchange.status === 'REJECTED' &&
+          (exchange.requestedBook.usuarioPublicador === userEmail || exchange.offeredBook.usuarioPublicador === userEmail)
         );
       },
       (error) => {
         this.toastr.error('Erro ao carregar as solicitações de troca.', 'Erro');
       }
     );
-  }
-
-  isUserEligible(exchange: any): boolean {
-    // Verifica se o usuário autenticado é o proprietário do livro oferecido na troca
-    return exchange.offeredBook && exchange.offeredBook.ownerEmail === this.userEmail;
   }
 
   acceptExchange(id: number): void {
