@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
+
 
 export interface Livro {
   id: number;
@@ -10,7 +12,7 @@ export interface Livro {
   genre: string;
   picture?: string;
   usuarioPublicador?: string;
-  phoneNumber?: string
+  phoneNumber?: string;
 }
 
 @Injectable({
@@ -23,7 +25,23 @@ export class LivroService {
 
   // Listar livros
   getLivros(): Observable<Livro[]> {
-    return this.http.get<Livro[]>(`${this.apiUrl}/list`);
+    // Verificar se os livros estão armazenados no localStorage
+    const cachedLivros = localStorage.getItem('livros');
+    if (cachedLivros) {
+      // Se estiverem no cache, retornar os dados diretamente
+      return new Observable(observer => {
+        observer.next(JSON.parse(cachedLivros));
+        observer.complete();
+      });
+    } else {
+      // Se não estiverem no cache, fazer a requisição para a API
+      return this.http.get<Livro[]>(`${this.apiUrl}/list`).pipe(
+        tap(livros => {
+          // Armazenar os livros no cache para a próxima vez
+          localStorage.setItem('livros', JSON.stringify(livros));
+        })
+      );
+    }
   }
 
   // Adicionar livro
@@ -51,4 +69,3 @@ export class LivroService {
     return this.http.put<Livro>(`${this.apiUrl}/${livro.id}`, livro);
   }
 }
-
