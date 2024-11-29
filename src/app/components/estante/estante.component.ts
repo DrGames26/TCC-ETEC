@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Livro, LivroService } from 'src/app/services/livro.service';
+import { AuthService } from 'src/app/services/auth.service'; // Importando o AuthService
 
 @Component({
   selector: 'app-estante',
@@ -16,14 +17,28 @@ export class EstanteComponent implements OnInit {
     description: '',
   };
 
-  constructor(private livroService: LivroService) {}
+  constructor(
+    private livroService: LivroService,
+    private authService: AuthService // Injetando o AuthService
+  ) {}
 
   ngOnInit(): void {
     this.carregarLivros();
   }
 
   carregarLivros(): void {
-    this.livroService.getLivros().subscribe((data) => (this.livros = data));
+    const usuarioLogado = this.authService.getUser(); // Obtendo o usuário logado
+    if (usuarioLogado) {
+      const usuarioPublicador = usuarioLogado.name; // Usando o nome do usuário logado como o publicador
+      this.livroService.getBooksByUsuarioPublicador(usuarioPublicador).subscribe(
+        (data) => {
+          this.livros = data;
+        },
+        (error) => {
+          console.error('Erro ao carregar livros do usuário', error);
+        }
+      );
+    }
   }
 
   editarLivro(livro: Livro): void {
