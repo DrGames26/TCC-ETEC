@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import * as LZString from 'lz-string';  // Importando a biblioteca lz-string
 
 export interface Livro {
   id: number;
@@ -34,9 +35,15 @@ export class LivroService {
       
       // Verificar se o cache ainda está válido (1 hora)
       if (cacheAge < this.cacheExpirationTime) {
+        // Descomprimir os livros antes de retornar
         return new Observable(observer => {
-          observer.next(JSON.parse(cachedLivros));
-          observer.complete();
+          const decompressedLivros = LZString.decompress(cachedLivros);
+          if (decompressedLivros) {
+            observer.next(JSON.parse(decompressedLivros));
+            observer.complete();
+          } else {
+            observer.error('Erro ao descomprimir os livros');
+          }
         });
       }
     }
@@ -44,8 +51,9 @@ export class LivroService {
     // Se o cache expirou ou não existe, fazer a requisição para a API
     return this.http.get<Livro[]>(`${this.apiUrl}/list`).pipe(
       tap(livros => {
-        // Armazenar os livros no cache e salvar o timestamp
-        localStorage.setItem('livros', JSON.stringify(livros));
+        // Comprimir os livros antes de armazenar
+        const compressedLivros = LZString.compress(JSON.stringify(livros));
+        localStorage.setItem('livros', compressedLivros);
         localStorage.setItem('livrosTimestamp', Date.now().toString());
       })
     );
