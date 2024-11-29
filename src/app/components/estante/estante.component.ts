@@ -30,6 +30,7 @@ export class EstanteComponent implements OnInit {
     this.livroService.getLivros().subscribe((data) => {
       const usuarioLogado = this.authService.getUser(); // Obtém o usuário logado
       if (usuarioLogado) {
+        // Filtra os livros com base no email do usuário logado
         this.livros = data.filter((livro) => livro.usuarioPublicador === usuarioLogado.email);
       }
     });
