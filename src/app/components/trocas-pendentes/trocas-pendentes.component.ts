@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ExchangeService } from '../../services/exchange.service'; // Serviço que busca os dados
 import { ToastrService } from 'ngx-toastr'; // Para exibir mensagens de notificação
-import { AuthService } from '../../services/auth.service'; // Serviço de autenticação
 
 @Component({
   selector: 'app-trocas-pendentes',
@@ -15,8 +14,7 @@ export class TrocasPendentesComponent implements OnInit {
 
   constructor(
     private exchangeService: ExchangeService, // Serviço que interage com o backend
-    private toastr: ToastrService, // Para exibir notificações
-    private authService: AuthService // Para obter o usuário autenticado
+    private toastr: ToastrService // Para exibir notificações
   ) {}
 
   ngOnInit(): void {
@@ -28,21 +26,9 @@ export class TrocasPendentesComponent implements OnInit {
     this.exchangeService.getPendingExchanges().subscribe(
       (data) => {
         // Filtra as trocas de acordo com o status (PENDING, ACCEPTED, REJECTED)
-        const userEmail = this.authService.getUser()?.email; // Obtém o e-mail do usuário autenticado
-
-        // Filtra as trocas que pertencem ao usuário autenticado
-        this.pendentes = data.filter(exchange => 
-          exchange.status === 'PENDING' &&
-          (exchange.requestedBook.usuarioPublicador === userEmail || exchange.offeredBook.usuarioPublicador === userEmail)
-        );
-        this.aceitas = data.filter(exchange => 
-          exchange.status === 'ACCEPTED' &&
-          (exchange.requestedBook.usuarioPublicador === userEmail || exchange.offeredBook.usuarioPublicador === userEmail)
-        );
-        this.recusadas = data.filter(exchange => 
-          exchange.status === 'REJECTED' &&
-          (exchange.requestedBook.usuarioPublicador === userEmail || exchange.offeredBook.usuarioPublicador === userEmail)
-        );
+        this.pendentes = data.filter(exchange => exchange.status === 'PENDING');
+        this.aceitas = data.filter(exchange => exchange.status === 'ACCEPTED');
+        this.recusadas = data.filter(exchange => exchange.status === 'REJECTED');
       },
       (error) => {
         this.toastr.error('Erro ao carregar as solicitações de troca.', 'Erro');
