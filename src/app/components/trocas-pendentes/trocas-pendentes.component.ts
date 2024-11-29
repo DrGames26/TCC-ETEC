@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ExchangeService } from '../../services/exchange.service'; // Serviço que busca os dados
+import { AuthService } from '../../services/auth.service'; // Serviço de autenticação
 import { ToastrService } from 'ngx-toastr'; // Para exibir mensagens de notificação
 
 @Component({
@@ -11,13 +12,16 @@ export class TrocasPendentesComponent implements OnInit {
   pendentes: any[] = [];
   aceitas: any[] = [];
   recusadas: any[] = [];
+  userEmail: string = '';
 
   constructor(
     private exchangeService: ExchangeService, // Serviço que interage com o backend
+    private authService: AuthService, // Serviço de autenticação
     private toastr: ToastrService // Para exibir notificações
   ) {}
 
   ngOnInit(): void {
+    this.userEmail = this.authService.getUser()?.email; // Obtém o e-mail do usuário autenticado
     this.loadExchanges(); // Chama o método que carrega as trocas
   }
 
@@ -25,15 +29,26 @@ export class TrocasPendentesComponent implements OnInit {
     // Chama o serviço para buscar as trocas pendentes do backend
     this.exchangeService.getPendingExchanges().subscribe(
       (data) => {
-        // Filtra as trocas de acordo com o status (PENDING, ACCEPTED, REJECTED)
-        this.pendentes = data.filter(exchange => exchange.status === 'PENDING');
-        this.aceitas = data.filter(exchange => exchange.status === 'ACCEPTED');
-        this.recusadas = data.filter(exchange => exchange.status === 'REJECTED');
+        // Filtra as trocas de acordo com o status (PENDING, ACCEPTED, REJECTED) e o e-mail do usuário
+        this.pendentes = data.filter(exchange => 
+          exchange.status === 'PENDING' && this.isUserEligible(exchange)
+        );
+        this.aceitas = data.filter(exchange => 
+          exchange.status === 'ACCEPTED' && this.isUserEligible(exchange)
+        );
+        this.recusadas = data.filter(exchange => 
+          exchange.status === 'REJECTED' && this.isUserEligible(exchange)
+        );
       },
       (error) => {
         this.toastr.error('Erro ao carregar as solicitações de troca.', 'Erro');
       }
     );
+  }
+
+  isUserEligible(exchange: any): boolean {
+    // Verifica se o usuário autenticado é o proprietário do livro oferecido na troca
+    return exchange.offeredBook && exchange.offeredBook.ownerEmail === this.userEmail;
   }
 
   acceptExchange(id: number): void {
