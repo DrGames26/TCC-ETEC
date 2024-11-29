@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Livro, LivroService } from 'src/app/services/livro.service';
-import { AuthService } from 'src/app/services/auth.service'; 
 
 @Component({
   selector: 'app-estante',
@@ -17,23 +16,14 @@ export class EstanteComponent implements OnInit {
     description: '',
   };
 
-  constructor(
-    private livroService: LivroService,
-    private authService: AuthService 
-  ) {}
+  constructor(private livroService: LivroService) {}
 
   ngOnInit(): void {
     this.carregarLivros();
   }
 
   carregarLivros(): void {
-    this.livroService.getLivros().subscribe((data) => {
-      const usuarioLogado = this.authService.getUser(); // Obtém o usuário logado
-      if (usuarioLogado) {
-        // Filtra os livros com base no email do usuário logado
-        this.livros = data.filter((livro) => livro.usuarioPublicador === usuarioLogado.email);
-      }
-    });
+    this.livroService.getLivros().subscribe((data) => (this.livros = data));
   }
 
   editarLivro(livro: Livro): void {
