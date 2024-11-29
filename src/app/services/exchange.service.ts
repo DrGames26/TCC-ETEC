@@ -9,7 +9,7 @@ import { tap } from 'rxjs/operators';
 })
 export class ExchangeService {
 
-  private apiUrl = 'https://sorobooks-backend-lu3a.onrender.com/api/exchange'; 
+  private apiUrl = 'https://sorobooks-backend-1.onrender.com/api/exchange'; 
 
   constructor(private http: HttpClient, private toastr: ToastrService) {}
 
