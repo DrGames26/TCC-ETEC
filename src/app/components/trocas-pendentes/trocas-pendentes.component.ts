@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ExchangeService } from '../../services/exchange.service'; // Serviço que busca os dados
 import { ToastrService } from 'ngx-toastr'; // Para exibir mensagens de notificação
+import { AuthService } from 'src/app/services/auth.service'; // Serviço de autenticação
+import { LivroService } from 'src/app/services/livro.service'; // Serviço para buscar livros do usuário
 
 @Component({
   selector: 'app-trocas-pendentes',
@@ -11,14 +13,32 @@ export class TrocasPendentesComponent implements OnInit {
   pendentes: any[] = [];
   aceitas: any[] = [];
   recusadas: any[] = [];
+  livrosDoUsuario: any[] = []; // Lista de livros do usuário
 
   constructor(
     private exchangeService: ExchangeService, // Serviço que interage com o backend
-    private toastr: ToastrService // Para exibir notificações
+    private toastr: ToastrService, // Para exibir notificações
+    private authService: AuthService, // Serviço de autenticação
+    private livroService: LivroService // Serviço para buscar livros do usuário
   ) {}
 
   ngOnInit(): void {
-    this.loadExchanges(); // Chama o método que carrega as trocas
+    this.loadUserBooks(); // Carregar os livros do usuário
+  }
+
+  loadUserBooks(): void {
+    const usuario = this.authService.getUser();
+    if (usuario && usuario.email) {
+      this.livroService.getBooksByUsuarioPublicador(usuario.email).subscribe(
+        (livros) => {
+          this.livrosDoUsuario = livros; // Armazena os livros do usuário
+          this.loadExchanges(); // Carrega as trocas após os livros serem carregados
+        },
+        (error) => {
+          this.toastr.error('Erro ao carregar os livros do usuário.', 'Erro');
+        }
+      );
+    }
   }
 
   loadExchanges(): void {
@@ -26,7 +46,10 @@ export class TrocasPendentesComponent implements OnInit {
     this.exchangeService.getPendingExchanges().subscribe(
       (data) => {
         // Filtra as trocas de acordo com o status (PENDING, ACCEPTED, REJECTED)
-        this.pendentes = data.filter(exchange => exchange.status === 'PENDING');
+        this.pendentes = data.filter(exchange => {
+          // Verifica se o usuário tem o livro solicitado
+          return this.livrosDoUsuario.some(livro => livro.id === exchange.requestedBook.id);
+        });
         this.aceitas = data.filter(exchange => exchange.status === 'ACCEPTED');
         this.recusadas = data.filter(exchange => exchange.status === 'REJECTED');
       },
