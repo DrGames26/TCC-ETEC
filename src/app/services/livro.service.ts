@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
-
 export interface Livro {
   id: number;
   name: string;
@@ -20,28 +19,36 @@ export interface Livro {
 })
 export class LivroService {
   private apiUrl = 'https://sorobooks-backend-1.onrender.com/api/books';
+  private cacheExpirationTime = 60 * 60 * 1000; // 1 hora
 
   constructor(private http: HttpClient) {}
 
-  // Listar livros
+  // Listar livros com cache e expiração
   getLivros(): Observable<Livro[]> {
-    // Verificar se os livros estão armazenados no localStorage
+    // Verificar se os livros estão armazenados no localStorage e se o cache não expirou
     const cachedLivros = localStorage.getItem('livros');
-    if (cachedLivros) {
-      // Se estiverem no cache, retornar os dados diretamente
-      return new Observable(observer => {
-        observer.next(JSON.parse(cachedLivros));
-        observer.complete();
-      });
-    } else {
-      // Se não estiverem no cache, fazer a requisição para a API
-      return this.http.get<Livro[]>(`${this.apiUrl}/list`).pipe(
-        tap(livros => {
-          // Armazenar os livros no cache para a próxima vez
-          localStorage.setItem('livros', JSON.stringify(livros));
-        })
-      );
+    const cacheTimestamp = localStorage.getItem('livrosTimestamp');
+    
+    if (cachedLivros && cacheTimestamp) {
+      const cacheAge = Date.now() - parseInt(cacheTimestamp, 10);
+      
+      // Verificar se o cache ainda está válido (1 hora)
+      if (cacheAge < this.cacheExpirationTime) {
+        return new Observable(observer => {
+          observer.next(JSON.parse(cachedLivros));
+          observer.complete();
+        });
+      }
     }
+
+    // Se o cache expirou ou não existe, fazer a requisição para a API
+    return this.http.get<Livro[]>(`${this.apiUrl}/list`).pipe(
+      tap(livros => {
+        // Armazenar os livros no cache e salvar o timestamp
+        localStorage.setItem('livros', JSON.stringify(livros));
+        localStorage.setItem('livrosTimestamp', Date.now().toString());
+      })
+    );
   }
 
   // Adicionar livro
