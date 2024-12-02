@@ -32,7 +32,7 @@ export class TrocasPendentesComponent implements OnInit {
     this.exchangeService.getPendingExchanges().subscribe(
       (data) => {
         // Filtra as trocas de acordo com o status (PENDING, ACCEPTED, REJECTED)
-        this.pendentes = data.filter(exchange => 
+        this.pendentes = data.filter(exchange =>
           exchange.status === 'PENDING' && this.livroSolicitadoPertenceAoUsuario(exchange)
         );
         this.aceitas = data.filter(exchange => exchange.status === 'ACCEPTED');
@@ -83,7 +83,8 @@ export class TrocasPendentesComponent implements OnInit {
         this.toastr.success('Solicitação de troca aceita!', 'Sucesso');
         this.loadExchanges(); // Recarrega as trocas após aceitar
         this.aceitas.push(exchange); // Adiciona a troca aceita à lista de trocas aceitas
-        window.location.href = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+        // Abre o WhatsApp em uma nova aba
+        window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`, '_blank');
       },
       () => {
         this.toastr.error('Erro ao aceitar solicitação.', 'Erro');
