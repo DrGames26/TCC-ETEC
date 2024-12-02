@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent implements OnInit {
   livros: any[] = []; // Armazena os livros para exibição
+  livrosCarregados: boolean = false; // Controle para evitar chamadas repetidas
 
   constructor(private livroService: LivroService, private router: Router) {}
 
@@ -20,27 +21,31 @@ export class HomeComponent implements OnInit {
       console.log('Livros carregados do localStorage:', this.livros);
     }
 
-    // Busca livros da API e sincroniza com o localStorage
-    this.livroService.getLivros().subscribe(
-      (data: any) => {
-        this.livros = data.map((livro: any) => {
-          if (livro.picture) {
-            if (!livro.picture.startsWith('data:image')) {
-              livro.picture = 'data:image/jpeg;base64,' + livro.picture;
+    // Evita chamar a API se os livros já estiverem carregados
+    if (!this.livrosCarregados) {
+      // Busca livros da API e sincroniza com o localStorage
+      this.livroService.getLivros().subscribe(
+        (data: any) => {
+          this.livros = data.map((livro: any) => {
+            if (livro.picture) {
+              if (!livro.picture.startsWith('data:image')) {
+                livro.picture = 'data:image/jpeg;base64,' + livro.picture;
+              }
             }
-          }
-          return livro;
-        }).sort((a: any, b: any) => (b.id || 0) - (a.id || 0));
+            return livro;
+          }).sort((a: any, b: any) => (b.id || 0) - (a.id || 0));
 
-        console.log('Livros carregados da API:', this.livros);
+          console.log('Livros carregados da API:', this.livros);
 
-        // Salva os livros da API no localStorage
-        this.livroService.saveToLocalStorage(this.livros);
-      },
-      (error) => {
-        console.error('Erro ao carregar livros da API:', error);
-      }
-    );
+          // Salva os livros da API no localStorage
+          this.livroService.saveToLocalStorage(this.livros);
+          this.livrosCarregados = true; // Marca como carregado
+        },
+        (error) => {
+          console.error('Erro ao carregar livros da API:', error);
+        }
+      );
+    }
   }
 
   // Método para navegar para a página de detalhes do livro
