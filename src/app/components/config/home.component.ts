@@ -8,34 +8,43 @@ import { Router } from '@angular/router';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  livros: any[] = [];  // Define a variável para armazenar os livros
+  livros: any[] = []; // Armazena os livros para exibição
 
   constructor(private livroService: LivroService, private router: Router) {}
 
   ngOnInit(): void {
+    // Tenta carregar os livros do localStorage primeiro
+    const livrosSalvos = this.livroService.getFromLocalStorage();
+    if (livrosSalvos.length > 0) {
+      this.livros = livrosSalvos;
+      console.log('Livros carregados do localStorage:', this.livros);
+    }
+
+    // Busca livros da API e sincroniza com o localStorage
     this.livroService.getLivros().subscribe(
       (data: any) => {
-        // Verifica se a imagem está em Base64 e converte corretamente
         this.livros = data.map((livro: any) => {
           if (livro.picture) {
-            // Verifica se a imagem já possui o prefixo Base64
             if (!livro.picture.startsWith('data:image')) {
-              livro.picture = 'data:image/jpeg;base64,' + livro.picture; // Adiciona o prefixo Base64 se necessário
+              livro.picture = 'data:image/jpeg;base64,' + livro.picture;
             }
           }
           return livro;
-        }).sort((a: any, b: any) => (b.id || 0) - (a.id || 0)); // Ordena os mais recentes
+        }).sort((a: any, b: any) => (b.id || 0) - (a.id || 0));
 
-        console.log(this.livros); // Para verificar os livros carregados
+        console.log('Livros carregados da API:', this.livros);
+
+        // Salva os livros da API no localStorage
+        this.livroService.saveToLocalStorage(this.livros);
       },
       (error) => {
-        console.error('Erro ao carregar livros:', error);
+        console.error('Erro ao carregar livros da API:', error);
       }
     );
   }
 
   // Método para navegar para a página de detalhes do livro
   navegarParaDetalhes(livroId: number): void {
-    this.router.navigate(['/livro', livroId]); // Altere a rota conforme sua configuração
+    this.router.navigate(['/livro', livroId]); // Altere a rota conforme necessário
   }
 }
