@@ -42,6 +42,7 @@ export class TrocarLivroComponent implements OnInit {
         this.livroService.getLivroPorId(Number(livroId)).subscribe(
           (livro: Livro) => {
             this.livroDesejado = livro;
+            console.log('Livro encontrado na API:', this.livroDesejado);
           },
           (error) => {
             // Caso falhe, tenta buscar no localStorage
@@ -49,6 +50,7 @@ export class TrocarLivroComponent implements OnInit {
             const livro = this.livroService.getFromLocalStorage().find(l => l.id === Number(livroId));
             if (livro) {
               this.livroDesejado = livro;
+              console.log('Livro encontrado no localStorage:', this.livroDesejado);
             } else {
               console.error('Livro não encontrado nem na API nem no localStorage.');
             }
@@ -85,7 +87,14 @@ export class TrocarLivroComponent implements OnInit {
           this.toastr.success('Troca solicitada com sucesso!', 'Sucesso');
           // Redirecionar para a página de trocas
           this.router.navigateByUrl('/trocas');
+        } else {
+          console.error('Falha na solicitação de troca:', response);
+          this.toastr.error('Falha ao solicitar a troca.', 'Erro');
         }
+      },
+      (error) => {
+        console.error('Erro ao solicitar a troca:', error);
+        this.toastr.error('Ocorreu um erro ao solicitar a troca.', 'Erro');
       }
     );
   }
