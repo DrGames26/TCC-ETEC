@@ -34,32 +34,32 @@
     </div>
   </div>
 
-<!-- Título das trocas aceitas -->
-<h3 class="mb-4 text-center">Trocas Aceitas</h3>
+  <!-- Título das trocas aceitas -->
+  <h3 class="mb-4 text-center">Trocas Aceitas</h3>
 
-<!-- Lista de trocas aceitas -->
-<div *ngFor="let exchange of aceitas" class="mb-3">
-  <div class="card p-4">
-    <div class="card-body text-center">
-      <h5 class="card-title">{{ exchange.requester }} aceitou a troca</h5>
-      <div class="d-flex justify-content-center align-items-center">
-        <!-- Imagem do livro solicitado -->
-        <div class="col-md-3 text-center">
-          <img *ngIf="exchange.requestedBook?.picture" 
-               [src]="exchange.requestedBook?.picture.startsWith('data:image') ? exchange.requestedBook?.picture : 'data:image/jpeg;base64,' + exchange.requestedBook?.picture"
-               class="img-fluid mb-2" alt="Imagem do Livro Solicitado" style="max-height: 200px;">
-          <p class="fw-bold">Livro Solicitado</p>
-        </div>
+  <!-- Lista de trocas aceitas -->
+  <div *ngFor="let exchange of aceitas" class="mb-3">
+    <div class="card p-4">
+      <div class="card-body text-center">
+        <h5 class="card-title">{{ exchange.requester }} aceitou a troca</h5>
+        <div class="d-flex justify-content-center align-items-center">
+          <!-- Imagem do livro solicitado -->
+          <div class="col-md-3 text-center">
+            <img *ngIf="exchange.requestedBook?.picture" 
+                 [src]="exchange.requestedBook?.picture.startsWith('data:image') ? exchange.requestedBook?.picture : 'data:image/jpeg;base64,' + exchange.requestedBook?.picture"
+                 class="img-fluid mb-2" alt="Imagem do Livro Solicitado" style="max-height: 200px;">
+            <p class="fw-bold">Livro Solicitado</p>
+          </div>
 
-        <!-- Imagem do livro oferecido -->
-        <div class="col-md-3 text-center">
-          <img *ngIf="exchange.offeredBook?.picture" 
-               [src]="exchange.offeredBook?.picture.startsWith('data:image') ? exchange.offeredBook?.picture : 'data:image/jpeg;base64,' + exchange.offeredBook?.picture"
-               class="img-fluid mb-2" alt="Imagem do Livro Oferecido" style="max-height: 200px;">
-          <p class="fw-bold">Livro Oferecido</p>
+          <!-- Imagem do livro oferecido -->
+          <div class="col-md-3 text-center">
+            <img *ngIf="exchange.offeredBook?.picture" 
+                 [src]="exchange.offeredBook?.picture.startsWith('data:image') ? exchange.offeredBook?.picture : 'data:image/jpeg;base64,' + exchange.offeredBook?.picture"
+                 class="img-fluid mb-2" alt="Imagem do Livro Oferecido" style="max-height: 200px;">
+            <p class="fw-bold">Livro Oferecido</p>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-

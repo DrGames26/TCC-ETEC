@@ -82,6 +82,7 @@ export class TrocasPendentesComponent implements OnInit {
       () => {
         this.toastr.success('Solicitação de troca aceita!', 'Sucesso');
         this.loadExchanges(); // Recarrega as trocas após aceitar
+        this.aceitas.push(exchange); // Adiciona a troca aceita à lista de trocas aceitas
         window.location.href = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
       },
       () => {
