@@ -22,81 +22,11 @@ export class LivroService {
 
   constructor(private http: HttpClient) {}
 
-  // Método para compactar imagens
-  compressImage(file: File, maxSizeKB: number): Promise<File> {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-        const img = new Image();
-        img.src = reader.result as string;
-        img.onload = () => {
-          const canvas = document.createElement('canvas');
-          const ctx = canvas.getContext('2d')!;
-
-          const scaleFactor = Math.sqrt(maxSizeKB * 1024 / file.size); // Ajusta para o tamanho desejado
-          canvas.width = img.width * scaleFactor;
-          canvas.height = img.height * scaleFactor;
-
-          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-
-          canvas.toBlob(
-            (blob) => {
-              if (blob) {
-                const compressedFile = new File([blob], file.name, {
-                  type: file.type,
-                });
-                resolve(compressedFile);
-              } else {
-                reject(new Error('Falha ao comprimir a imagem.'));
-              }
-            },
-            file.type,
-            0.7 // Qualidade da compressão (ajustável)
-          );
-        };
-        img.onerror = () => reject(new Error('Erro ao carregar a imagem.'));
-      };
-      reader.onerror = () => reject(new Error('Erro ao ler o arquivo.'));
-    });
-  }
-
-  // Listar livros (sem cache)
-  getLivros(): Observable<Livro[]> {
-    console.log('Buscando livros da API');
-    return this.http.get<Livro[]>(`${this.apiUrl}/list`);
-  }
-
-  // Adicionar livro com compressão de imagem
-  addLivro(formData: FormData): Observable<any> {
-    return this.http.post(`${this.apiUrl}/add`, formData);
-  }
-
-  // Obter livro pelo ID
-  getLivroPorId(id: number): Observable<Livro> {
-    return this.http.get<Livro>(`${this.apiUrl}/${id}`);
-  }
-
-  // Obter livros pelo nome do usuário publicador
-  getBooksByUsuarioPublicador(usuarioPublicador: string): Observable<Livro[]> {
-    return this.http.get<Livro[]>(`${this.apiUrl}/my-books?usuarioPublicador=${usuarioPublicador}`);
-  }
-
-  // Excluir livro
-  deleteBook(bookId: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/${bookId}`);
-  }
-
-  // Atualizar livro
-  updateBook(livro: Livro): Observable<Livro> {
-    return this.http.put<Livro>(`${this.apiUrl}/${livro.id}`, livro);
-  }
-
   // Salvar livros no localStorage
   saveToLocalStorage(livros: Livro[]): void {
     try {
       localStorage.setItem(this.localStorageKey, JSON.stringify(livros));
-      console.log('Livros salvos no localStorage');
+      console.log('Livros salvos no localStorage:', livros);
     } catch (error) {
       console.error('Erro ao salvar no localStorage:', error);
     }
@@ -106,7 +36,9 @@ export class LivroService {
   getFromLocalStorage(): Livro[] {
     try {
       const data = localStorage.getItem(this.localStorageKey);
-      return data ? JSON.parse(data) : [];
+      const livros = data ? JSON.parse(data) : [];
+      console.log('Livros carregados do localStorage:', livros);
+      return livros;
     } catch (error) {
       console.error('Erro ao obter do localStorage:', error);
       return [];
@@ -123,14 +55,63 @@ export class LivroService {
     }
   }
 
+  // Listar livros: Primeiro tenta carregar do localStorage, depois sincroniza com a API
+  getLivros(): Observable<Livro[]> {
+    const livrosLocais = this.getFromLocalStorage();
+
+    if (livrosLocais.length > 0) {
+      console.log('Livros encontrados no localStorage.');
+      return new Observable((observer) => {
+        observer.next(livrosLocais);
+        observer.complete();
+      });
+    } else {
+      console.log('Buscando livros da API...');
+      return new Observable((observer) => {
+        this.http.get<Livro[]>(`${this.apiUrl}/list`).subscribe({
+          next: (livros) => {
+            this.saveToLocalStorage(livros); // Salvar no localStorage
+            observer.next(livros);
+            observer.complete();
+          },
+          error: (err) => {
+            console.error('Erro ao buscar livros da API:', err);
+            observer.error(err);
+          },
+        });
+      });
+    }
+  }
+
+  // Adicionar livro com atualização do localStorage
+  addLivro(formData: FormData): Observable<any> {
+    return new Observable((observer) => {
+      this.http.post(`${this.apiUrl}/add`, formData).subscribe({
+        next: (response) => {
+          console.log('Livro adicionado:', response);
+          this.http.get<Livro[]>(`${this.apiUrl}/list`).subscribe((livros) => {
+            this.saveToLocalStorage(livros); // Atualiza o localStorage
+          });
+          observer.next(response);
+          observer.complete();
+        },
+        error: (err) => {
+          console.error('Erro ao adicionar livro:', err);
+          observer.error(err);
+        },
+      });
+    });
+  }
+
   // Sincronizar dados do localStorage com a API
   syncWithApi(): void {
     const localData = this.getFromLocalStorage();
-    if (localData.length) {
+    if (localData.length > 0) {
       localData.forEach((livro) => {
         this.addLivro(new FormData()).subscribe({
           next: () => console.log(`Livro ${livro.name} sincronizado com a API`),
-          error: (err) => console.error(`Erro ao sincronizar livro ${livro.name}:`, err),
+          error: (err) =>
+            console.error(`Erro ao sincronizar livro ${livro.name}:`, err),
         });
       });
       this.removeFromLocalStorage();
