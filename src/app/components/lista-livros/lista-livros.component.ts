@@ -9,36 +9,50 @@ import { LivroService, Livro } from 'src/app/services/livro.service';
 })
 export class ListaLivrosComponent implements OnInit {
   livros: Livro[] = [];
+  livrosCarregados: boolean = false; // Controle para evitar chamadas repetidas
 
   constructor(private livroService: LivroService, private router: Router) {}
 
   ngOnInit(): void {
-    this.carregarLivros();
-  }
+    // Tenta carregar os livros do localStorage primeiro
+    const livrosSalvos = this.livroService.getFromLocalStorage();
+    if (livrosSalvos.length > 0) {
+      this.livros = livrosSalvos;
+      console.log('Livros carregados do localStorage:', this.livros);
+    }
 
-  carregarLivros(): void {
-    this.livroService.getLivros().subscribe(
-      (data: Livro[]) => {
-        this.livros = data.map((livro) => {
-          // Configura fallback para imagem e outros dados opcionais
-          if (livro.picture) {
-            livro.picture = this.convertToBase64(livro.picture);
+    // Verifica se os livros já foram carregados da API anteriormente
+    if (!this.livrosCarregados) {
+      // Busca livros da API apenas se não estiverem presentes no localStorage ou se forem antigos
+      this.livroService.getLivros().subscribe(
+        (data: Livro[]) => {
+          // Verifica se os livros obtidos da API são diferentes dos do localStorage
+          const livrosDoLocalStorage = this.livroService.getFromLocalStorage();
+          if (JSON.stringify(livrosDoLocalStorage) !== JSON.stringify(data)) {
+            this.livros = data.map((livro) => {
+              if (livro.picture) {
+                if (!livro.picture.startsWith('data:image')) {
+                  livro.picture = 'data:image/jpeg;base64,' + livro.picture;
+                }
+              }
+              return livro;
+            }).sort((a, b) => b.id - a.id);
+
+            console.log('Livros carregados da API:', this.livros);
+
+            // Salva os livros da API no localStorage
+            this.livroService.saveToLocalStorage(this.livros);
+            this.livrosCarregados = true; // Marca como carregado
+          } else {
+            console.log('Os livros no localStorage já estão atualizados.');
           }
-          return livro;
-        });
-
-        // Ordena os livros por ID em ordem decrescente
-        this.livros.sort((a, b) => b.id - a.id);
-      },
-      (error) => console.error('Erro ao carregar livros:', error)
-    );
+        },
+        (error) => console.error('Erro ao carregar livros:', error)
+      );
+    }
   }
 
-  convertToBase64(base64String: string): string {
-    // Retorna a string Base64 diretamente
-    return base64String;
-  }
-
+  // Método para navegar para a página de detalhes do livro
   navegarParaDetalhes(id: number): void {
     this.router.navigate(['/livro', id]);
   }
