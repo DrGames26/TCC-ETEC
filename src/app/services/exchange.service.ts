@@ -5,21 +5,21 @@ import { ToastrService } from 'ngx-toastr';
 import { tap } from 'rxjs/operators';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ExchangeService {
-
-  private apiUrl = 'https://sorobooks-backend-1.onrender.com/api/exchange'; 
+  private apiUrl = 'https://sorobooks-backend-1.onrender.com/api/exchange';
 
   constructor(private http: HttpClient, private toastr: ToastrService) {}
 
+  // Solicitar troca
   requestExchange(requestData: any): Observable<any> {
     const formattedRequestData = {
       requestedBook: requestData.requestedBook,
       offeredBook: requestData.offeredBook,
-      requester: requestData.requester
+      requester: requestData.requester,
     };
-    
+
     return this.http.post(`${this.apiUrl}/request`, formattedRequestData).pipe(
       tap({
         next: () => {
@@ -28,7 +28,7 @@ export class ExchangeService {
         error: (error) => {
           console.error('Erro ao enviar solicitação de troca:', error);
           this.toastr.error('Erro ao enviar solicitação de troca.', 'Erro');
-        }
+        },
       })
     );
   }
@@ -39,40 +39,38 @@ export class ExchangeService {
       tap({
         error: (error) => {
           console.error('Erro ao carregar solicitações de troca:', error);
-        }
+        },
+      })
+    );
+  }
+
+  // Atualizar status da troca
+  updateExchangeStatus(id: number, status: 'ACCEPTED' | 'REJECTED'): Observable<any> {
+    const body = { status };
+
+    return this.http.put<any>(`${this.apiUrl}/${id}/status`, body).pipe(
+      tap({
+        next: () => {
+          const message = status === 'ACCEPTED' ? 'Troca aceita com sucesso!' : 'Troca recusada com sucesso!';
+          console.log(message);
+          this.toastr.success(message, 'Sucesso');
+        },
+        error: (error) => {
+          const message = status === 'ACCEPTED' ? 'Erro ao aceitar troca.' : 'Erro ao recusar troca.';
+          console.error(message, error);
+          this.toastr.error(message, 'Erro');
+        },
       })
     );
   }
 
   // Aceitar troca
   acceptExchange(id: number): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/accept/${id}`, {}).pipe(
-      tap({
-        next: () => {
-          console.log('Troca aceita com sucesso!');
-          this.toastr.success('Troca aceita com sucesso!', 'Sucesso');
-        },
-        error: (error) => {
-          console.error('Erro ao aceitar troca:', error);
-          this.toastr.error('Erro ao aceitar troca.', 'Erro');
-        }
-      })
-    );
+    return this.updateExchangeStatus(id, 'ACCEPTED');
   }
 
   // Recusar troca
   rejectExchange(id: number): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/reject/${id}`, {}).pipe(
-      tap({
-        next: () => {
-          console.log('Troca recusada com sucesso!');
-          this.toastr.success('Troca recusada com sucesso!', 'Sucesso');
-        },
-        error: (error) => {
-          console.error('Erro ao recusar troca:', error);
-          this.toastr.error('Erro ao recusar troca.', 'Erro');
-        }
-      })
-    );
+    return this.updateExchangeStatus(id, 'REJECTED');
   }
 }
