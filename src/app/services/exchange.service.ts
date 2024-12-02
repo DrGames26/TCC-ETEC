@@ -46,14 +46,15 @@ export class ExchangeService {
 
   // Aceitar troca
   acceptExchange(id: number): Observable<any> {
-    const body = { status: 'accepted' }; // Envia o status como parte da requisição
-    return this.http.put<any>(`${this.apiUrl}/${id}/status`, body).pipe(
+    return this.http.put<any>(`${this.apiUrl}/accept/${id}`, {}).pipe(
       tap({
         next: () => {
           console.log('Troca aceita com sucesso!');
+          this.toastr.success('Troca aceita com sucesso!', 'Sucesso');
         },
         error: (error) => {
           console.error('Erro ao aceitar troca:', error);
+          this.toastr.error('Erro ao aceitar troca.', 'Erro');
         }
       })
     );
@@ -61,17 +62,17 @@ export class ExchangeService {
 
   // Recusar troca
   rejectExchange(id: number): Observable<any> {
-    const body = { status: 'rejected' }; // Envia o status como parte da requisição
-    return this.http.put<any>(`${this.apiUrl}/${id}/status`, body).pipe(
+    return this.http.put<any>(`${this.apiUrl}/reject/${id}`, {}).pipe(
       tap({
         next: () => {
           console.log('Troca recusada com sucesso!');
+          this.toastr.success('Troca recusada com sucesso!', 'Sucesso');
         },
         error: (error) => {
           console.error('Erro ao recusar troca:', error);
+          this.toastr.error('Erro ao recusar troca.', 'Erro');
         }
       })
     );
   }
 }
-
