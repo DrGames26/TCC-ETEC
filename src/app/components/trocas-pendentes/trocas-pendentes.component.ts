@@ -64,26 +64,29 @@ export class TrocasPendentesComponent implements OnInit {
   }
 
   acceptExchange(id: number): void {
-    const exchange = this.pendentes.find(e => e.id === id);
-    if (!exchange || !exchange.offeredBook || !exchange.offeredBook.phoneNumber || !exchange.requestedBook) {
-      this.toastr.error('Informações da troca incompletas.', 'Erro');
-      console.log('Troca não encontrada ou informações ausentes', exchange);
+    const exchangeIndex = this.pendentes.findIndex(e => e.id === id);
+    if (exchangeIndex === -1) {
+      this.toastr.error('Troca não encontrada.', 'Erro');
       return;
     }
-
+  
+    const exchange = this.pendentes[exchangeIndex];
+    if (!exchange || !exchange.offeredBook || !exchange.requestedBook) {
+      this.toastr.error('Informações da troca incompletas.', 'Erro');
+      return;
+    }
+  
     const phoneNumber = exchange.offeredBook.phoneNumber; // Número do solicitante
     const requestedBook = exchange.requestedBook; // Livro solicitado
-
     const message = `Olá, estou aceitando a troca do livro "${requestedBook.name}" (autor: ${requestedBook.author}). Podemos alinhar os detalhes?`;
-
+  
     console.log('Mensagem gerada para o WhatsApp:', message);
-
+  
     this.exchangeService.acceptExchange(id).subscribe(
       () => {
         this.toastr.success('Solicitação de troca aceita!', 'Sucesso');
-        this.loadExchanges(); // Recarrega as trocas após aceitar
-        this.aceitas.push(exchange); // Adiciona a troca aceita à lista de trocas aceitas
-        // Abre o WhatsApp em uma nova aba
+        this.aceitas.push(exchange); // Move para a lista de aceitas
+        this.pendentes.splice(exchangeIndex, 1); // Remove da lista de pendentes
         window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`, '_blank');
       },
       () => {
@@ -91,16 +94,25 @@ export class TrocasPendentesComponent implements OnInit {
       }
     );
   }
-
+  
   rejectExchange(id: number): void {
+    const exchangeIndex = this.pendentes.findIndex(e => e.id === id);
+    if (exchangeIndex === -1) {
+      this.toastr.error('Troca não encontrada.', 'Erro');
+      return;
+    }
+  
+    const exchange = this.pendentes[exchangeIndex];
+  
     this.exchangeService.rejectExchange(id).subscribe(
       () => {
         this.toastr.success('Solicitação de troca recusada!', 'Sucesso');
-        this.loadExchanges(); // Recarrega as trocas após recusar
+        this.recusadas.push(exchange); // Move para a lista de recusadas
+        this.pendentes.splice(exchangeIndex, 1); // Remove da lista de pendentes
       },
       () => {
         this.toastr.error('Erro ao recusar solicitação.', 'Erro');
       }
     );
-  }
+  }  
 }
