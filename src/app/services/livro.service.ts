@@ -18,6 +18,7 @@ export interface Livro {
 })
 export class LivroService {
   private apiUrl = 'https://sorobooks-backend-1.onrender.com/api/books';
+  private localStorageKey = 'livros';
 
   constructor(private http: HttpClient) {}
 
@@ -89,5 +90,50 @@ export class LivroService {
   // Atualizar livro
   updateBook(livro: Livro): Observable<Livro> {
     return this.http.put<Livro>(`${this.apiUrl}/${livro.id}`, livro);
+  }
+
+  // Salvar livros no localStorage
+  saveToLocalStorage(livros: Livro[]): void {
+    try {
+      localStorage.setItem(this.localStorageKey, JSON.stringify(livros));
+      console.log('Livros salvos no localStorage');
+    } catch (error) {
+      console.error('Erro ao salvar no localStorage:', error);
+    }
+  }
+
+  // Obter livros do localStorage
+  getFromLocalStorage(): Livro[] {
+    try {
+      const data = localStorage.getItem(this.localStorageKey);
+      return data ? JSON.parse(data) : [];
+    } catch (error) {
+      console.error('Erro ao obter do localStorage:', error);
+      return [];
+    }
+  }
+
+  // Remover livros do localStorage
+  removeFromLocalStorage(): void {
+    try {
+      localStorage.removeItem(this.localStorageKey);
+      console.log('Livros removidos do localStorage');
+    } catch (error) {
+      console.error('Erro ao remover do localStorage:', error);
+    }
+  }
+
+  // Sincronizar dados do localStorage com a API
+  syncWithApi(): void {
+    const localData = this.getFromLocalStorage();
+    if (localData.length) {
+      localData.forEach((livro) => {
+        this.addLivro(new FormData()).subscribe({
+          next: () => console.log(`Livro ${livro.name} sincronizado com a API`),
+          error: (err) => console.error(`Erro ao sincronizar livro ${livro.name}:`, err),
+        });
+      });
+      this.removeFromLocalStorage();
+    }
   }
 }
