@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { LivroService, Livro } from 'src/app/services/livro.service';
+import { LivroService } from 'src/app/services/livro.service';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -9,7 +9,7 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./form-livro.component.css']
 })
 export class FormLivroComponent {
-  novoLivro: Livro = {
+  novoLivro = {
     id: 0,
     name: '',
     author: '',
@@ -56,8 +56,8 @@ export class FormLivroComponent {
       return;
     }
 
-    if (!this.novoLivro.name || !this.novoLivro.author ||
-        !this.novoLivro.genre || !this.novoLivro.description) {
+    // Validações de campos
+    if (!this.novoLivro.name || !this.novoLivro.author || !this.novoLivro.genre || !this.novoLivro.description) {
       this.errorMessage = 'Por favor, preencha todos os campos obrigatórios.';
       return;
     }
@@ -73,9 +73,10 @@ export class FormLivroComponent {
     formData.append('genre', this.novoLivro.genre);
     formData.append('description', this.novoLivro.description);
     formData.append('usuarioPublicador', usuarioLogado.name);
-    formData.append('phoneNumber', usuarioLogado.phoneNumber || '');
-    formData.append('picture', this.selectedFile); // Anexa o arquivo
+    formData.append('phoneNumber', usuarioLogado.phoneNumber || ''); // Usa o telefone do usuário logado
+    formData.append('picture', this.selectedFile); // Adiciona o arquivo de imagem
 
+    // Envia o FormData para o serviço
     this.livroService.addLivro(formData).subscribe(
       () => {
         console.log('Livro adicionado com sucesso');

@@ -96,33 +96,8 @@ export class LivroService {
   }
 
   // Adicionar livro com compressão de imagem
-  addLivro(livro: Livro, imagem?: File): Observable<any> {
-    if (imagem) {
-      return new Observable((observer) => {
-        this.compressImage(imagem, 3) // Compactar para ~3 KB
-          .then((compressedImage) => {
-            const formData = new FormData();
-            formData.append('livro', JSON.stringify(livro));
-            formData.append('imagem', compressedImage);
-
-            this.http.post(`${this.apiUrl}/add`, formData).subscribe({
-              next: (response) => {
-                observer.next(response);
-                observer.complete();
-              },
-              error: (error) => {
-                observer.error(error);
-              },
-            });
-          })
-          .catch((error) => {
-            observer.error(error);
-          });
-      });
-    } else {
-      // Caso não haja imagem
-      return this.http.post(`${this.apiUrl}/add`, livro);
-    }
+  addLivro(formData: FormData): Observable<any> {
+    return this.http.post(`${this.apiUrl}/add`, formData);
   }
 
   // Obter livro pelo ID
