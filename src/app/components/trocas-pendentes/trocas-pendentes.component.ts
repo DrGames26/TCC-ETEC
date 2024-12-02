@@ -23,25 +23,38 @@ export class TrocasPendentesComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.loadExchanges(); // Chama o método que carrega as trocas
-    this.loadLivrosUsuario(); // Carrega os livros do usuário logado
+    // Carrega as trocas do localStorage ou do backend
+    this.loadExchanges();
+    this.loadLivrosUsuario();
   }
 
   loadExchanges(): void {
-    // Chama o serviço para buscar as trocas pendentes do backend
-    this.exchangeService.getPendingExchanges().subscribe(
-      (data) => {
-        // Filtra as trocas de acordo com o status (PENDING, ACCEPTED, REJECTED)
-        this.pendentes = data.filter(exchange =>
-          exchange.status === 'PENDING' && this.livroSolicitadoPertenceAoUsuario(exchange)
-        );
-        this.aceitas = data.filter(exchange => exchange.status === 'ACCEPTED');
-        this.recusadas = data.filter(exchange => exchange.status === 'REJECTED');
-      },
-      (error) => {
-        this.toastr.error('Erro ao carregar as solicitações de troca.', 'Erro');
-      }
-    );
+    const pendentesStorage = localStorage.getItem('trocasPendentes');
+    const aceitasStorage = localStorage.getItem('trocasAceitas');
+    const recusadasStorage = localStorage.getItem('trocasRecusadas');
+
+    if (pendentesStorage) {
+      this.pendentes = JSON.parse(pendentesStorage); // Carrega as trocas pendentes do localStorage
+    } else {
+      this.exchangeService.getPendingExchanges().subscribe(
+        (data) => {
+          // Filtra as trocas de acordo com o status (PENDING, ACCEPTED, REJECTED)
+          this.pendentes = data.filter(exchange =>
+            exchange.status === 'PENDING' && this.livroSolicitadoPertenceAoUsuario(exchange)
+          );
+          this.aceitas = data.filter(exchange => exchange.status === 'ACCEPTED');
+          this.recusadas = data.filter(exchange => exchange.status === 'REJECTED');
+
+          // Salva as trocas no localStorage
+          localStorage.setItem('trocasPendentes', JSON.stringify(this.pendentes));
+          localStorage.setItem('trocasAceitas', JSON.stringify(this.aceitas));
+          localStorage.setItem('trocasRecusadas', JSON.stringify(this.recusadas));
+        },
+        (error) => {
+          this.toastr.error('Erro ao carregar as solicitações de troca.', 'Erro');
+        }
+      );
+    }
   }
 
   loadLivrosUsuario(): void {
@@ -69,50 +82,60 @@ export class TrocasPendentesComponent implements OnInit {
       this.toastr.error('Troca não encontrada.', 'Erro');
       return;
     }
-  
+
     const exchange = this.pendentes[exchangeIndex];
     if (!exchange || !exchange.offeredBook || !exchange.requestedBook) {
       this.toastr.error('Informações da troca incompletas.', 'Erro');
       return;
     }
-  
+
     const phoneNumber = exchange.offeredBook.phoneNumber; // Número do solicitante
     const requestedBook = exchange.requestedBook; // Livro solicitado
     const message = `Olá, estou aceitando a troca do livro "${requestedBook.name}" (autor: ${requestedBook.author}). Podemos alinhar os detalhes?`;
-  
+
     console.log('Mensagem gerada para o WhatsApp:', message);
-  
+
     this.exchangeService.acceptExchange(id).subscribe(
       () => {
         this.toastr.success('Solicitação de troca aceita!', 'Sucesso');
         this.aceitas.push(exchange); // Move para a lista de aceitas
         this.pendentes.splice(exchangeIndex, 1); // Remove da lista de pendentes
         window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`, '_blank');
+
+        // Atualiza o localStorage
+        localStorage.setItem('trocasPendentes', JSON.stringify(this.pendentes));
+        localStorage.setItem('trocasAceitas', JSON.stringify(this.aceitas));
+        localStorage.setItem('trocasRecusadas', JSON.stringify(this.recusadas));
       },
       () => {
         this.toastr.error('Erro ao aceitar solicitação.', 'Erro');
       }
     );
   }
-  
+
   rejectExchange(id: number): void {
     const exchangeIndex = this.pendentes.findIndex(e => e.id === id);
     if (exchangeIndex === -1) {
       this.toastr.error('Troca não encontrada.', 'Erro');
       return;
     }
-  
+
     const exchange = this.pendentes[exchangeIndex];
-  
+
     this.exchangeService.rejectExchange(id).subscribe(
       () => {
         this.toastr.success('Solicitação de troca recusada!', 'Sucesso');
         this.recusadas.push(exchange); // Move para a lista de recusadas
         this.pendentes.splice(exchangeIndex, 1); // Remove da lista de pendentes
+
+        // Atualiza o localStorage
+        localStorage.setItem('trocasPendentes', JSON.stringify(this.pendentes));
+        localStorage.setItem('trocasAceitas', JSON.stringify(this.aceitas));
+        localStorage.setItem('trocasRecusadas', JSON.stringify(this.recusadas));
       },
       () => {
         this.toastr.error('Erro ao recusar solicitação.', 'Erro');
       }
     );
-  }  
+  }
 }
