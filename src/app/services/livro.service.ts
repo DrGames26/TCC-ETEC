@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
 
 export interface Livro {
   id: number;
@@ -33,8 +34,7 @@ export class LivroService {
         img.onload = () => {
           const canvas = document.createElement('canvas');
           const ctx = canvas.getContext('2d')!;
-
-          const scaleFactor = Math.sqrt(maxSizeKB * 1024 / file.size); // Ajusta para o tamanho desejado
+          const scaleFactor = Math.sqrt((maxSizeKB * 1024) / file.size);
           canvas.width = img.width * scaleFactor;
           canvas.height = img.height * scaleFactor;
 
@@ -52,7 +52,7 @@ export class LivroService {
               }
             },
             file.type,
-            0.7 // Qualidade da compressão (ajustável)
+            0.7
           );
         };
         img.onerror = () => reject(new Error('Erro ao carregar a imagem.'));
@@ -61,13 +61,19 @@ export class LivroService {
     });
   }
 
-  // Listar livros (sem cache)
+  // Listar livros da API
   getLivros(): Observable<Livro[]> {
-    console.log('Buscando livros da API');
-    return this.http.get<Livro[]>(`${this.apiUrl}/list`);
+    console.log('Carregando livros da API...');
+    return this.http.get<Livro[]>(`${this.apiUrl}/list`).pipe(
+      tap((data) => console.log(`Livros retornados (${data.length}):`, data)),
+      catchError((error) => {
+        console.error('Erro ao buscar livros da API:', error);
+        return throwError(() => new Error('Erro ao carregar livros da API.'));
+      })
+    );
   }
 
-  // Adicionar livro com compressão de imagem
+  // Adicionar livro
   addLivro(formData: FormData): Observable<any> {
     return this.http.post(`${this.apiUrl}/add`, formData);
   }
@@ -96,7 +102,7 @@ export class LivroService {
   saveToLocalStorage(livros: Livro[]): void {
     try {
       localStorage.setItem(this.localStorageKey, JSON.stringify(livros));
-      console.log('Livros salvos no localStorage');
+      console.log('Livros salvos no localStorage.');
     } catch (error) {
       console.error('Erro ao salvar no localStorage:', error);
     }
@@ -106,9 +112,11 @@ export class LivroService {
   getFromLocalStorage(): Livro[] {
     try {
       const data = localStorage.getItem(this.localStorageKey);
-      return data ? JSON.parse(data) : [];
+      const livros = data ? JSON.parse(data) : [];
+      console.log(`Livros recuperados do localStorage (${livros.length}):`, livros);
+      return livros;
     } catch (error) {
-      console.error('Erro ao obter do localStorage:', error);
+      console.error('Erro ao recuperar livros do localStorage:', error);
       return [];
     }
   }
@@ -117,19 +125,29 @@ export class LivroService {
   removeFromLocalStorage(): void {
     try {
       localStorage.removeItem(this.localStorageKey);
-      console.log('Livros removidos do localStorage');
+      console.log('Livros removidos do localStorage.');
     } catch (error) {
       console.error('Erro ao remover do localStorage:', error);
     }
   }
 
-  // Sincronizar dados do localStorage com a API
+  // Sincronizar localStorage com a API
   syncWithApi(): void {
     const localData = this.getFromLocalStorage();
     if (localData.length) {
       localData.forEach((livro) => {
-        this.addLivro(new FormData()).subscribe({
-          next: () => console.log(`Livro ${livro.name} sincronizado com a API`),
+        const formData = new FormData();
+        formData.append('name', livro.name);
+        formData.append('author', livro.author);
+        formData.append('description', livro.description || '');
+        formData.append('genre', livro.genre);
+        if (livro.picture) {
+          formData.append('picture', livro.picture);
+        }
+        formData.append('usuarioPublicador', livro.usuarioPublicador || '');
+
+        this.addLivro(formData).subscribe({
+          next: () => console.log(`Livro ${livro.name} sincronizado com a API.`),
           error: (err) => console.error(`Erro ao sincronizar livro ${livro.name}:`, err),
         });
       });
