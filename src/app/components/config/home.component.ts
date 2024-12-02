@@ -8,26 +8,30 @@ import { Router } from '@angular/router';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-
   livros: any[] = [];  // Define a variável para armazenar os livros
 
   constructor(private livroService: LivroService, private router: Router) {}
 
   ngOnInit(): void {
-    this.livroService.getLivros().subscribe((data: any) => {
-      // Verifica se a imagem está em Base64 e converte corretamente
-      this.livros = data.map((livro: any) => {
-        if (livro.picture) {
-          // Verifica se a imagem já possui o prefixo Base64
-          if (!livro.picture.startsWith('data:image')) {
-            livro.picture = 'data:image/jpeg;base64,' + livro.picture; // Adiciona o prefixo Base64 se necessário
+    this.livroService.getLivros().subscribe(
+      (data: any) => {
+        // Verifica se a imagem está em Base64 e converte corretamente
+        this.livros = data.map((livro: any) => {
+          if (livro.picture) {
+            // Verifica se a imagem já possui o prefixo Base64
+            if (!livro.picture.startsWith('data:image')) {
+              livro.picture = 'data:image/jpeg;base64,' + livro.picture; // Adiciona o prefixo Base64 se necessário
+            }
           }
-        }
-        return livro;
-      }).sort((a: any, b: any) => (b.id || 0) - (a.id || 0)); // Ordena os mais recentes
+          return livro;
+        }).sort((a: any, b: any) => (b.id || 0) - (a.id || 0)); // Ordena os mais recentes
 
-      console.log(this.livros); // Para verificar os livros carregados
-    });
+        console.log(this.livros); // Para verificar os livros carregados
+      },
+      (error) => {
+        console.error('Erro ao carregar livros:', error);
+      }
+    );
   }
 
   // Método para navegar para a página de detalhes do livro
