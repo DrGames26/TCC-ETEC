@@ -27,46 +27,35 @@ export class TrocarLivroComponent implements OnInit {
   ngOnInit(): void {
     const usuarioPublicador = this.authService.getUser()?.name || '';  
 
-    // Carregar os livros do localStorage ou da API
-    this.loadBooksFromStorageOrApi(usuarioPublicador);
-
+    // Carregar os livros do usuário autenticado
+    this.livroService.getBooksByUsuarioPublicador(usuarioPublicador).subscribe(
+      (data: Livro[]) => {
+        this.meusLivros = data;
+      }
+    );
+      
     // Carregar detalhes do livro desejado
     this.route.paramMap.subscribe(params => {
       const livroId = params.get('livroId');
       if (livroId) {
+        // Primeiramente tenta buscar o livro na API
         this.livroService.getLivroPorId(Number(livroId)).subscribe(
           (livro: Livro) => {
             this.livroDesejado = livro;
           },
-          (error) => console.error('Erro ao carregar o livro desejado:', error)
+          (error) => {
+            // Caso falhe, tenta buscar no localStorage
+            console.error('Livro não encontrado na API, buscando no localStorage...');
+            const livro = this.livroService.getFromLocalStorage().find(l => l.id === Number(livroId));
+            if (livro) {
+              this.livroDesejado = livro;
+            } else {
+              console.error('Livro não encontrado nem na API nem no localStorage.');
+            }
+          }
         );
       }
     });
-  }
-
-  // Método para carregar os livros do localStorage ou da API
-  private loadBooksFromStorageOrApi(usuarioPublicador: string): void {
-    const storedBooks = localStorage.getItem('meusLivros');
-    if (storedBooks) {
-      try {
-        this.meusLivros = JSON.parse(storedBooks);
-        console.log('Livros carregados do localStorage:', this.meusLivros);
-      } catch (error) {
-        console.error('Erro ao processar livros do localStorage:', error);
-      }
-    }
-
-    // Se o localStorage estiver vazio ou os livros não forem encontrados, busca da API
-    if (!this.meusLivros || this.meusLivros.length === 0) {
-      this.livroService.getBooksByUsuarioPublicador(usuarioPublicador).subscribe(
-        (data: Livro[]) => {
-          this.meusLivros = data;
-          localStorage.setItem('meusLivros', JSON.stringify(data)); // Atualiza o localStorage
-          console.log('Livros carregados da API e salvos no localStorage:', data);
-        },
-        (error) => console.error('Erro ao carregar os livros da API:', error)
-      );
-    }
   }
 
   // Função para oferecer a troca
