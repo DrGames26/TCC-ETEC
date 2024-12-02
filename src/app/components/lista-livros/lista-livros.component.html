@@ -4,7 +4,7 @@
       <!-- Exibe a imagem com proporção mantida -->
       <img *ngIf="livro.picture" 
            class="card-img-top img-fluid p-3" 
-           [src]="'data:image/jpeg;base64,' + livro.picture" 
+           [src]="livro.picture" 
            alt="Imagem do Livro">
 
       <div class="card-body d-flex flex-column">

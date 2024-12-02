@@ -19,6 +19,7 @@ export class ListaLivrosComponent implements OnInit {
     if (livrosSalvos.length > 0) {
       this.livros = livrosSalvos;
       console.log('Livros carregados do localStorage:', this.livros);
+      this.livrosCarregados = true; // Marca como carregado
     }
 
     // Verifica se os livros já foram carregados da API anteriormente
@@ -30,10 +31,8 @@ export class ListaLivrosComponent implements OnInit {
           const livrosDoLocalStorage = this.livroService.getFromLocalStorage();
           if (JSON.stringify(livrosDoLocalStorage) !== JSON.stringify(data)) {
             this.livros = data.map((livro) => {
-              if (livro.picture) {
-                if (!livro.picture.startsWith('data:image')) {
-                  livro.picture = 'data:image/jpeg;base64,' + livro.picture;
-                }
+              if (livro.picture && !livro.picture.startsWith('data:image')) {
+                livro.picture = 'data:image/jpeg;base64,' + livro.picture;
               }
               return livro;
             }).sort((a, b) => b.id - a.id);
