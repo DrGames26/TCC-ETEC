@@ -18,6 +18,14 @@ export class BuscaLivrosComponent implements OnInit {
     // Inicialização do componente (opcional, por enquanto nada é carregado aqui)
   }
 
+  // Função para remover acentos e tornar a comparação insensível a maiúsculas/minúsculas
+  removerAcentosEConverterParaMinusculas(texto: string): string {
+    return texto
+      .normalize('NFD') // Normaliza para decompor os caracteres acentuados
+      .replace(/[\u0300-\u036f]/g, '') // Remove os acentos
+      .toLowerCase(); // Converte para minúsculas
+  }
+
   // Método para buscar livros
   buscarLivros(): void {
     if (this.query.trim() === '') {
@@ -30,8 +38,12 @@ export class BuscaLivrosComponent implements OnInit {
       (livros: Livro[]) => {
         this.livros = livros.filter(
           livro =>
-            livro.name.toLowerCase().includes(this.query.toLowerCase()) ||
-            livro.author.toLowerCase().includes(this.query.toLowerCase())
+            this.removerAcentosEConverterParaMinusculas(livro.name).includes(
+              this.removerAcentosEConverterParaMinusculas(this.query)
+            ) ||
+            this.removerAcentosEConverterParaMinusculas(livro.author).includes(
+              this.removerAcentosEConverterParaMinusculas(this.query)
+            )
         );
         this.isLoading = false; // Desativa o carregamento após os dados serem recebidos
       },
