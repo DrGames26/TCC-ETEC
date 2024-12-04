@@ -44,6 +44,7 @@ export class BuscaLivrosComponent implements OnInit {
 
   // Método para navegar para a página de detalhes do livro
   navegarParaDetalhes(livroId: number): void {
-    this.router.navigate([`/livro-detalhes/${livroId}`]);  // Redireciona para a página de detalhes
+    this.router.navigate([`/livro/${livroId}`]);
   }
+  
 }
