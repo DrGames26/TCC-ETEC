@@ -1,0 +1,26 @@
+<div class="search-container">
+    <input
+      type="text"
+      [(ngModel)]="query"
+      (input)="buscarLivros()"
+      placeholder="Buscar por título ou autor"
+      class="form-control"
+    />
+    <div *ngIf="isLoading" class="loading-indicator">Carregando...</div>
+  
+    <div *ngIf="livros.length > 0">
+      <ul class="book-list">
+        <li *ngFor="let livro of livros">
+          <h4>{{ livro.name }}</h4>
+          <p>{{ livro.author }}</p>
+          <p>{{ livro.genre }}</p>
+          <img *ngIf="livro.picture" [src]="'data:image/jpeg;base64,' + livro.picture" alt="Capa do livro" />
+        </li>
+      </ul>
+    </div>
+  
+    <div *ngIf="livros.length === 0 && !isLoading" class="no-results">
+      Nenhum livro encontrado.
+    </div>
+  </div>
+  

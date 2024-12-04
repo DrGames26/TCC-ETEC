@@ -24,6 +24,7 @@ import { TrocasPendentesComponent } from './components/trocas-pendentes/trocas-p
 import { TrocarLivroComponent } from './components/trocar-livro/trocar-livro.component';
 import { AdmComponent } from './components/adm/adm.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { BuscaLivrosComponent } from './components/busca-livros/busca-livros.component';
 
 
 @NgModule({
@@ -42,7 +43,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     EstanteComponent,
     TrocasPendentesComponent,
     TrocarLivroComponent,
-    AdmComponent
+    AdmComponent,
+    BuscaLivrosComponent
   ],
   imports: [
     BrowserModule,
