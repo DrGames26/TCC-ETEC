@@ -25,6 +25,7 @@ import { TrocarLivroComponent } from './components/trocar-livro/trocar-livro.com
 import { AdmComponent } from './components/adm/adm.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
+
 @NgModule({
   declarations: [
     AppComponent,
