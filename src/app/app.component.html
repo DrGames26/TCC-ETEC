@@ -12,47 +12,43 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
-        <button class="btn" style="background-color: #8d573a; color: white;" routerLink="/form-livro">
-          <i class="bi bi-book"></i> ADICIONE SEU LIVRO AQUI
-        </button>
+        <button class="btn" style="background-color: #8d573a; color: white;" routerLink="/form-livro">ADICIONE SEU LIVRO AQUI</button>
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link" routerLink="/home"><i class="bi bi-house-door"></i> INÍCIO</a>
+            <a class="nav-link" routerLink="/home">INÍCIO</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="/livros"><i class="bi bi-book-half"></i> LIVROS</a>
+            <a class="nav-link" routerLink="/livros">LIVROS</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="/suporte"><i class="bi bi-question-circle"></i> SUPORTE</a>
+            <a class="nav-link" routerLink="/suporte">SUPORTE</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="/equipe"><i class="bi bi-people"></i> EQUIPE</a>
+            <a class="nav-link" routerLink="/equipe">EQUIPE</a>
           </li>
 
           <!-- Aba Perfil -->
           <li class="nav-item dropdown" *ngIf="!isAuthenticated">
-            <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <i class="bi bi-person-circle"></i> PERFIL
-            </a>
+            <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">PERFIL</a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" routerLink="/login"><i class="bi bi-box-arrow-in-right"></i> LOGIN</a>
-              <a class="dropdown-item" routerLink="/cadastro"><i class="bi bi-pencil-square"></i> CRIAR CONTA</a>
+              <a class="dropdown-item" routerLink="/login">LOGIN</a>
+              <a class="dropdown-item" routerLink="/cadastro">CRIAR CONTA</a>
             </div>
           </li>
 
           <li class="nav-item dropdown" *ngIf="isAuthenticated">
-            <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <i class="bi bi-person-circle"></i> PERFIL
-            </a>
+            <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">PERFIL</a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" *ngIf="authService.isAuthorized()" routerLink="/adm"><i class="bi bi-gear"></i> CONFIGURAÇÕES</a>
-              <a class="dropdown-item" routerLink="/perfil"><i class="bi bi-person"></i> PERFIL</a>
-              <a class="dropdown-item" routerLink="/estante"><i class="bi bi-bookmark"></i> MINHA ESTANTE</a>
-              <a class="dropdown-item" routerLink="/trocas"><i class="bi bi-exchange"></i> NOTIFICAÇÕES DE TROCA</a>
-              <a class="dropdown-item" (click)="logout()"><i class="bi bi-box-arrow-left"></i> SAIR</a>
+              <a class="dropdown-item" *ngIf="authService.isAuthorized()" routerLink="/adm">CONFIGURAÇÕES</a>
+              <a class="dropdown-item" routerLink="/perfil">PERFIL</a>
+              <a class="dropdown-item" routerLink="/estante">MINHA ESTANTE</a>
+              <a class="dropdown-item" routerLink="/trocas">NOTIFICAÇÕES DE TROCA</a>
+              <a class="dropdown-item" (click)="logout()">SAIR</a>
             </div>
           </li>
         </ul>
+
+    
       </div>
     </div>
   </nav>
