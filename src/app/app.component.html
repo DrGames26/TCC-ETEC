@@ -26,8 +26,6 @@
           <li class="nav-item">
             <a class="nav-link" routerLink="/equipe">EQUIPE</a>
           </li>
-
-          <!-- Aba Perfil -->
           <li class="nav-item dropdown" *ngIf="!isAuthenticated">
             <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">PERFIL</a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -35,38 +33,30 @@
               <a class="dropdown-item" routerLink="/cadastro">CRIAR CONTA</a>
             </div>
           </li>
-
           <li class="nav-item dropdown" *ngIf="isAuthenticated">
             <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">PERFIL</a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" *ngIf="authService.isAuthorized()" routerLink="/adm">CONFIGURAÇÕES</a>
               <a class="dropdown-item" routerLink="/perfil">PERFIL</a>
               <a class="dropdown-item" routerLink="/estante">MINHA ESTANTE</a>
-              <a class="dropdown-item" routerLink="/trocas">NOTIFICAÇÕES DE TROCA</a>
               <a class="dropdown-item" (click)="logout()">SAIR</a>
             </div>
           </li>
         </ul>
-
-        <form class="d-flex" role="search">
-          <input class="form-control me-2" type="search" placeholder="Buscar livros" aria-label="Search">
-          <button class="btn btn-outline-light" type="submit">
-            <i class="bi bi-search"></i>
-          </button>
+        <form class="d-flex ml-auto" (ngSubmit)="onSearch()">
+          <input class="form-control" type="search" placeholder="Pesquise por livro ou autor..." aria-label="Search" [(ngModel)]="searchTerm" name="searchTerm">
+          <button class="btn btn-outline-light" type="submit">Pesquisar</button>
         </form>
-        
-
       </div>
     </div>
   </nav>
-
-  <!-- Conteúdo principal -->
-  <div class="content">
-    <router-outlet></router-outlet>
+  
+  <!-- Lista de livros encontrados -->
+  <div *ngIf="livros.length">
+    <h2>Resultados da Pesquisa:</h2>
+    <ul>
+      <li *ngFor="let livro of livros">{{ livro.name }} - {{ livro.author }}</li>
+    </ul>
   </div>
 
-  <!-- Rodapé -->
-  <footer class="rodape">
-    <p>&copy; 2024 Sorobooks - Todos os direitos reservados.</p>
-  </footer>
 </body>
