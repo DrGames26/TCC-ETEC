@@ -30,6 +30,76 @@ export class FormLivroComponent {
     private router: Router
   ) {}
 
+  // Função para comprimir a imagem
+  compressImage(file: File, maxSizeKB: number): Promise<File> {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+
+      reader.onload = () => {
+        const img = new Image();
+        img.src = reader.result as string;
+
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          const ctx = canvas.getContext('2d')!;
+
+          // Define dimensões máximas para garantir a redução
+          const maxWidth = 800; // Reduzido para controle rigoroso
+          const maxHeight = 800;
+
+          let width = img.width;
+          let height = img.height;
+
+          // Ajuste proporcional das dimensões
+          if (width > maxWidth || height > maxHeight) {
+            if (width > height) {
+              height = (height * maxWidth) / width;
+              width = maxWidth;
+            } else {
+              width = (width * maxHeight) / height;
+              height = maxHeight;
+            }
+          }
+
+          canvas.width = width;
+          canvas.height = height;
+          ctx.drawImage(img, 0, 0, width, height);
+
+          // Converte para Blob com qualidade ajustada
+          canvas.toBlob(
+            (blob) => {
+              if (blob) {
+                const compressedFile = new File([blob], file.name, {
+                  type: file.type,
+                });
+
+                // Verifica se o tamanho está dentro do limite
+                if (compressedFile.size / 1024 <= maxSizeKB) {
+                  resolve(compressedFile);
+                } else {
+                  reject(
+                    new Error(
+                      `Imagem comprimida ainda excede ${maxSizeKB}KB. Tamanho atual: ${(compressedFile.size / 1024).toFixed(2)} KB`
+                    )
+                  );
+                }
+              } else {
+                reject(new Error('Falha ao gerar o blob da imagem.'));
+              }
+            },
+            file.type,
+            0.5 // Redução máxima da qualidade para garantir compressão
+          );
+        };
+
+        img.onerror = () => reject(new Error('Erro ao carregar a imagem.'));
+      };
+
+      reader.onerror = () => reject(new Error('Erro ao ler o arquivo.'));
+    });
+  }
+
   onFileSelected(event: any): void {
     const file = event.target.files[0];
     if (file) {
@@ -67,25 +137,33 @@ export class FormLivroComponent {
       return;
     }
 
-    const formData = new FormData();
-    formData.append('name', this.novoLivro.name);
-    formData.append('author', this.novoLivro.author);
-    formData.append('genre', this.novoLivro.genre);
-    formData.append('description', this.novoLivro.description);
-    formData.append('usuarioPublicador', usuarioLogado.name);
-    formData.append('phoneNumber', usuarioLogado.phoneNumber || ''); // Usa o telefone do usuário logado
-    formData.append('picture', this.selectedFile); // Adiciona o arquivo de imagem
+    // Comprime a imagem antes de enviar
+    this.compressImage(this.selectedFile, 500) // Limite de 500KB
+      .then((compressedFile) => {
+        const formData = new FormData();
+        formData.append('name', this.novoLivro.name);
+        formData.append('author', this.novoLivro.author);
+        formData.append('genre', this.novoLivro.genre);
+        formData.append('description', this.novoLivro.description);
+        formData.append('usuarioPublicador', usuarioLogado.name);
+        formData.append('phoneNumber', usuarioLogado.phoneNumber || ''); // Usa o telefone do usuário logado
+        formData.append('picture', compressedFile); // Envia o arquivo comprimido
 
-    // Envia o FormData para o serviço
-    this.livroService.addLivro(formData).subscribe(
-      () => {
-        console.log('Livro adicionado com sucesso');
-        this.router.navigate(['/livros']);
-      },
-      (error) => {
-        console.error('Erro ao adicionar livro:', error);
-        this.errorMessage = 'Erro ao adicionar livro. Tente novamente mais tarde.';
-      }
-    );
+        // Envia o FormData para o serviço
+        this.livroService.addLivro(formData).subscribe(
+          () => {
+            console.log('Livro adicionado com sucesso');
+            this.router.navigate(['/livros']);
+          },
+          (error) => {
+            console.error('Erro ao adicionar livro:', error);
+            this.errorMessage = 'Erro ao adicionar livro. Tente novamente mais tarde.';
+          }
+        );
+      })
+      .catch((error) => {
+        console.error('Erro ao comprimir imagem:', error);
+        this.errorMessage = 'Erro ao comprimir a imagem. Tente novamente.';
+      });
   }
 }
