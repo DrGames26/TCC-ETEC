@@ -26,6 +26,19 @@ export class BuscaLivrosComponent implements OnInit {
       .toLowerCase(); // Converte para minúsculas
   }
 
+  // Função para dividir a query em palavras e verificar se todas estão presentes no nome ou autor
+  verificarPalavrasChave(livro: Livro): boolean {
+    const palavrasChave = this.query.trim().split(/\s+/); // Divide a query em palavras (espaços como delimitador)
+
+    return palavrasChave.every(palavra => {
+      const palavraNormalizada = this.removerAcentosEConverterParaMinusculas(palavra);
+      return (
+        this.removerAcentosEConverterParaMinusculas(livro.name).includes(palavraNormalizada) ||
+        this.removerAcentosEConverterParaMinusculas(livro.author).includes(palavraNormalizada)
+      );
+    });
+  }
+
   // Método para buscar livros
   buscarLivros(): void {
     if (this.query.trim() === '') {
@@ -36,15 +49,7 @@ export class BuscaLivrosComponent implements OnInit {
     this.isLoading = true; // Ativa o carregamento enquanto busca os dados
     this.livroService.getLivros().subscribe(
       (livros: Livro[]) => {
-        this.livros = livros.filter(
-          livro =>
-            this.removerAcentosEConverterParaMinusculas(livro.name).includes(
-              this.removerAcentosEConverterParaMinusculas(this.query)
-            ) ||
-            this.removerAcentosEConverterParaMinusculas(livro.author).includes(
-              this.removerAcentosEConverterParaMinusculas(this.query)
-            )
-        );
+        this.livros = livros.filter(livro => this.verificarPalavrasChave(livro));
         this.isLoading = false; // Desativa o carregamento após os dados serem recebidos
       },
       error => {
