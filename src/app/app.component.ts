@@ -1,6 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { LivroService, Livro } from './services/livro.service';
-import { AuthService } from './services/auth.service';
+import { AuthService } from './services/auth.service';  // Importa o AuthService
 import { LoginComponent } from './login/login/login.component';
 
 @Component({
@@ -10,17 +9,12 @@ import { LoginComponent } from './login/login/login.component';
 })
 export class AppComponent {
   title = 'Sorobooks';
-  livros: Livro[] = [];
-  searchTerm: string = '';
 
   @ViewChild(LoginComponent) loginComponent!: LoginComponent;
 
   dropdownOpen = false;
 
-  constructor(
-    public authService: AuthService, 
-    private livroService: LivroService
-  ) {}
+  constructor(public authService: AuthService) {} // Injeta o AuthService
 
   // Método para alternar o dropdown do perfil
   toggleDropdown() {
@@ -45,18 +39,5 @@ export class AppComponent {
   // Verifica se o usuário autenticado possui um e-mail autorizado
   get isAuthorizedUser() {
     return this.authService.isAuthorized();
-  }
-
-  // Buscar livros pelo termo de pesquisa
-  onSearch() {
-    if (this.searchTerm.trim()) {
-      this.livroService.searchLivros(this.searchTerm).subscribe((result) => {
-        this.livros = result;
-      });
-    } else {
-      this.livroService.getLivros().subscribe((result) => {
-        this.livros = result;
-      });
-    }
   }
 }
