@@ -1,4 +1,5 @@
 <div class="search-container">
+  <div class="input-group mb-3">
     <input
       type="text"
       [(ngModel)]="query"
@@ -6,38 +7,59 @@
       placeholder="Buscar por título ou autor"
       class="form-control"
     />
-    <div *ngIf="isLoading" class="loading-indicator">Carregando...</div>
-  
-    <!-- Botão para abrir o modal -->
-    <button 
-      *ngIf="livros.length > 0" 
-      class="btn btn-primary" 
-      data-bs-toggle="modal" 
-      data-bs-target="#livrosModal">
-      Buscar Livros
+    <button
+      class="btn btn-outline-secondary"
+      *ngIf="query"
+      data-bs-toggle="modal"
+      data-bs-target="#livrosModal"
+    >
+      <i class="bi bi-search"></i>
     </button>
-  
-    <!-- Modal com os resultados da busca -->
-    <div class="modal fade" id="livrosModal" tabindex="-1" aria-labelledby="livrosModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="livrosModalLabel">Livros Encontrados</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <ul class="book-list">
-              <li *ngFor="let livro of livros">
-                <h4>{{ livro.name }}</h4>
-                <p>{{ livro.author }}</p>
-                <button class="btn btn-primary" (click)="navegarParaDetalhes(livro.id)">
-                  Ver Detalhes
-                </button>
-              </li>
-            </ul>
-          </div>
+  </div>
+  <div *ngIf="isLoading" class="loading-indicator">Carregando...</div>
+
+  <!-- Modal com os resultados da busca -->
+  <div
+    class="modal fade"
+    id="livrosModal"
+    tabindex="-1"
+    aria-labelledby="livrosModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="livrosModalLabel">Livros Encontrados</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <ul class="list-group">
+            <li
+              *ngFor="let livro of livros"
+              class="list-group-item d-flex justify-content-between align-items-start"
+            >
+              <div>
+                <h5 class="mb-1">{{ livro.name }}</h5>
+                <p class="mb-1 text-muted">{{ livro.author }}</p>
+              </div>
+              <button
+                class="btn btn-primary btn-sm"
+                (click)="navegarParaDetalhes(livro.id)"
+              >
+                Ver Detalhes
+              </button>
+            </li>
+          </ul>
+          <p *ngIf="livros.length === 0" class="text-center text-danger mt-3">
+            Nenhum livro encontrado.
+          </p>
         </div>
       </div>
     </div>
   </div>
-  
+</div>
