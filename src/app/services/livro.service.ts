@@ -27,39 +27,70 @@ export class LivroService {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.readAsDataURL(file);
+  
       reader.onload = () => {
         const img = new Image();
         img.src = reader.result as string;
+  
         img.onload = () => {
           const canvas = document.createElement('canvas');
           const ctx = canvas.getContext('2d')!;
-
-          const scaleFactor = Math.sqrt(maxSizeKB * 1024 / file.size); // Ajusta para o tamanho desejado
-          canvas.width = img.width * scaleFactor;
-          canvas.height = img.height * scaleFactor;
-
-          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-
+  
+          // Define o tamanho máximo permitido (por exemplo, 1024px de largura ou altura)
+          const maxWidth = 1024;
+          const maxHeight = 1024;
+  
+          let width = img.width;
+          let height = img.height;
+  
+          // Ajusta as dimensões proporcionalmente
+          if (width > maxWidth || height > maxHeight) {
+            if (width > height) {
+              height = (height * maxWidth) / width;
+              width = maxWidth;
+            } else {
+              width = (width * maxHeight) / height;
+              height = maxHeight;
+            }
+          }
+  
+          canvas.width = width;
+          canvas.height = height;
+          ctx.drawImage(img, 0, 0, width, height);
+  
           canvas.toBlob(
             (blob) => {
               if (blob) {
                 const compressedFile = new File([blob], file.name, {
                   type: file.type,
                 });
-                resolve(compressedFile);
+  
+                // Verifica se o tamanho está dentro do limite
+                if (compressedFile.size / 1024 <= maxSizeKB) {
+                  resolve(compressedFile);
+                } else {
+                  reject(
+                    new Error(
+                      `Não foi possível reduzir a imagem para menos de ${maxSizeKB}KB.`
+                    )
+                  );
+                }
               } else {
-                reject(new Error('Falha ao comprimir a imagem.'));
+                reject(new Error('Falha ao gerar o blob da imagem.'));
               }
             },
             file.type,
-            0.7 // Qualidade da compressão (ajustável)
+            0.7 // Qualidade da compressão (ajustável: de 0.1 a 1.0)
           );
         };
+  
         img.onerror = () => reject(new Error('Erro ao carregar a imagem.'));
       };
+  
       reader.onerror = () => reject(new Error('Erro ao ler o arquivo.'));
     });
   }
+  
 
   // Listar livros (sem cache)
   getLivros(): Observable<Livro[]> {
