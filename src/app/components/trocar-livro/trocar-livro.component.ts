@@ -92,10 +92,7 @@ export class TrocarLivroComponent implements OnInit {
           this.toastr.error('Falha ao solicitar a troca.', 'Erro');
         }
       },
-      (error) => {
-        console.error('Erro ao solicitar a troca:', error);
-        this.toastr.error('Ocorreu um erro ao solicitar a troca.', 'Erro');
-      }
+    
     );
   }
 }
