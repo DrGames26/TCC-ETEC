@@ -48,3 +48,20 @@
 .modal-title {
   font-weight: bold;
 }
+
+.btn-detalhes {
+  background-color: #8d573a;
+  color: white;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  transition: background-color 0.3s ease;
+}
+
+.btn-detalhes:hover {
+  background-color: #7a4c34;
+}
+
+.btn-detalhes:focus {
+  outline: none;
+  box-shadow: 0 0 0 0.2rem rgba(141, 87, 58, 0.5);
+}

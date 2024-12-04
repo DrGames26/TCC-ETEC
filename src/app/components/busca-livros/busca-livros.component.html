@@ -9,7 +9,6 @@
     />
     <button
       class="btn custom-search-button"
-      *ngIf="query"
       data-bs-toggle="modal"
       data-bs-target="#livrosModal"
     >
@@ -47,8 +46,9 @@
                 <p class="mb-1 text-muted">{{ livro.author }}</p>
               </div>
               <button
-                class="btn btn-primary btn-sm"
+                class="btn btn-detalhes btn-sm"
                 (click)="navegarParaDetalhes(livro.id)"
+                data-bs-dismiss="modal"
               >
                 Ver Detalhes
               </button>
