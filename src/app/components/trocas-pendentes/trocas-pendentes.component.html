@@ -7,9 +7,9 @@
     <div class="card p-4">
       <div class="card-body text-center">
         <h5 class="card-title">{{ exchange.requester }} solicitou uma troca</h5>
-        <div class="d-flex justify-content-center align-items-center">
+        <div class="row justify-content-center align-items-center">
           <!-- Imagem do livro solicitado -->
-          <div class="col-md-3 text-center">
+          <div class="col-12 col-md-3 text-center mb-3 mb-md-0">
             <img *ngIf="exchange.requestedBook?.picture" 
                  [src]="exchange.requestedBook?.picture.startsWith('data:image') ? exchange.requestedBook?.picture : 'data:image/jpeg;base64,' + exchange.requestedBook?.picture"
                  class="img-fluid mb-2" alt="Imagem do Livro Solicitado" style="max-height: 200px;">
@@ -17,13 +17,13 @@
           </div>
 
           <!-- Botões de aceitar e recusar -->
-          <div class="col-md-2 d-flex flex-column align-items-center justify-content-center">
+          <div class="col-12 col-md-2 d-flex flex-column align-items-center justify-content-center mb-3 mb-md-0">
             <button class="btn btn-success mb-2" (click)="acceptExchange(exchange.id)" style="width: 100px;">Aceitar</button>
             <button class="btn btn-danger" (click)="rejectExchange(exchange.id)" style="width: 100px;">Recusar</button>
           </div>
 
           <!-- Imagem do livro oferecido -->
-          <div class="col-md-3 text-center">
+          <div class="col-12 col-md-3 text-center">
             <img *ngIf="exchange.offeredBook?.picture" 
                  [src]="exchange.offeredBook?.picture.startsWith('data:image') ? exchange.offeredBook?.picture : 'data:image/jpeg;base64,' + exchange.offeredBook?.picture"
                  class="img-fluid mb-2" alt="Imagem do Livro Oferecido" style="max-height: 200px;">
@@ -42,9 +42,9 @@
     <div class="card p-4">
       <div class="card-body text-center">
         <h5 class="card-title">{{ exchange.requester }} aceitou a troca</h5>
-        <div class="d-flex justify-content-center align-items-center">
+        <div class="row justify-content-center align-items-center">
           <!-- Imagem do livro solicitado -->
-          <div class="col-md-3 text-center">
+          <div class="col-12 col-md-3 text-center mb-3 mb-md-0">
             <img *ngIf="exchange.requestedBook?.picture" 
                  [src]="exchange.requestedBook?.picture.startsWith('data:image') ? exchange.requestedBook?.picture : 'data:image/jpeg;base64,' + exchange.requestedBook?.picture"
                  class="img-fluid mb-2" alt="Imagem do Livro Solicitado" style="max-height: 200px;">
@@ -52,7 +52,7 @@
           </div>
 
           <!-- Imagem do livro oferecido -->
-          <div class="col-md-3 text-center">
+          <div class="col-12 col-md-3 text-center">
             <img *ngIf="exchange.offeredBook?.picture" 
                  [src]="exchange.offeredBook?.picture.startsWith('data:image') ? exchange.offeredBook?.picture : 'data:image/jpeg;base64,' + exchange.offeredBook?.picture"
                  class="img-fluid mb-2" alt="Imagem do Livro Oferecido" style="max-height: 200px;">
@@ -62,3 +62,4 @@
       </div>
     </div>
   </div>
+</div>
