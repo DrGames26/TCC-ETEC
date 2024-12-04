@@ -8,13 +8,36 @@
     />
     <div *ngIf="isLoading" class="loading-indicator">Carregando...</div>
   
-    <div *ngIf="livros.length > 0">
-      <ul class="book-list">
-        <li *ngFor="let livro of livros">
-          <h4>{{ livro.name }}</h4>
-        </li>
-      </ul>
-    </div>
+    <!-- Botão para abrir o modal -->
+    <button 
+      *ngIf="livros.length > 0" 
+      class="btn btn-primary" 
+      data-bs-toggle="modal" 
+      data-bs-target="#livrosModal">
+      Buscar Livros
+    </button>
   
+    <!-- Modal com os resultados da busca -->
+    <div class="modal fade" id="livrosModal" tabindex="-1" aria-labelledby="livrosModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="livrosModalLabel">Livros Encontrados</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <ul class="book-list">
+              <li *ngFor="let livro of livros">
+                <h4>{{ livro.name }}</h4>
+                <p>{{ livro.author }}</p>
+                <button class="btn btn-primary" (click)="navegarParaDetalhes(livro.id)">
+                  Ver Detalhes
+                </button>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
   

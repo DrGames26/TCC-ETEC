@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LivroService, Livro } from '../../services/livro.service';
+import { Router } from '@angular/router';  // Importa o Router para navegação
 
 @Component({
   selector: 'app-busca-livros',
@@ -11,7 +12,7 @@ export class BuscaLivrosComponent implements OnInit {
   livros: Livro[] = [];  // Lista de livros a serem exibidos
   isLoading: boolean = false;  // Flag para mostrar carregamento
 
-  constructor(private livroService: LivroService) {}
+  constructor(private livroService: LivroService, private router: Router) {}
 
   ngOnInit(): void {
     // Inicialização do componente (opcional, por enquanto nada é carregado aqui)
@@ -39,5 +40,10 @@ export class BuscaLivrosComponent implements OnInit {
           this.isLoading = false;  // Desativa o carregamento em caso de erro
         }
       );
+  }
+
+  // Método para navegar para a página de detalhes do livro
+  navegarParaDetalhes(livroId: number): void {
+    this.router.navigate([`/livro-detalhes/${livroId}`]);  // Redireciona para a página de detalhes
   }
 }
