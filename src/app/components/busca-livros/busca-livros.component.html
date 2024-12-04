@@ -8,15 +8,14 @@
       class="form-control"
     />
     <button
-      class="btn btn-outline-secondary"
+      class="btn custom-search-button"
       *ngIf="query"
       data-bs-toggle="modal"
       data-bs-target="#livrosModal"
     >
-      <i class="bi bi-search"></i>
+      <i class="bi bi-search text-white"></i>
     </button>
   </div>
-  <div *ngIf="isLoading" class="loading-indicator">Carregando...</div>
 
   <!-- Modal com os resultados da busca -->
   <div

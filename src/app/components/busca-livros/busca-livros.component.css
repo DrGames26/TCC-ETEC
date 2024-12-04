@@ -7,6 +7,25 @@
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
+.custom-search-button {
+  background-color: #b48f6b;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.custom-search-button:hover {
+  background-color: #a0785e;
+}
+
+.custom-search-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 0.2rem rgba(180, 143, 107, 0.5);
+}
+
 .loading-indicator {
   text-align: center;
   font-size: 16px;
