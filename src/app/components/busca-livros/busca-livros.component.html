@@ -12,15 +12,9 @@
       <ul class="book-list">
         <li *ngFor="let livro of livros">
           <h4>{{ livro.name }}</h4>
-          <p>{{ livro.author }}</p>
-          <p>{{ livro.genre }}</p>
-          <img *ngIf="livro.picture" [src]="'data:image/jpeg;base64,' + livro.picture" alt="Capa do livro" />
         </li>
       </ul>
     </div>
   
-    <div *ngIf="livros.length === 0 && !isLoading" class="no-results">
-      Nenhum livro encontrado.
-    </div>
   </div>
   
