@@ -60,12 +60,11 @@ export class TrocarLivroComponent implements OnInit {
     });
   }
 
-  // Função para oferecer a troca
   offerExchange(livroId: number): void {
     if (!this.livroDesejado) {
       return;
     }
-
+  
     const troca = {
       offeredBook: {
         id: livroId,
@@ -76,23 +75,27 @@ export class TrocarLivroComponent implements OnInit {
       requester: this.authService.getUser()?.email || '',
       requesterPhoneNumber: this.authService.getUser()?.phoneNumber || ''  // Incluindo o número de telefone
     };
-
+  
     console.log('Requester:', troca.requester);
     console.log('PhoneNumber:', troca.requesterPhoneNumber); // Para garantir que o número de telefone está sendo enviado corretamente
-
+  
     // Solicitar a troca
     this.exchangeService.requestExchange(troca).subscribe(
       (response) => {
         if (response && response.success) {
           this.toastr.success('Troca solicitada com sucesso!', 'Sucesso');
           // Redirecionar para a página de trocas
-          this.router.navigateByUrl('/trocas');
+          this.router.navigateByUrl('/trocas'); // Redireciona para a página de trocas após a troca ser solicitada
         } else {
           console.error('Falha na solicitação de troca:', response);
           this.toastr.error('Falha ao solicitar a troca.', 'Erro');
         }
       },
-    
+      (error) => {
+        console.error('Erro ao solicitar a troca:', error);
+        this.toastr.error('Erro ao solicitar a troca.', 'Erro');
+      }
     );
   }
-}
+  }
+
