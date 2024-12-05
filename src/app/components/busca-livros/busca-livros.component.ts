@@ -15,7 +15,7 @@ export class BuscaLivrosComponent implements OnInit {
   constructor(private livroService: LivroService, private router: Router) {}
 
   ngOnInit(): void {
-    // Inicialização do componente (opcional, por enquanto nada é carregado aqui)
+
   }
 
   // Função para remover acentos e tornar a comparação insensível a maiúsculas/minúsculas
@@ -30,7 +30,7 @@ export class BuscaLivrosComponent implements OnInit {
   verificarPalavrasChave(livro: Livro): boolean {
     const palavrasChave = this.query.trim().split(/\s+/); // Divide a query em palavras (espaços como delimitador)
 
-    // Para depuração, adicione logs para ver como as palavras estão sendo processadas
+    
     console.log('Palavras-chave:', palavrasChave);
 
     return palavrasChave.some(palavra => {
@@ -54,7 +54,7 @@ export class BuscaLivrosComponent implements OnInit {
     this.isLoading = true; // Ativa o carregamento enquanto busca os dados
     this.livroService.getLivros().subscribe(
       (livros: Livro[]) => {
-        // Para depuração, adicione um log para ver como os livros estão sendo filtrados
+       
         console.log('Livros recebidos:', livros);
         this.livros = livros.filter(livro => this.verificarPalavrasChave(livro));
         console.log('Livros filtrados:', this.livros);

@@ -56,6 +56,6 @@ export class HomeComponent implements OnInit {
 
   // Método para navegar para a página de detalhes do livro
   navegarParaDetalhes(livroId: number): void {
-    this.router.navigate(['/livro', livroId]); // Altere a rota conforme necessário
+    this.router.navigate(['/livro', livroId]); 
   }
 }
