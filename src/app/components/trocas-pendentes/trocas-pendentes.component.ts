@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ExchangeService } from '../../services/exchange.service'; // Serviço que busca os dados
+import { ExchangeService } from '../../services/exchange.service'; // Serviço que interage com o backend
 import { ToastrService } from 'ngx-toastr'; // Para exibir mensagens de notificação
 import { AuthService } from 'src/app/services/auth.service'; // Serviço de autenticação
 import { LivroService } from 'src/app/services/livro.service'; // Serviço de livros
@@ -23,15 +23,14 @@ export class TrocasPendentesComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.loadExchanges(); // Chama o método que carrega as trocas
+    this.loadExchanges(); // Carrega as trocas
     this.loadLivrosUsuario(); // Carrega os livros do usuário logado
   }
 
   loadExchanges(): void {
-    // Chama o serviço para buscar as trocas pendentes do backend
     this.exchangeService.getPendingExchanges().subscribe(
       (data) => {
-        // Filtra as trocas de acordo com o status (PENDING, ACCEPTED, REJECTED)
+        // Filtra as trocas de acordo com o status
         this.pendentes = data.filter(exchange =>
           exchange.status === 'PENDING' && this.livroSolicitadoPertenceAoUsuario(exchange)
         );
@@ -45,7 +44,7 @@ export class TrocasPendentesComponent implements OnInit {
   }
 
   loadLivrosUsuario(): void {
-    const usuarioLogado = this.authService.getUser(); // Obtendo o usuário logado
+    const usuarioLogado = this.authService.getUser(); // Obtém o usuário logado
     if (usuarioLogado) {
       this.livroService.getBooksByUsuarioPublicador(usuarioLogado.name).subscribe(
         (data) => {
@@ -69,22 +68,23 @@ export class TrocasPendentesComponent implements OnInit {
       this.toastr.error('Troca não encontrada.', 'Erro');
       return;
     }
-  
+
     const exchange = this.pendentes[exchangeIndex];
     if (!exchange || !exchange.offeredBook || !exchange.requestedBook) {
       this.toastr.error('Informações da troca incompletas.', 'Erro');
       return;
     }
-  
+
     const phoneNumber = exchange.offeredBook.phoneNumber; // Número do solicitante
     const requestedBook = exchange.requestedBook; // Livro solicitado
     const message = `Olá, estou aceitando a troca do livro "${requestedBook.name}" (autor: ${requestedBook.author}). Podemos alinhar os detalhes?`;
-  
+
     console.log('Mensagem gerada para o WhatsApp:', message);
-  
+
     this.exchangeService.acceptExchange(id).subscribe(
       () => {
         this.toastr.success('Solicitação de troca aceita!', 'Sucesso');
+        exchange.status = 'ACCEPTED'; // Atualiza o status localmente
         this.aceitas.push(exchange); // Move para a lista de aceitas
         this.pendentes.splice(exchangeIndex, 1); // Remove da lista de pendentes
         window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`, '_blank');
@@ -94,19 +94,20 @@ export class TrocasPendentesComponent implements OnInit {
       }
     );
   }
-  
+
   rejectExchange(id: number): void {
     const exchangeIndex = this.pendentes.findIndex(e => e.id === id);
     if (exchangeIndex === -1) {
       this.toastr.error('Troca não encontrada.', 'Erro');
       return;
     }
-  
+
     const exchange = this.pendentes[exchangeIndex];
-  
+
     this.exchangeService.rejectExchange(id).subscribe(
       () => {
         this.toastr.success('Solicitação de troca recusada!', 'Sucesso');
+        exchange.status = 'REJECTED'; // Atualiza o status localmente
         this.recusadas.push(exchange); // Move para a lista de recusadas
         this.pendentes.splice(exchangeIndex, 1); // Remove da lista de pendentes
       },
@@ -114,5 +115,5 @@ export class TrocasPendentesComponent implements OnInit {
         this.toastr.error('Erro ao recusar solicitação.', 'Erro');
       }
     );
-  }  
+  }
 }
