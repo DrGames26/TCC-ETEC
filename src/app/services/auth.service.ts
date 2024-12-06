@@ -18,7 +18,7 @@ export class AuthService {
   ];
 
   // URL base do backend hospedado no Render
-  private apiUrl = 'https://sorobooks-backend-1.onrender.com/api';
+  private apiUrl = 'https://sorobooks-backend-2.onrender.com/api';
 
   private userSubject = new BehaviorSubject<any>(null); // Armazena o usuário autenticado
   public user$ = this.userSubject.asObservable(); // Observable para acessar o usuário

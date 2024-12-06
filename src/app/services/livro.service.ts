@@ -17,7 +17,7 @@ export interface Livro {
   providedIn: 'root',
 })
 export class LivroService {
-  private apiUrl = 'https://sorobooks-backend-1.onrender.com/api/books';
+  private apiUrl = 'https://sorobooks-backend-2.onrender.com/api/books';
   private localStorageKey = 'livros';
 
   constructor(private http: HttpClient) {}
